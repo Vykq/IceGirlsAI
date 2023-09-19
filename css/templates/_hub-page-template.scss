@@ -1,0 +1,115 @@
+.hub-page-template{
+  .container{
+    @include contentStructure();
+    .generated-images-wrapper{
+      margin:3rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap:1rem;
+      @media (max-width: 900px){
+        grid-template-columns: 1fr 1fr;
+      }
+      .single-image{
+        width: 100%;
+        aspect-ratio: 9/16;
+        border-radius: .5rem;
+        border:1px solid $go;
+        position: relative;
+        overflow: hidden;
+        a{
+          display: block;
+          width: 100%;
+          height: 100%;
+          .single-wrapper{
+            padding:.5rem;
+            height: 100%;
+            .hover-area{
+              transform:translateY(100%);
+              position: absolute;
+              left:0;
+              bottom:0;
+              transition: .2s all ease;
+              width:100%;
+              opacity: 0;
+              background-color: $black;
+              border-radius: 0.5rem 0.5rem 0 0;
+              padding:.25rem .5rem;
+              .hover-con{
+                width: 95%;
+                margin:0 auto;
+                .wrapper{
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap:.25rem;
+                  .left{
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    img{
+                      width: 100%;
+                    }
+                  }
+                  .right{
+                    p{
+                      color:#dedede;
+                      font-size: 1rem;
+                      line-height: 1.5rem;
+                    }
+                  }
+                }
+              }
+            }
+            &:hover{
+              .hover-area {
+                opacity: 1;
+                transform:translateY(0%);
+              }
+            }
+          }
+          .post-image{
+            width: 100%;
+            height: 100%;
+            border-radius: .25rem;
+            overflow: hidden;
+            img{
+              transition: .4s all ease-in-out;
+              @include imageCover(50%, 0);
+            }
+          }
+        }
+        &:hover{
+          .post-image{
+            img{
+              transform:scale(1.1);
+            }
+          }
+        }
+      }
+    }
+    .pagination {
+      margin-bottom: 5rem;
+      display: flex;
+      gap:.5rem;
+      justify-content: end;
+      .page-numbers{
+        color:#dedede;
+        padding:.5rem;
+        font-weight: 500;
+      }
+      .current{
+        color:$black;
+        background-color: $go;
+        padding: .5rem;
+        font-weight: 700;
+      }
+      a{
+        border-bottom: 1px solid $black;
+        transition: .2s all ease-in;
+        &:hover{
+          border-bottom: 1px solid $go;
+        }
+      }
+    }
+  }
+}
+

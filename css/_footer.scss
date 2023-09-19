@@ -1,0 +1,112 @@
+.main-footer{
+  background-color: #292929;
+  padding:3rem 0;
+  border-top:.5rem solid $go;
+  .container{
+    @include contentStructure();
+    .logo-area{
+      width: 10rem;
+      height: 100%;
+      img{
+        width: 100%;
+      }
+    }
+    .grid{
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      row-gap: 2rem;
+      @media (max-width: 800px){
+        grid-template-columns: 1fr 1fr;
+      }
+      @media (max-width: 400px){
+        grid-template-columns: 1fr;
+      }
+      .col{
+        .col-title{
+          color:#FFF;
+          font-size: 1.25rem;
+          font-weight: 600;
+        }
+        nav{
+          margin-top: 1rem;
+          ul{
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            gap:.3rem;
+            a{
+              color:#dedede;
+              line-height: 1.2rem;
+              font-size:0.8rem;
+              display: block;
+              width: 100%;
+            }
+            li{
+              &:hover{
+                a{
+                  color:$go;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.bottom-footer{
+  background-color: $black;
+  padding:2rem 0;
+  .container{
+    @include contentStructure();
+    .wrapper{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      @media (max-width: 600px){
+        grid-template-columns: 1fr;
+        gap:2rem;
+      }
+      .social-icons{
+        display: flex;
+        gap:1rem;
+        align-items: center;
+        @media (max-width: 600px){
+          justify-content: center;
+        }
+        a{
+          width: 1.5rem;
+          height: 1.5rem;
+          display: block;
+          svg{
+            width: 100%;
+          }
+          &:hover{
+            svg{
+              *{
+                fill:$go;
+              }
+              fill:$go;
+            }
+          }
+        }
+      }
+      .copyright{
+        text-align: right;
+        @media (max-width: 600px){
+          text-align: center;
+        }
+        p{
+          color:#dedede;
+          font-size: 1rem;
+          line-height: 1rem;
+          a{
+            color:$go;
+
+          }
+        }
+      }
+    }
+  }
+}

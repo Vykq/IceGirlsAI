@@ -1,0 +1,97 @@
+.premium-page-template{
+  margin:2rem 0;
+  .container{
+    @include smallContentStructure();
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap:2rem;
+      @media (max-width: 600px){
+        grid-template-columns: 1fr;
+      }
+      .inner-col-wrapper{
+        border:1px solid $go;
+        border-radius: .5rem;
+        padding: 1rem;
+        position: relative;
+        &.premium{
+          box-shadow: 0px 0px 10px 4px #FFA702;
+        }
+        .col-title{
+          color:$go;
+          text-align: center;
+          font-size: 2rem;
+          font-weight: 700;
+          line-height: 2rem;
+          text-transform: uppercase;
+        }
+        .whole-price{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+        .price{
+          font-size: 2rem;
+          line-height: 2rem;
+          font-weight: 600;
+          text-align: center;
+          color:$go;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap:.25rem;
+          span{
+            font-size: 75%;
+            line-height: 100%;
+            color:#dedede;
+            vertical-align: top;
+          }
+        }
+        .subprice{
+          display: inline-block;
+          color:#dedede;
+          font-weight: 500;
+          font-size: 1rem;
+          line-height: 1rem;
+        }
+        }
+        .button-area {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin:1rem 0;
+          .main-button {
+            text-align: center;
+            width: fit-content;
+          }
+        }
+        ul{
+          list-style-type: none;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          li{
+            text-align: center;
+            width: 100%;
+            padding:.5rem 0;
+            border-bottom:1px solid #919191;
+            &:last-of-type{
+              border-bottom: none;
+            }
+            span{
+              color:#dedede;
+            }
+          }
+        }
+        .note-area{
+          margin-top: .75rem;
+          text-align: center;
+          p{
+            font-size: .8rem;
+            color:#dedede;
+          }
+        }
+      }
+    }
+  }
+}

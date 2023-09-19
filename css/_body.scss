@@ -1,0 +1,96 @@
+body,
+body * {
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  //user-select: none;
+
+}
+body {
+  background-color: $black;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+  font-family: 'Hellix', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  scroll-behavior: smooth;
+  &.modal-is-open {
+    overflow-y: hidden!important;
+  }
+  @media (max-width: 1420px) {
+    font-size: 18px;
+  }
+  @media (max-width: 1200px) {
+    font-size: 16px;
+  }
+  @media (max-width: 1000px) {
+    font-size: 15px;
+  }
+  @media (max-width: 750px) {
+    font-size: 14px;
+  }
+}
+
+
+a{
+  text-decoration: none;
+}
+
+input {
+  //appearance: none;
+  //outline: none;
+  border: none;
+  font-family: 'Hellix', sans-serif;
+}
+
+select {
+  appearance: none;
+  outline: none;
+  border: none;
+  font-family: 'Hellix', sans-serif;
+}
+
+button {
+  font-family: 'Hellix', sans-serif;
+  cursor: pointer;
+}
+
+textarea{
+  font-family: 'Hellix', sans-serif;
+}
+
+
+.main-button {
+  width: 100%;
+  color:$black;
+  background-color: $go;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding:1rem 2rem;
+  outline:none;
+  border:none;
+  border-radius: 0.5rem;
+  &.hidden{
+    display: none;
+  }
+}
+
+.secondary-button {
+  width: 100%;
+  color:$go;
+  background-color: $black;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding:1rem 2rem;
+  outline:none;
+  border:3px solid $go;
+  border-radius: 0.5rem;
+  opacity: .6;
+}

@@ -1,0 +1,105 @@
+.tml{
+  @include smallContentStructure();
+  margin:2rem auto;
+  .tml-message, .tml-error{
+    color:#dedede;
+    border-left-color: $go;
+  }
+
+  .tml-field-wrap{
+    position: relative;
+    width: 100%;
+
+    label{
+      position: absolute;
+      top:0;
+      left:1rem;
+      transform:translate(0, -100%);
+      color:$go;
+      font-size: 1rem;
+      background-color: $black;
+      padding:3px 6px;
+    }
+    input{
+      padding:1rem 1rem 1rem;
+      background-color: $black;
+      color:#dedede;
+      font-size: 1rem;
+      line-height: 1rem;
+      border-radius: .25rem;
+      border:1px solid $go;
+      &:focus-visible{
+        border-radius: .25rem;
+        outline:none;
+        border:1px solid $go;
+      }
+    }
+    button{
+      width: 100%;
+      padding: 1rem;
+      color:$black;
+      background-color: $go;
+      border-radius: .5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      line-height: 1rem;
+      font-weight: 700;
+      outline:none;
+      border:none;
+    }
+
+  }
+  .tml-links{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    li{
+      list-style-type: none;
+      &.tml-register-link{
+        display: none;
+      }
+      a{
+        color:#dedede;
+        font-size: .9rem;
+        line-height: 1rem;
+        text-decoration: none;
+      }
+    }
+  }
+  .tml-rememberme-wrap{
+    display: flex;
+    align-items: center;
+    gap:.5rem;
+    cursor: pointer;
+    margin: 0;
+    label{
+      position: unset;
+      transform: none;
+      padding: 0;
+      font-size: 1rem;
+      line-height: 1rem;
+    }
+    input{
+      width: 1rem;
+      height: 1rem;
+      appearance: none;
+      border: 1px solid $go;
+      border-radius: 5px;
+      padding:0;
+      position: relative;
+      &:checked{
+        &:before{
+          content:"";
+          position: absolute;
+          top:50%;
+          left:50%;
+          width: 0.5rem;
+          height: 0.5rem;
+          transform:translate(-50%, -50%);
+          background-color: $go;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+}

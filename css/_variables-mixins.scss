@@ -1,0 +1,57 @@
+$black : #1D1D1D;
+$go : #FFA702;
+
+@mixin imageCover($vertical, $horizontal) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: $vertical $horizontal;
+  transform: none;
+}
+
+//for Header
+@mixin headerStructure() {
+  width: 90%;
+  margin: 0 auto;
+  max-width: 1920px;
+  @media (max-width: 1200px) {
+    width: 95%;
+  }
+  @media (max-width: 1024px) {
+    width: 93%;
+  }
+  @media (max-width: 768px) {
+    width: 95%;
+  }
+}
+
+//for Content
+@mixin contentStructure() {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1920px;
+  @media (max-width: 1200px) {
+    width: 85%;
+  }
+  @media (max-width: 1024px) {
+    width: 83%;
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+}
+
+@mixin smallContentStructure() {
+  width: 60%;
+  margin: 0 auto;
+  max-width: 1920px;
+  @media (max-width: 1200px) {
+    width: 70%;
+  }
+  @media (max-width: 1024px) {
+    width: 75%;
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+}

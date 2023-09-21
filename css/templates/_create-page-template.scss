@@ -25,24 +25,37 @@
             }
             .prompt-preview-area{
               display: none;
-              border-radius: .5rem;
               margin:2rem 0;
-              border:1px solid $go;
               position: relative;
-              padding:1rem 0.5rem;
-              .title{
-                color:$go;
-                position: absolute;
-                top:0;
-                left:1rem;
-                transform:translate(0, -50%);
-                background-color: $black;
-                padding:3px 6px;
-              }
-              #prompt-preview{
-                color:#dedede;
-                font-size: 0.8rem;
-                line-height: 1.1rem;
+              .whole-input{
+                position: relative;
+
+                label{
+                  color:$go;
+                  background-color: $black;
+                  font-size: 1rem;
+                  line-height: 1rem;
+                  padding:2px;
+                  position: absolute;
+                  top:0;
+                  transform:translateY(-50%);
+                  left:1rem;
+                  transition:.1s all ease-in-out;
+                }
+                textarea{
+                  border:1px solid $go;
+                  background-color: $black;
+                  border-radius: 0.5rem;
+                  width: 100%;
+                  min-width: 100%;
+                  height: 6rem;
+                  min-height: 6rem;
+                  max-height: 6rem;
+                  color:#FFF;
+                  padding:1rem;
+                  resize:none;
+                }
+
               }
               &.show{
                 display: block;
@@ -256,13 +269,10 @@
           position: relative;
           border-radius: 0.5rem;
           border:3px solid $go;
-          height: 80%;
+          height: 75vh;
           aspect-ratio: 9/16;
           margin:0 auto;
-          @media (max-width: 1100px){
-            width: 100%;
-            height: unset;
-          }
+
           .image{
             position: absolute;
             top:0;
@@ -296,6 +306,7 @@
             }
             p{
               color:#dedede;
+              font-size: .8rem;
             }
 
           }
@@ -394,6 +405,7 @@
           .single-checkpoint, .single-action{
             aspect-ratio: 1/1;
             width: 100%;
+            cursor: pointer;
             @media (max-width: 600px){
               aspect-ratio: 1/2;
             }
@@ -425,6 +437,7 @@
                   z-index: 3;
                 }
                 input{
+                  cursor: pointer;
                   width: 100%;
                   height: 100%;
                   position: absolute;
@@ -699,6 +712,20 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+  &.advanced-settings{
+    .main-modal{
+      aspect-ratio: unset;
+      height: auto;
+    }
+    .grid{
+      .right{
+        .single-input{
+          height: calc(25% - 1rem)!important;
+          height: unset!important;
         }
       }
     }

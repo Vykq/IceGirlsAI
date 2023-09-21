@@ -16,8 +16,8 @@ const upscaleImage = (isPremium, image) => {
                 "codeformer_weight": 0,
                 "upscaling_resize": 3.5,
                 "upscaling_crop": false,
-                "upscaler_1": "4x-UltraSharp",
-                "upscaler_2": "4x-UltraSharp",
+                "upscaler_1": "4xUltrasharp_4xUltrasharpV10",
+                "upscaler_2": "4xUltrasharp_4xUltrasharpV10",
                 "extras_upscaler_2_visibility": 1,
                 "upscale_first": true,
                 "image": image
@@ -46,9 +46,11 @@ const upscaleImage = (isPremium, image) => {
                 return upscaledImage;
             })
             .catch(error => console.error('error', error));
+    } else {
+        const modal = document.querySelector('.premium-modal');
+        modal.classList.add('show');
+        return false;
     }
-    //openPopup();
-    return false;
 
     function dataURItoBlob(dataURI) {
         // Ensure the dataURI starts with a MIME type declaration
@@ -63,6 +65,9 @@ const upscaleImage = (isPremium, image) => {
         }
         return new Blob([ab], { type: mimeString });
     }
+
+
+
 }
 
 export default upscaleImage;

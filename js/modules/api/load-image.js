@@ -28,7 +28,7 @@ const loadImage = (image, isPremium) => {
 
             context.font = '20px Arial';
             context.fillStyle = 'rgba(255, 255, 255, 1)'; // Text color with transparency
-            context.fillText(watermarkText, (canvas.width / 9) * 7, (canvas.height / 16) * 15.25); // Draw text
+            context.fillText(watermarkText, (canvas.width / 9) * 7, (canvas.height / 16) * 15.17); // Draw text
 
             imageElement.src = canvas.toDataURL('image/png'); // Update imageElement with combined content
 

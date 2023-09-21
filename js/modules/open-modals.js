@@ -7,7 +7,8 @@ const openModals = () => {
     const saveNotify = document.querySelector('.saved-notify');
     const promptPreviewEl = document.querySelector('.prompt-preview-area');
     const promptInput = document.querySelector('#positive-prompt');
-    const promptPreview = document.querySelector('#prompt-preview');
+    const promptInput2 = document.querySelector('#positive-prompt-2');
+
 
     const checkpointsInput = document.querySelectorAll('input[name="checkpoint"]');
     const modelTitle = document.querySelector('#current-model');
@@ -35,6 +36,14 @@ const openModals = () => {
         }
     })
 
+    if(document.querySelector('.promptInput2')){
+        promptInput2.addEventListener('input', (e) =>{
+            promptInput.value = promptInput2.value;
+        })
+        promptInput.addEventListener('input', (e) =>{
+            promptInput2.value = promptInput.value;
+        })
+    }
 
     function closeModal() {
         modals.forEach(modal => {
@@ -43,10 +52,12 @@ const openModals = () => {
             if(promptInput) {
                 if (promptInput.value != "") {
                     promptPreviewEl.classList.add('show');
-                    promptPreview.textContent = promptInput.value;
+                    promptInput2.textContent = promptInput.value;
+                    promptInput2.value = promptInput.value;
                 } else {
                     promptPreviewEl.classList.remove('show');
-                    promptPreview.textContent = "";
+                    promptInput2.textContent = "";
+                    promptInput2.value = "";
                 }
             }
 

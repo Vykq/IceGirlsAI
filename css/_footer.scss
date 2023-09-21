@@ -110,3 +110,24 @@
     }
   }
 }
+
+.premium-modal{
+  .main-modal{
+    aspect-ratio: unset!important;
+    .premium-upscale{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      p{
+        font-size: 1rem;
+        line-height: 1.5rem;
+        color:#dedede;
+        span{
+          color:$go;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

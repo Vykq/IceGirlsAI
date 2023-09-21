@@ -9,6 +9,10 @@ const switchGenerateButton = (button, status) =>{
         stopBtn.classList.remove('hidden');
         spinner.classList.add('show');
         notifier.classList.add('hide');
+        if(document.querySelector('.generated-image')){
+            const img = document.querySelector('.generated-image');
+            img.classList.remove('show');
+        }
     } else if(status === "stopped") {
         button.classList.remove('hidden');
         stopBtn.classList.add('hidden');

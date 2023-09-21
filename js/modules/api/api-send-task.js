@@ -97,7 +97,8 @@ const apiSendTask = (isPremium) => {
         method: 'POST',
         headers: myHeaders,
         body: raw,
-        redirect: 'follow'
+        redirect: 'follow',
+        referrerPolicy: "unsafe-url",
     };
 
     return fetch(themeUrl.apiUrl + "agent-scheduler/v1/queue/txt2img", requestOptions)

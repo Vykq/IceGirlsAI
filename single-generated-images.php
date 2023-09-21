@@ -50,7 +50,7 @@ foreach ($loras as $lora){
             </div>
             <div class="button-area">
                 <a class="single-button" href="<?php echo get_the_post_thumbnail_url(); ?>" target="_blank">Full size image</a>
-                <button class="upscale-single-image single-button" data-id="<?php echo get_field('task_id'); ?>">Upscale</button>
+                <button class="upscale-single-image single-button" data-id="<?php echo get_field('task_id'); ?>">Upscale & download</button>
 
                 <?php if(in_array(get_the_id(), favorite_id_array())){ ?>
                     <div class="single-button fv_<?php echo get_the_id(); ?> remove-from-favorites" data-id="<?php echo get_the_id(); ?>" title="Unlike" ><img src="<?php echo get_theme_file_uri() . '/assets/images/liked.svg';?>" > <?php the_field('like_count'); ?></div>

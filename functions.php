@@ -3,10 +3,10 @@ require_once('lib/add_functions.php');
 require_once('lib/stable-diffusion-api.php');
 function webpack_files() {
     wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), time(), true);
-    wp_enqueue_script('gsap', get_theme_file_uri('assets/gsap.min.js'), array(), time(), true);
-    wp_enqueue_script('ScrollTrigger', get_theme_file_uri('assets/ScrollTrigger.min.js'), array(), time(), true);
-    wp_enqueue_script('lenis', get_theme_file_uri('assets/lenis.min.js'), array(), time(), true);
-    wp_enqueue_script('imagesloaded', get_theme_file_uri('assets/imagesloaded.pkgd.min.js'), array(), time(), true);
+    //wp_enqueue_script('gsap', get_theme_file_uri('assets/gsap.min.js'), array(), time(), true);
+    //wp_enqueue_script('ScrollTrigger', get_theme_file_uri('assets/ScrollTrigger.min.js'), array(), time(), true);
+    //wp_enqueue_script('lenis', get_theme_file_uri('assets/lenis.min.js'), array(), time(), true);
+    //wp_enqueue_script('imagesloaded', get_theme_file_uri('assets/imagesloaded.pkgd.min.js'), array(), time(), true);
     wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), time());
     wp_enqueue_script('watermark-js', get_theme_file_uri('js/modules/watermark.min.js'), array(), time(), true);
     wp_localize_script( 'webpack-js', 'themeUrl',

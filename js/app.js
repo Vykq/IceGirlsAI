@@ -11,14 +11,14 @@ import accordion from "./modules/accordions";
 import sendRemovalForm from "./modules/send-form-removal";
 import customSelect from "./modules/custom-select";
 import sendContactForm from "./modules/send-form-contact";
-import HUB from "./hub/main-hub";
+//import HUB from "./hub/main-hub";
 
 window.addEventListener('DOMContentLoaded', () => {
   openModals();
   openModalOnLink();
 
   if(document.querySelector('.hub-area')){
-    HUB();
+    //HUB();
   }
 
   if(!document.querySelector('body').classList.contains('logged-in')){

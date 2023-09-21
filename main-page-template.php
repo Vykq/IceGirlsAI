@@ -104,41 +104,41 @@ $user_info = get_user_meta($user_id);
 
 
     <?php
-    $args = array(
-            'post_type' => 'generated-images',
-            'posts_per_page' => 20,
-            'order' => 'DATE',
-            'orderby' => 'ASC',
-    );
-    $images = new WP_Query($args);
-    if ($images->have_posts()): ?>
-        <div class="hub-area demo-7">
-            <div class="container">
-                <div class="images-grid">
-                    <div class="columns">
-                        <?php
-                        $count = 0; // Initialize a counter
-                        while ($images->have_posts() && $count < 5) : // Limit to 4 columns
-                            $count++;
-                            ?>
-                            <div class="column">
-                                <?php for ($i = 0; $i < 4 && $images->have_posts(); $i++): ?>
-                                    <?php $images->the_post(); ?>
-                                    <figure class="column__item">
-                                        <div class="column__item-imgwrap">
-                                            <a href="<?php the_permalink(); ?>">
-                                            <div class="column__item-img" style="background-image:url(<?php echo get_the_post_thumbnail_url(); ?>)"></div>
-                                            </a>
-                                        </div>
-                                    </figure>
-                                <?php endfor; ?>
-                            </div>
-                        <?php endwhile; ?>
-                    </div>
-            </div>
-            </div>
-        </div>
-    <?php endif; ?>
+//    $args = array(
+//            'post_type' => 'generated-images',
+//            'posts_per_page' => 20,
+//            'order' => 'DATE',
+//            'orderby' => 'ASC',
+//    );
+//    $images = new WP_Query($args);
+//    if ($images->have_posts()): ?>
+<!--        <div class="hub-area demo-7">-->
+<!--            <div class="container">-->
+<!--                <div class="images-grid">-->
+<!--                    <div class="columns">-->
+<!--                        --><?php
+//                        $count = 0; // Initialize a counter
+//                        while ($images->have_posts() && $count < 5) : // Limit to 4 columns
+//                            $count++;
+//                            ?>
+<!--                            <div class="column">-->
+<!--                                --><?php //for ($i = 0; $i < 4 && $images->have_posts(); $i++): ?>
+<!--                                    --><?php //$images->the_post(); ?>
+<!--                                    <figure class="column__item">-->
+<!--                                        <div class="column__item-imgwrap">-->
+<!--                                            <a href="--><?php //the_permalink(); ?><!--">-->
+<!--                                            <div class="column__item-img" style="background-image:url(--><?php //echo get_the_post_thumbnail_url(); ?>/*)"></div>*/
+/*                                            </a>*/
+/*                                        </div>*/
+/*                                    </figure>*/
+/*                                */<?php //endfor; ?>
+<!--                            </div>-->
+<!--                        --><?php //endwhile; ?>
+<!--                    </div>-->
+<!--            </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    --><?php //endif; ?>
 
 
 </div>

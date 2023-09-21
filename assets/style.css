@@ -110,9 +110,18 @@ textarea {
   outline: none;
   border: none;
   border-radius: 0.5rem;
+  transition: 0.2s all ease-in-out;
+}
+.main-button.upscale {
+  width: max-content;
+  margin: 2rem auto 0;
+  display: block;
 }
 .main-button.hidden {
   display: none;
+}
+.main-button:hover {
+  box-shadow: 0px 0px 11px 0px #FFA702;
 }
 
 .secondary-button {
@@ -127,6 +136,26 @@ textarea {
   border: 3px solid #FFA702;
   border-radius: 0.5rem;
   opacity: 0.6;
+  transition: 0.2s all ease-in-out;
+}
+.secondary-button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.secondary-button.clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 1rem;
+  background-color: #1D1D1D;
+  width: max-content;
+  border: 4px solid #FFA702;
+  opacity: 1;
+}
+.secondary-button:hover {
+  box-shadow: 0px 0px 11px 0px #FFA702;
+  opacity: 1;
 }
 
 .main-header {
@@ -652,6 +681,25 @@ textarea {
 }
 .bottom-footer .container .wrapper .copyright p a {
   color: #FFA702;
+}
+
+.premium-modal .main-modal {
+  aspect-ratio: unset !important;
+}
+.premium-modal .main-modal .premium-upscale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.premium-modal .main-modal .premium-upscale p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #dedede;
+}
+.premium-modal .main-modal .premium-upscale p span {
+  color: #FFA702;
+  font-weight: 700;
 }
 
 .spinner {
@@ -1323,25 +1371,36 @@ textarea {
 }
 .creation .container .grid .left form .form-area .prompt-preview-area {
   display: none;
-  border-radius: 0.5rem;
   margin: 2rem 0;
-  border: 1px solid #FFA702;
   position: relative;
-  padding: 1rem 0.5rem;
 }
-.creation .container .grid .left form .form-area .prompt-preview-area .title {
+.creation .container .grid .left form .form-area .prompt-preview-area .whole-input {
+  position: relative;
+}
+.creation .container .grid .left form .form-area .prompt-preview-area .whole-input label {
   color: #FFA702;
+  background-color: #1D1D1D;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 2px;
   position: absolute;
   top: 0;
+  transform: translateY(-50%);
   left: 1rem;
-  transform: translate(0, -50%);
-  background-color: #1D1D1D;
-  padding: 3px 6px;
+  transition: 0.1s all ease-in-out;
 }
-.creation .container .grid .left form .form-area .prompt-preview-area #prompt-preview {
-  color: #dedede;
-  font-size: 0.8rem;
-  line-height: 1.1rem;
+.creation .container .grid .left form .form-area .prompt-preview-area .whole-input textarea {
+  border: 1px solid #FFA702;
+  background-color: #1D1D1D;
+  border-radius: 0.5rem;
+  width: 100%;
+  min-width: 100%;
+  height: 6rem;
+  min-height: 6rem;
+  max-height: 6rem;
+  color: #FFF;
+  padding: 1rem;
+  resize: none;
 }
 .creation .container .grid .left form .form-area .prompt-preview-area.show {
   display: block;
@@ -1541,15 +1600,9 @@ textarea {
   position: relative;
   border-radius: 0.5rem;
   border: 3px solid #FFA702;
-  height: 80%;
+  height: 75vh;
   aspect-ratio: 9/16;
   margin: 0 auto;
-}
-@media (max-width: 1100px) {
-  .creation .container .grid .right .col-wrapper {
-    width: 100%;
-    height: unset;
-  }
 }
 .creation .container .grid .right .col-wrapper .image {
   position: absolute;
@@ -1585,6 +1638,7 @@ textarea {
 }
 .creation .container .grid .right .col-wrapper .notifier p {
   color: #dedede;
+  font-size: 0.8rem;
 }
 .creation .container .grid .right .col-wrapper .premium-info {
   width: 75%;
@@ -1689,6 +1743,7 @@ textarea {
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .actions .single-action {
   aspect-ratio: 1/1;
   width: 100%;
+  cursor: pointer;
 }
 @media (max-width: 600px) {
   .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .actions .single-action {
@@ -1726,6 +1781,7 @@ textarea {
   z-index: 3;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input input, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input input, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input input, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input input, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input input, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input input, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input input, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input input {
+  cursor: pointer;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -1996,6 +2052,14 @@ textarea {
   top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.backdrop.advanced-settings .main-modal {
+  aspect-ratio: unset;
+  height: auto;
+}
+.backdrop.advanced-settings .grid .right .single-input {
+  height: calc(25% - 1rem) !important;
+  height: unset !important;
 }
 
 .saved-notify {

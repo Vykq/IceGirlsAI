@@ -10,10 +10,12 @@ const upscaleSingleImage = () => {
         e.preventDefault();
         if(document.querySelector('body').classList.contains('premium')){
             premiumBody = true;
+            button.textContent = "Upscaling...";
         } else {
             premiumBody = false;
         }
-        button.textContent = "Upscaling...";
+
+
         const image = await getImage(button.dataset.id);
         if(image.image){
             const upscaledImage = await upscaleImage(premiumBody, image.image)

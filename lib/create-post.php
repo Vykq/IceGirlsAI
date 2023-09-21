@@ -14,12 +14,12 @@ function create_generated_post() {
             if ($_POST['image'] && $_POST['infoText']) {
                 $imageData = $_POST['image'];
                 $infoText = $_POST['infoText'];
-
+                $current_user = wp_get_current_user();
                 $post_id = wp_insert_post(array(
                     'post_title' => 'Generated Image Post',
                     'post_type' => 'generated-images',
                     'post_status' => 'publish',
-                    'post_author' => $current_user->ID
+                    'post_author' => $current_user
                 ));
 
                 if ($post_id) {
@@ -85,6 +85,6 @@ function create_generated_post() {
         $response['error'] = 'Error';
     }
     $response['status'] = 'yey';
-    wp_send_json($info);
+    wp_send_json($response);
     die();
 }

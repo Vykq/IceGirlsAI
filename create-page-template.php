@@ -33,7 +33,7 @@ get_header();
                 </div>
             </div>
             <div class="button-area">
-                <button class="upscale main-button hidden">Upscale it!</button>
+                <button class="upscale main-button hidden">Upscale & download!</button>
             </div>
         </div>
     </div>

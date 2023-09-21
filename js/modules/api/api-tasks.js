@@ -126,7 +126,9 @@ const apiTasks = () => {
             document.querySelector('.upscale').classList.remove('hidden');
             document.querySelector('.upscale').addEventListener('click', async (e1) => {
                 e1.preventDefault();
-                switchGenerateButton(e1.target, 'upscale');
+                if(userStatus){
+                    switchGenerateButton(e1.target, 'upscale');
+                }
                 const upscaledImage = await upscaleImage(userStatus, imgdata.image);
 
                 if(upscaledImage){

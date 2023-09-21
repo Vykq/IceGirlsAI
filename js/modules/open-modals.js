@@ -5,8 +5,6 @@ const openModals = () => {
     const closeBtns = document.querySelectorAll('.close-modal');
     const html = document.querySelector('html');
     const saveNotify = document.querySelector('.saved-notify');
-    const promptPreviewEl = document.querySelector('.prompt-preview-area');
-    const promptInput = document.querySelector('#positive-prompt');
     const promptInput2 = document.querySelector('#positive-prompt-2');
 
 
@@ -36,30 +34,10 @@ const openModals = () => {
         }
     })
 
-    if(document.querySelector('.promptInput2')){
-        promptInput2.addEventListener('input', (e) =>{
-            promptInput.value = promptInput2.value;
-        })
-        promptInput.addEventListener('input', (e) =>{
-            promptInput2.value = promptInput.value;
-        })
-    }
-
     function closeModal() {
         modals.forEach(modal => {
             modal.classList.remove('show');
             html.classList.remove('modal-is-open');
-            if(promptInput) {
-                if (promptInput.value != "") {
-                    promptPreviewEl.classList.add('show');
-                    promptInput2.textContent = promptInput.value;
-                    promptInput2.value = promptInput.value;
-                } else {
-                    promptPreviewEl.classList.remove('show');
-                    promptInput2.textContent = "";
-                    promptInput2.value = "";
-                }
-            }
 
             setTimeout(function() {
                 saveNotify.classList.remove('show');

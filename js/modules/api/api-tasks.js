@@ -71,6 +71,7 @@ const apiTasks = () => {
                         setPercent('66');
                         apiGetQueueInfo = await apiGetQueue();
                         const currentPos = await getPosition(taskID);
+                        let status = await showQueueInfo(taskID);
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                         //console.log(totalPendingTasksObj)
                         const totalPendingTasksCount = totalPendingTasksObj.length;
@@ -87,11 +88,12 @@ const apiTasks = () => {
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                         const totalPendingTasksCount = totalPendingTasksObj.length;
                         updateQueueInfo(currentPos.pos, totalPendingTasksCount, '');
+                        currentTaskID = apiGetQueueInfo.currentTaskId;
                         await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                     }
                     let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
                     while (status !== "done") {
-                        setPercent('66');
+                        setPercent('68');
                         apiGetQueueInfo = await apiGetQueue();
                         const currentPos = await getPosition(taskID);
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;

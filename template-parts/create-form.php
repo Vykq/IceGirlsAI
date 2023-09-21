@@ -50,12 +50,30 @@ if(in_array( 'premium', (array) $user->roles)){
             </div>
         </div>
 
-        <div class="prompt-preview-area">
+
+
+        <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
+        <div class="main-prompt prompt-preview-area show">
                     <div class="whole-input">
                         <textarea name="prompt" id="positive-prompt-2" placeholder="Enter Your prompt"></textarea>
                         <label for="positive-prompt">Prompt</label>
                     </div>
         </div>
+        <?php } else { ?>
+            <div class="single-input positive-prompt">
+                <div class="whole-input single-input premium prompt">
+                    <a href="/premium">
+                        <div class="input-wrapper premium">
+                            <textarea name="get-premium-prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>
+                            <label for="positive-prompt">Prompt</label>
+                        </div>
+                        <div class="premium-area">
+                            <p class="offer">To use this option you need <span>Premium</span></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        <?php } ?>
 
         <?php if($tabs) : ?>
             <div class="form-inputs">
@@ -326,20 +344,24 @@ $actions = new WP_Query($args2);
                 <div class="content">
                         <div class="grid">
                             <div class="left">
-                                <div class="single-input positive-prompt">
+                                <div class="single-input details-slider">
                                     <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
-                                        <div class="prompt">
-                                            <div class="whole-input">
-                                                <textarea name="prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>
-                                                <label for="positive-prompt">Prompt</label>
+                                        <div class="whole-input">
+                                            <div class="input-wrapper">
+                                                <label class="step-title">Add details</label>
+                                                <input name="details" type="range" min="0" max="1" step="0.1" value="0.5">
+                                                <span id="details-value">0.5</span>
                                             </div>
+
                                         </div>
                                     <?php } else {?>
-                                        <div class="whole-input single-input premium prompt">
+
+                                        <div class="whole-input single-input premium">
                                             <a href="/premium">
-                                                <div class="input-wrapper premium">
-                                                    <textarea name="get-premium-prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>
-                                                    <label for="positive-prompt">Prompt</label>
+                                                <div class="input-wrapper">
+                                                    <label class="step-title">Add details</label>
+                                                    <input type="range" min="0" max="1" step="0.1" value="0.5">
+                                                    <span id="details-value">0.5</span>
                                                 </div>
                                                 <div class="premium-area">
                                                     <p class="offer">To use this option you need <span>Premium</span></p>
@@ -348,34 +370,31 @@ $actions = new WP_Query($args2);
                                         </div>
                                     <?php } ?>
                                 </div>
+<!--                                <div class="single-input positive-prompt">-->
+<!--                                    --><?php //if ( in_array( 'premium', (array) $user->roles ) ) { ?>
+<!--                                        <div class="prompt">-->
+<!--                                            <div class="whole-input">-->
+<!--                                                <textarea name="prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>-->
+<!--                                                <label for="positive-prompt">Prompt</label>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    --><?php //} else {?>
+<!--                                        <div class="whole-input single-input premium prompt">-->
+<!--                                            <a href="/premium">-->
+<!--                                                <div class="input-wrapper premium">-->
+<!--                                                    <textarea name="get-premium-prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>-->
+<!--                                                    <label for="positive-prompt">Prompt</label>-->
+<!--                                                </div>-->
+<!--                                                <div class="premium-area">-->
+<!--                                                    <p class="offer">To use this option you need <span>Premium</span></p>-->
+<!--                                                </div>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    --><?php //} ?>
+<!--                                </div>-->
                             </div>
                             <div class="right">
-                                <div class="single-input details-slider">
-                                    <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
-                                                <div class="whole-input">
-                                                    <div class="input-wrapper">
-                                                        <label class="step-title">Add details</label>
-                                                        <input name="details" type="range" min="0" max="1" step="0.1" value="0.5">
-                                                        <span id="details-value">0.5</span>
-                                                    </div>
 
-                                                </div>
-                                    <?php } else {?>
-
-                                    <div class="whole-input single-input premium">
-                                        <a href="/premium">
-                                            <div class="input-wrapper">
-                                                <label class="step-title">Add details</label>
-                                                <input type="range" min="0" max="1" step="0.1" value="0.5">
-                                                <span id="details-value">0.5</span>
-                                            </div>
-                                            <div class="premium-area">
-                                                <p class="offer">To use this option you need <span>Premium</span></p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <?php } ?>
-                                </div>
 
                                 <div class="single-input quality-slider">
                                     <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>

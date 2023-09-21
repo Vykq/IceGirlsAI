@@ -123,6 +123,13 @@ textarea {
 .main-button:hover {
   box-shadow: 0px 0px 11px 0px #FFA702;
 }
+.main-button:disabled {
+  opacity: 0.5;
+}
+.main-button:disabled:hover {
+  opacity: 0.25;
+  box-shadow: none;
+}
 
 .secondary-button {
   width: 100%;
@@ -1369,6 +1376,71 @@ textarea {
 .creation .container .grid .left form .form-area .top .hidden {
   display: none;
 }
+.creation .container .grid .left form .form-area .single-input {
+  height: 50%;
+}
+.creation .container .grid .left form .form-area .single-input div {
+  height: 100%;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input {
+  position: relative;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input label {
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  transform: translate(0, -50%);
+  padding: 2px 6px;
+  background-color: #1D1D1D;
+  color: #FFA702;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background-color: #1D1D1D;
+  color: #dedede;
+  border-radius: 0.25rem;
+  border: 1px solid #FFA702;
+  padding: 1rem;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input.premium {
+  margin: 1.5rem 0;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input.premium a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input.premium label {
+  z-index: 3;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input.premium .premium-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  backdrop-filter: blur(2px);
+  background-color: rgba(29, 29, 29, 0.85);
+  transform: translate(-50%, -50%);
+}
+.creation .container .grid .left form .form-area .single-input .whole-input.premium .premium-area p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #dedede;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.creation .container .grid .left form .form-area .single-input .whole-input.premium .premium-area p span {
+  color: #FFA702;
+  font-weight: 700;
+}
 .creation .container .grid .left form .form-area .prompt-preview-area {
   display: none;
   margin: 2rem 0;
@@ -1485,7 +1557,7 @@ textarea {
 .creation .container .grid .left form .form-area .form-inputs .tabs .tabs-container .single-tab-container .single-question .radio-buttons-area, .creation .container .grid .left form .form-area .form-inputs .tabs .tabs-container .single-tab-container .single-question .checkbox-buttons-area {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.5rem;
   padding: 1rem;
 }
 .creation .container .grid .left form .form-area .form-inputs .tabs .tabs-container .single-tab-container .single-question .radio-buttons-area .single-radio-button, .creation .container .grid .left form .form-area .form-inputs .tabs .tabs-container .single-tab-container .single-question .radio-buttons-area .single-checkbox-button, .creation .container .grid .left form .form-area .form-inputs .tabs .tabs-container .single-tab-container .single-question .checkbox-buttons-area .single-radio-button, .creation .container .grid .left form .form-area .form-inputs .tabs .tabs-container .single-tab-container .single-question .checkbox-buttons-area .single-checkbox-button {
@@ -1644,6 +1716,12 @@ textarea {
   width: 75%;
   text-align: center;
   margin: 0 auto;
+}
+.creation .container .grid .right .col-wrapper #steps-all.hide {
+  display: none;
+}
+.creation .container .grid .right .col-wrapper #premium-queue.hide {
+  display: none;
 }
 
 .backdrop {
@@ -1872,68 +1950,6 @@ textarea {
 .backdrop .main-modal .modal-wrapper .content .grid .left {
   height: 100%;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input {
-  height: 50%;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input div {
-  height: 100%;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input .whole-input {
-  position: relative;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input .whole-input label {
-  position: absolute;
-  top: 0;
-  left: 1rem;
-  transform: translate(0, -50%);
-  padding: 2px 6px;
-  background-color: #1D1D1D;
-  color: #FFA702;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input .whole-input textarea {
-  width: 100%;
-  height: 100%;
-  resize: none;
-  background-color: #1D1D1D;
-  color: #dedede;
-  border-radius: 0.25rem;
-  border: 1px solid #FFA702;
-  padding: 1rem;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input.premium a {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input.premium label {
-  z-index: 3;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input.premium .premium-area {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  backdrop-filter: blur(2px);
-  background-color: rgba(29, 29, 29, 0.85);
-  transform: translate(-50%, -50%);
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input.premium .premium-area p {
-  font-size: 1rem;
-  line-height: 1.5rem;
-  color: #dedede;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-.backdrop .main-modal .modal-wrapper .content .grid .left .single-input.premium .premium-area p span {
-  color: #FFA702;
-  font-weight: 700;
-}
 .backdrop .main-modal .modal-wrapper .content .grid .right {
   height: 100%;
   display: flex;
@@ -1946,15 +1962,15 @@ textarea {
     height: 0;
   }
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input {
   height: 50%;
 }
 @media (max-width: 800px) {
-  .backdrop .main-modal .modal-wrapper .content .grid .right .single-input {
+  .backdrop .main-modal .modal-wrapper .content .grid .single-input {
     height: fit-content;
   }
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input {
   position: relative;
   border: 1px solid #FFA702;
   padding: 2rem 1rem;
@@ -1962,15 +1978,15 @@ textarea {
   height: 100%;
   display: block;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input.premium label {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input.premium label {
   z-index: 3;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input.premium a {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input.premium a {
   display: block;
   width: 100%;
   height: 100%;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input.premium .premium-area {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input.premium .premium-area {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1984,7 +2000,7 @@ textarea {
   background-color: rgba(29, 29, 29, 0.85);
   transform: translate(-50%, -50%);
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .step-title {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .step-title {
   position: absolute;
   top: 0;
   left: 1rem;
@@ -1993,10 +2009,10 @@ textarea {
   background-color: #1D1D1D;
   color: #FFA702;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .premium-area {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .premium-area {
   display: flex;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .premium-area p {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .premium-area p {
   font-size: 1rem;
   line-height: 1.5rem;
   color: #dedede;
@@ -2004,11 +2020,11 @@ textarea {
   align-items: center;
   flex-direction: column;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .premium-area p span {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .premium-area p span {
   color: #FFA702;
   font-weight: 700;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .input-wrapper .step-title {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .input-wrapper .step-title {
   position: absolute;
   top: 0;
   left: 1rem;
@@ -2017,7 +2033,7 @@ textarea {
   background-color: #1D1D1D;
   color: #FFA702;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .input-wrapper input[type=range] {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .input-wrapper input[type=range] {
   position: absolute;
   top: 40%;
   left: 50%;
@@ -2029,7 +2045,7 @@ textarea {
   height: 0.5rem;
   background-color: #FFA702;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .input-wrapper input[type=range]::-webkit-slider-thumb {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .input-wrapper input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 1rem;
@@ -2039,11 +2055,11 @@ textarea {
   border-radius: 100%;
   cursor: pointer;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .input-wrapper input[type=range]::-moz-range-thumb {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .input-wrapper input[type=range]::-moz-range-thumb {
   cursor: pointer;
   background-color: red;
 }
-.backdrop .main-modal .modal-wrapper .content .grid .right .single-input .whole-input .input-wrapper span {
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input .input-wrapper span {
   color: #dedede;
   font-size: 1rem;
   line-height: 1rem;
@@ -2057,7 +2073,7 @@ textarea {
   aspect-ratio: unset;
   height: auto;
 }
-.backdrop.advanced-settings .grid .right .single-input {
+.backdrop.advanced-settings .grid .right .single-input, .backdrop.advanced-settings .grid .left .single-input {
   height: calc(25% - 1rem) !important;
   height: unset !important;
 }

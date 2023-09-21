@@ -9,6 +9,8 @@ const switchGenerateButton = (button, status) =>{
         stopBtn.classList.remove('hidden');
         spinner.classList.add('show');
         notifier.classList.add('hide');
+        percents.classList.remove('hide');
+        queue.classList.remove('hide');
         if(document.querySelector('.generated-image')){
             const img = document.querySelector('.generated-image');
             img.classList.remove('show');
@@ -27,14 +29,14 @@ const switchGenerateButton = (button, status) =>{
         button.textContent = "Upscaling, please wait...";
         spinner.classList.add('show');
         notifier.classList.add('hide');
-        percents.remove();
-        queue.remove();
+        percents.classList.add('hide');
+        queue.classList.add('hide');
     } else if (status === "end-upscale") {
         button.textContent = "Upscaled";
         spinner.classList.remove('show');
         notifier.classList.add('hide');
-        percents.remove();
-        queue.remove();
+        percents.classList.add('hide');
+        queue.classList.add('hide');
         button.disabled = true;
     }
 

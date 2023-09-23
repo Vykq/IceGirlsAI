@@ -19,14 +19,13 @@ function create_generated_post() {
                     'post_title' => 'Generated Image Post',
                     'post_type' => 'generated-images',
                     'post_status' => 'publish',
-                    'post_author' => $current_user
+                    'post_author' => $current_user->ID
                 ));
 
                 if ($post_id) {
                     $pattern = '/(.+?)\s*<lora:/';
                     preg_match($pattern, $infoText, $matches);
                     $prompt = trim($matches[1]);
-
                     // Step 2: Extract loras
                     $loras = array();
                     $pattern = '/<lora:(\w+):([^>]+)>/';
@@ -34,7 +33,6 @@ function create_generated_post() {
                     foreach ($matches as $match) {
                         $loras[$match[1]] = $match[2];
                     }
-                    print_r($loras);
                     // Step 3: Extract info
                     $pattern = '/<lora:.*?<\/lora>/';
                     $infoText = preg_replace($pattern, '', $infoText);

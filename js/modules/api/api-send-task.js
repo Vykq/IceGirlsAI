@@ -35,7 +35,7 @@ const apiSendTask = (isPremium) => {
         midPrompt = promptInput.value;
         stepSlider = stepInputElement.value;
     }else {
-        stepSlider = 15;
+        stepSlider = 20;
         details = 0;
     }
 
@@ -65,13 +65,18 @@ const apiSendTask = (isPremium) => {
     if(isAtLeastOneChecked) {
         //jeigu yra pazymeje nors 1
         const selectedValuesString = selectedValues.join(', ');
-        finalPrompt = `${selectedValuesString} ${midPrompt}`;
+        finalPrompt = midPrompt + ", " + selectedValuesString;
     } else {
         const inputCount = allRadiosAndCheckboxes.length;
         const filteredInputs = Array.from(allRadiosAndCheckboxes).filter(input => input.name !== 'get-premium');
         const randomValues = getRandomValues(Array.from(filteredInputs), 5);
-        const randomValuesString = randomValues.map(input => input.value).join(', ');
-        finalPrompt = randomValuesString;
+        let randomValuesString = randomValues.map(input => input.value).join(", ");
+        if(isPremium){
+            finalPrompt = midPrompt + ", " +randomValuesString;
+        } else{
+            finalPrompt = randomValuesString;
+        }
+
     }
 
     finalPrompt = addActionsToPrompt(finalPrompt, action);
@@ -120,7 +125,7 @@ const apiSendTask = (isPremium) => {
     //ADD action LORA to prompt;
     function addActionsToPrompt(prompt, action){
         let finalPrompt;
-        finalPrompt = action.triggerWord + prompt + action.loraInput + "<lora:more_details:" + details + ">";
+        finalPrompt = action.triggerWord + ", " + prompt + action.loraInput + "<lora:more_details:" + details + ">";
         return finalPrompt
     }
 

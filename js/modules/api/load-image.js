@@ -9,6 +9,7 @@ const loadImage = (image, isPremium) => {
         imageElement.classList.add('show');
         generateButton.disabled = false;
         loader.classList.remove('show');
+        return image;
     } else {
 
         //watermark
@@ -38,7 +39,9 @@ const loadImage = (image, isPremium) => {
         };
 
         tempImage.src = image; // Set the source of the temporary image to the original image base64
+        return image;
     }
+
 };
 
 export default loadImage;

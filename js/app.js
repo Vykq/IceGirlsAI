@@ -11,15 +11,11 @@ import accordion from "./modules/accordions";
 import sendRemovalForm from "./modules/send-form-removal";
 import customSelect from "./modules/custom-select";
 import sendContactForm from "./modules/send-form-contact";
-//import HUB from "./hub/main-hub";
+import hubPage from "./modules/hub-page";
 
 window.addEventListener('DOMContentLoaded', () => {
   openModals();
   openModalOnLink();
-
-  if(document.querySelector('.hub-area')){
-    //HUB();
-  }
 
   if(!document.querySelector('body').classList.contains('logged-in')){
     switchLoginRegister();
@@ -29,6 +25,10 @@ window.addEventListener('DOMContentLoaded', () => {
     apiTasks();
     showTabs();
     updateRangeValue();
+  }
+
+  if(document.querySelector('.hub-page-template')){
+    hubPage();
   }
 
   if(document.querySelector('form.content-removal')){

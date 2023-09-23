@@ -13,7 +13,17 @@ $args = array(
 
 );
 
-$images = new WP_Query($args); ?>
+$images = new WP_Query($args);
+
+$user = wp_get_current_user();
+$isPremiumClass = "";
+if ( in_array( 'premium', (array) $user->roles ) ) {
+    $isPremiumClass = "no-watermark-image";
+} else {
+    $isPremiumClass = "watermarked-image";
+}
+
+?>
 
 <div class="hub-page-template">
     <div class="container">
@@ -24,7 +34,7 @@ $images = new WP_Query($args); ?>
                         <a href="<?php echo get_permalink(); ?>">
                             <div class="single-wrapper">
                                 <div class="post-image">
-                                    <?php the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy' )); ?>
+                                    <?php the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass )); ?>
                                 </div>
                                 <div class="hover-area">
                                     <div class="hover-con">

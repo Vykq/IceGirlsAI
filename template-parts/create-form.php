@@ -95,6 +95,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                                              <?php if($question['question_type'] == 'radio'){ ?>
                                                               <div class="single-question">
                                                                 <p class="question-title"><?php echo $question['question_title']; ?></p>
+                                                                  <span class="clear-question <?php echo createSlug($question['question_title']); ?>" data-clear="<?php echo createSlug($question['question_title']); ?>">Clear</span>
                                                                     <div class="radio-buttons-area">
                                                                         <?php foreach ($question['answers'] as $answer) : ?>
                                                                             <div class="single-radio-button">
@@ -107,6 +108,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                                          <?php    } else { ?>
                                                             <div class="single-question">
                                                                 <p class="question-title"><?php echo $question['question_title']; ?></p>
+                                                                <span class="clear-question <?php echo createSlug($question['question_title']); ?>" data-clear="<?php echo createSlug($question['question_title']); ?>">Clear</span>
                                                                 <div class="checkbox-buttons-area">
                                                                      <?php foreach ($question['answers'] as $answer) : ?>
                                                                          <div class="single-checkbox-button">
@@ -160,6 +162,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                 <?php if($question['question_type'] == 'radio'){ ?>
                                 <div class="single-question">
                                     <p class="question-title"><?php echo $question['question_title']; ?></p>
+                                    <span class="clear-question <?php echo createSlug($question['question_title']); ?>" data-clear="<?php echo createSlug($question['question_title']); ?>">Clear</span>
                                     <div class="radio-buttons-area">
                                     <?php foreach ($question['answers'] as $answer) : ?>
                                         <div class="single-radio-button">
@@ -172,6 +175,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                 <?php    } else { ?>
                                 <div class="single-question">
                                     <p class="question-title"><?php echo $question['question_title']; ?></p>
+                                    <span class="clear-question <?php echo createSlug($question['question_title']); ?>" data-clear="<?php echo createSlug($question['question_title']); ?>">Clear</span>
                                     <div class="checkbox-buttons-area">
                                     <?php foreach ($question['answers'] as $answer) : ?>
                                         <div class="single-checkbox-button">

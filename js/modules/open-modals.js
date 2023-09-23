@@ -63,8 +63,15 @@ const openModals = () => {
             modelTitle.textContent = input.nextElementSibling.textContent;
             saveNotify.classList.add('show');
             openBtns.forEach(btn => {
-                if(btn.dataset.id === openedModalClass){
-                    btn.textContent = 'Model: ' + input.nextElementSibling.textContent;
+                if (btn.dataset.id === openedModalClass) {
+                    const modalText = 'Model: ' + input.nextElementSibling.textContent;
+
+                    if (modalText.length <= 26) {
+                        btn.textContent = modalText;
+                    } else {
+                        // If the text exceeds 26 characters, truncate it and add "..."
+                        btn.textContent = modalText.substring(0, 23) + '...';
+                    }
                 }
             })
             closeModal();
@@ -76,8 +83,15 @@ const openModals = () => {
             actionTitle.textContent = input.nextElementSibling.textContent;
             saveNotify.classList.add('show');
             openBtns.forEach(btn => {
-                if(btn.dataset.id === openedModalClass){
-                    btn.textContent = 'Action: ' + input.nextElementSibling.textContent;
+                if (btn.dataset.id === openedModalClass) {
+                    const modalText = 'Action: ' + input.nextElementSibling.textContent;
+
+                    if (modalText.length <= 26) {
+                        btn.textContent = modalText;
+                    } else {
+                        // If the text exceeds 26 characters, truncate it and add "..."
+                        btn.textContent = modalText.substring(0, 23) + '...';
+                    }
                 }
             })
             closeModal();

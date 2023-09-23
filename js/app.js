@@ -11,7 +11,7 @@ import accordion from "./modules/accordions";
 import sendRemovalForm from "./modules/send-form-removal";
 import customSelect from "./modules/custom-select";
 import sendContactForm from "./modules/send-form-contact";
-import hubPage from "./modules/hub-page";
+//import hubPage from "./modules/hub-page";
 
 window.addEventListener('DOMContentLoaded', () => {
   openModals();
@@ -28,7 +28,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   if(document.querySelector('.hub-page-template')){
-    hubPage();
+    //hubPage();
   }
 
   if(document.querySelector('form.content-removal')){

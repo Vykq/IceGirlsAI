@@ -29,6 +29,15 @@ if(!is_user_logged_in()){ ?>
     );
 
     $images = new WP_Query($args);
+    $user = wp_get_current_user();
+    $isPremiumClass = "";
+    if ( in_array( 'premium', (array) $user->roles ) ) {
+        $isPremiumClass = "no-watermark-image";
+    } else {
+        $isPremiumClass = "watermarked-image";
+    }
+
+
     ?>
 
     <div class="account-page-template">
@@ -68,11 +77,13 @@ if(!is_user_logged_in()){ ?>
                                         <?php $images->the_post(); ?>
                                     <div class="single-image">
                                         <a href="<?php echo get_permalink(); ?>">
-                                            <div class="single-wrapper">
                                                 <div class="post-image">
-                                                    <?php echo get_the_post_thumbnail(); ?>
+                                                    <?php if ( in_array( 'premium', (array) $user->roles ) ) {
+                                                        the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass ));
+                                                    } else { ?>
+                                                        <img class="lazy watermarked-image" loading="lazy" src="<?php echo get_field('watermarked_image', get_the_id()); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    <?php }?>
                                                 </div>
-                                            </div>
                                         </a>
 
                                     </div>

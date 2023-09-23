@@ -25,7 +25,13 @@ foreach ($loras as $lora){
     }
 }
 
-
+$user = wp_get_current_user();
+$isPremiumClass = "";
+if ( in_array( 'premium', (array) $user->roles ) ) {
+    $isPremiumClass = "no-watermark-image";
+} else {
+    $isPremiumClass = "watermarked-image";
+}
 
 ?>
 <div class="single-generated-image-page">
@@ -67,7 +73,11 @@ foreach ($loras as $lora){
         <div class="right">
             <div class="image-area">
                 <div class="image">
-                    <?php echo get_the_post_thumbnail( $post_id, 'full' );   ?>
+                    <?php if ( in_array( 'premium', (array) $user->roles ) ) {
+                        the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass ));
+                    } else { ?>
+                        <img class="lazy watermarked-image" loading="lazy" src="<?php echo get_field('watermarked_image', get_the_id()); ?>" alt="<?php echo get_the_title(); ?>">
+                    <?php }?>
                 </div>
             </div>
         </div>

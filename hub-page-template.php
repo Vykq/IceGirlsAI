@@ -34,8 +34,12 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
                         <a href="<?php echo get_permalink(); ?>">
                             <div class="single-wrapper">
                                 <div class="post-image">
-                                    <?php the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass )); ?>
-                                </div>
+                                    <?php if ( in_array( 'premium', (array) $user->roles ) ) {
+                                         the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass ));
+                                    } else { ?>
+                                        <img class="lazy watermarked-image" loading="lazy" src="<?php echo get_field('watermarked_image', get_the_id()); ?>" alt="<?php echo get_the_title(); ?>">
+                                    <?php }?>
+                                    </div>
                                 <div class="hover-area">
                                     <div class="hover-con">
                                         <div class="wrapper">

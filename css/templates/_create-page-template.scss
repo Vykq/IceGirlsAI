@@ -207,6 +207,19 @@
                         transform:translate(0, -50%);
                         z-index: 3;
                       }
+                      .clear-question{
+                        background-color: #2a2a2a;
+                        color:$go;
+                        font-size: 0.8rem;
+                        line-height: 1rem;
+                        position: absolute;
+                        padding:2px 10px;
+                        bottom:0;
+                        right:1rem;
+                        transform:translate(0, 50%);
+                        z-index: 3;
+                        cursor: pointer;
+                      }
                       .radio-buttons-area, .checkbox-buttons-area{
                         display: flex;
                         flex-wrap: wrap;

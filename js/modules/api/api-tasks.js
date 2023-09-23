@@ -122,7 +122,7 @@ const apiTasks = () => {
         if(imgdata.image){
             switchGenerateButton(e.target, 'end');
             const isImageLoaded = loadImage(imgdata.image, userStatus);
-            createPost(isImageLoaded, imgdata.infotext, taskID);
+            createPost(imgdata.image, imgdata.infotext, taskID);
             setPercent('100');
             //Reveal upscale btn and check if user is a premium, if no popup show
             document.querySelector('.upscale').classList.remove('hidden');

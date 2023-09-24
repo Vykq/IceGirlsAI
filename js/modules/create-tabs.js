@@ -57,6 +57,10 @@ const showTabs = () => {
     tabButtons[0].classList.add('active');
     tabContainers[0].classList.remove('hidden');
 
+
+
+
+
 }
 
 export default showTabs;

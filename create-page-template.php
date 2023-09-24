@@ -34,6 +34,7 @@ get_header();
             </div>
             <div class="button-area">
                 <button class="upscale main-button hidden">Upscale & download!</button>
+                <p class="hidden text upscale-text">Enhance image's quaity to 4k</p>
             </div>
         </div>
     </div>

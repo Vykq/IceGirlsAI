@@ -6,7 +6,7 @@ const openModals = () => {
     const html = document.querySelector('html');
     const saveNotify = document.querySelector('.saved-notify');
     const promptInput2 = document.querySelector('#positive-prompt-2');
-
+    const mobileMenu = document.querySelector('.mobile-menu');
 
     const checkpointsInput = document.querySelectorAll('input[name="checkpoint"]');
     const modelTitle = document.querySelector('#current-model');
@@ -18,6 +18,7 @@ const openModals = () => {
     openBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
+            mobileMenu.classList.remove('show');
             openedModalClass = btn.dataset.id;
             modals.forEach(modal => {
                 if(modal.classList.contains(btn.dataset.id)){

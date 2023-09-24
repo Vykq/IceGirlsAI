@@ -289,13 +289,25 @@ textarea {
   transform: translate(0%, -100%);
 }
 
+.ptrn-button img {
+  width: 100% !important;
+  height: fit-content !important;
+  max-width: 75%;
+}
+
+.login-modal {
+  z-index: 999 !important;
+  display: flex;
+}
 .login-modal .main-modal {
   width: 40% !important;
   aspect-ratio: unset !important;
   height: 90vh;
 }
-.login-modal .content {
-  display: flex;
+@media (max-width: 800px) {
+  .login-modal .main-modal {
+    width: 80% !important;
+  }
 }
 .login-modal .content .wrapper {
   display: grid;
@@ -989,8 +1001,17 @@ textarea {
   border-radius: 3px;
 }
 
+.homepage-hero {
+  height: 88vh;
+}
+@media (max-width: 800px) {
+  .homepage-hero {
+    height: 75vh;
+  }
+}
 .homepage-hero .hero-wrapper {
   position: relative;
+  height: 100%;
 }
 .homepage-hero .hero-wrapper .image {
   width: 100%;
@@ -1366,6 +1387,8 @@ textarea {
 @media (max-width: 800px) {
   .creation .container .grid .left {
     order: 2;
+    width: 100%;
+    overflow: scroll;
   }
 }
 .creation .container .grid .left form .form-area .top {
@@ -1482,8 +1505,8 @@ textarea {
 }
 .creation .container .grid .left form .form-area .form-inputs .tabs .tab-header {
   display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
+  overflow: auto;
 }
 .creation .container .grid .left form .form-area .form-inputs .tabs .tab-header .single-tab-btn button {
   font-weight: 500;
@@ -1675,8 +1698,7 @@ textarea {
 @media (max-width: 800px) {
   .creation .container .grid .right {
     order: 1;
-    aspect-ratio: 9/16;
-    width: 50%;
+    width: 100%;
     margin: 0 auto;
   }
 }
@@ -1688,6 +1710,19 @@ textarea {
   height: 75vh;
   aspect-ratio: 9/16;
   margin: 0 auto;
+}
+@media (max-width: 800px) {
+  .creation .container .grid .right .col-wrapper {
+    height: unset;
+    width: 80%;
+  }
+}
+.creation .container .grid .right .col-wrapper.square {
+  aspect-ratio: 1/1;
+}
+.creation .container .grid .right .col-wrapper.horizontal {
+  aspect-ratio: 16/9;
+  height: 46vh;
 }
 .creation .container .grid .right .col-wrapper .image {
   position: absolute;
@@ -1734,6 +1769,15 @@ textarea {
   display: none;
 }
 .creation .container .grid .right .col-wrapper #premium-queue.hide {
+  display: none;
+}
+.creation .container .grid .right .upscale-text {
+  color: #dedede;
+  font-size: 0.8rem;
+  line-height: 1.25rem;
+  text-align: center;
+}
+.creation .container .grid .right .upscale-text.hidden {
   display: none;
 }
 
@@ -1843,7 +1887,7 @@ textarea {
 }
 @media (max-width: 350px) {
   .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .actions .single-action {
-    aspect-ratio: unset;
+    aspect-ratio: 1/0.8;
   }
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper {
@@ -1962,6 +2006,9 @@ textarea {
 }
 .backdrop .main-modal .modal-wrapper .content .grid .left {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 .backdrop .main-modal .modal-wrapper .content .grid .right {
   height: 100%;
@@ -1973,6 +2020,7 @@ textarea {
   .backdrop .main-modal .modal-wrapper .content .grid .right {
     width: 100%;
     height: 0;
+    order: 2;
   }
 }
 .backdrop .main-modal .modal-wrapper .content .grid .single-input {
@@ -1982,6 +2030,9 @@ textarea {
   .backdrop .main-modal .modal-wrapper .content .grid .single-input {
     height: fit-content;
   }
+}
+.backdrop .main-modal .modal-wrapper .content .grid .single-input.aspect-ratio .whole-input {
+  padding: 0.5rem 0;
 }
 .backdrop .main-modal .modal-wrapper .content .grid .single-input .whole-input {
   position: relative;
@@ -2082,6 +2133,46 @@ textarea {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .radio-buttons-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+@media (max-width: 500px) {
+  .backdrop .main-modal .modal-wrapper .content .grid .single-input .radio-buttons-area {
+    grid-template-columns: 1fr;
+  }
+}
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .radio-buttons-area .single-radio-button {
+  padding: 0.75rem 0;
+  width: 100%;
+  position: relative;
+}
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .radio-buttons-area .single-radio-button input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .radio-buttons-area .single-radio-button input:checked + label {
+  border: 2px solid #FFA702;
+  color: #1D1D1D;
+  background-color: #FFA702;
+}
+.backdrop .main-modal .modal-wrapper .content .grid .single-input .radio-buttons-area .single-radio-button label {
+  display: inline-block;
+  width: 100%;
+  padding: 0.5rem 1.2rem;
+  color: #FFF;
+  border: 2px solid #FFA702;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  text-align: center;
+}
 .backdrop.advanced-settings .main-modal {
   aspect-ratio: unset;
   height: auto;
@@ -2158,6 +2249,7 @@ textarea {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
+  position: relative;
 }
 @media (max-width: 900px) {
   .hub-page-template .container .generated-images-wrapper {
@@ -2169,8 +2261,14 @@ textarea {
   aspect-ratio: 9/16;
   border-radius: 0.5rem;
   border: 1px solid #FFA702;
-  position: relative;
+  position: absolute;
   overflow: hidden;
+}
+.hub-page-template .container .generated-images-wrapper .single-image.square {
+  aspect-ratio: 1/1;
+}
+.hub-page-template .container .generated-images-wrapper .single-image.horizontal {
+  aspect-ratio: 16/9;
 }
 .hub-page-template .container .generated-images-wrapper .single-image a {
   display: block;
@@ -2505,10 +2603,20 @@ textarea {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
+  position: relative;
 }
 .account-page-template .container .grid .right .last-creations-wrapper .last-creations-grid .grid-wrapper .single-image {
   width: 100%;
-  height: 100%;
+  position: absolute;
+}
+.account-page-template .container .grid .right .last-creations-wrapper .last-creations-grid .grid-wrapper .single-image.square {
+  aspect-ratio: 1/1;
+}
+.account-page-template .container .grid .right .last-creations-wrapper .last-creations-grid .grid-wrapper .single-image.horizontal {
+  aspect-ratio: 16/9;
+}
+.account-page-template .container .grid .right .last-creations-wrapper .last-creations-grid .grid-wrapper .single-image.normal {
+  aspect-ratio: 9/16;
 }
 .account-page-template .container .grid .right .last-creations-wrapper .last-creations-grid .grid-wrapper .single-image a {
   width: 100%;
@@ -2522,7 +2630,9 @@ textarea {
 .account-page-template .container .grid .right .last-creations-wrapper .last-creations-grid .grid-wrapper .single-image a .post-image img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 9/16;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: none;
 }
 
 .main-width-template {
@@ -2740,6 +2850,11 @@ textarea {
   display: flex;
   gap: 1rem;
 }
+@media (max-width: 800px) {
+  .single-generated-image-page .container .left .image-info-block .list {
+    flex-direction: column;
+  }
+}
 .single-generated-image-page .container .left .image-info-block .list .info-title {
   font-size: 1rem;
   line-height: 1rem;
@@ -2792,9 +2907,15 @@ textarea {
 }
 @media (max-width: 768px) {
   .single-generated-image-page .container .right .image-area {
-    width: 50%;
     margin: 0 auto;
   }
+}
+.single-generated-image-page .container .right .image-area.square {
+  aspect-ratio: 1/1;
+}
+.single-generated-image-page .container .right .image-area.horizontal {
+  aspect-ratio: 16/9;
+  height: 100%;
 }
 .single-generated-image-page .container .right .image-area .image {
   width: 100%;

@@ -30,7 +30,16 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
         <?php if($images->have_posts()) : ?>
             <div class="generated-images-wrapper">
                 <?php while($images->have_posts()) : $images->the_post(); ?>
-                    <div class="single-image">
+                    <?php
+                    if(get_field('size', get_the_id()) == "512x512"){
+                        $imageSize = "square";
+                    } else if(get_field('size') == "960x512"){
+                        $imageSize = "horizontal";
+                    } else {
+                        $imageSize = "normal";
+                    }
+                    ?>
+                    <div class="single-image <?php echo $imageSize; ?>">
                         <a href="<?php echo get_permalink(); ?>">
                             <div class="single-wrapper">
                                 <div class="post-image">

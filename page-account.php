@@ -74,8 +74,16 @@ if(!is_user_logged_in()){ ?>
                             <div class="last-creations-grid">
                                 <div class="grid-wrapper">
                                 <?php while($images->have_posts()) : ?>
-                                        <?php $images->the_post(); ?>
-                                    <div class="single-image">
+                                        <?php $images->the_post();
+                                            if(get_field('size') == "512x512"){
+                                                $imageSize = "square";
+                                            } else if(get_field('size') == "960x512"){
+                                                $imageSize = "horizontal";
+                                            } else {
+                                                $imageSize = "normal";
+                                            }
+                                        ?>
+                                    <div class="single-image <?php echo $imageSize; ?>">
                                         <a href="<?php echo get_permalink(); ?>">
                                                 <div class="post-image">
                                                     <?php if ( in_array( 'premium', (array) $user->roles ) ) {

@@ -27,10 +27,11 @@ const upscaleImage = (isPremium, image) => {
         return fetch(themeUrl.apiUrl + "sdapi/v1/extra-single-image", requestOptions)
             .then(response => response.json())
             .then(data => {
+                let blob = "";
                 const upscaledImage = data.image;
 
                 // Create a Blob from the base64 upscaled image data
-                const blob = dataURItoBlob(upscaledImage);
+                blob = dataURItoBlob(upscaledImage);
 
                 // Create a download link
                 const downloadLink = document.createElement('a');
@@ -46,15 +47,13 @@ const upscaleImage = (isPremium, image) => {
                 return upscaledImage;
             })
             .catch(error => console.error('error', error));
-    } else {
-        const modal = document.querySelector('.premium-modal');
-        modal.classList.add('show');
-        return false;
     }
 
     function dataURItoBlob(dataURI) {
         // Ensure the dataURI starts with a MIME type declaration
-        const fullDataURI = "data:image/png;base64," + dataURI;
+
+         let fullDataURI = "";
+         fullDataURI = "data:image/png;base64," + dataURI;
 
         const byteString = atob(fullDataURI.split(',')[1]);
         const mimeString = fullDataURI.split(',')[0].split(':')[1].split(';')[0];

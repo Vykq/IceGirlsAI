@@ -13,6 +13,8 @@ const upscaleSingleImage = () => {
             button.textContent = "Upscaling...";
         } else {
             premiumBody = false;
+            const modal = document.querySelector('.premium-modal');
+            modal.classList.add('show');
         }
 
 

@@ -1,4 +1,4 @@
-const createPost = async (image, infotext, taskID) => {
+const createPost = async (image, infotext, taskID, aspectRatio) => {
     async function addWatermark(image) {
         return new Promise((resolve) => {
             //watermark
@@ -14,11 +14,25 @@ const createPost = async (image, infotext, taskID) => {
                 context.drawImage(tempImage, 0, 0); // Draw the original image onto the canvas
 
                 context.fillStyle = 'rgba(29, 29, 29, 1)'; // Black color with transparency
-                context.fillRect((canvas.width / 9) * 6.5, (canvas.height / 16) * 14.75, 140, 40); // Draw black rectangle
+
+                if(aspectRatio === "9/16"){
+                    context.fillRect((canvas.width / 9) * 6.5, (canvas.height / 16) * 14.75, 140, 40); // Draw black rectangle
+                } else if(aspectRatio === "1/1"){
+                    context.fillRect((canvas.width / 10) * 7, (canvas.height / 10) * 9, 140, 40); // Draw black rectangle
+                } else {
+                    context.fillRect((canvas.width / 16) * 12, (canvas.height / 9) * 8, 140, 40); // Draw black rectangle
+                }
 
                 context.font = '20px Arial';
                 context.fillStyle = 'rgba(255, 255, 255, 1)'; // Text color with transparency
-                context.fillText(watermarkText, (canvas.width / 9) * 7, (canvas.height / 16) * 15.17); // Draw text
+                if(aspectRatio === "9/16"){
+                    context.fillText(watermarkText, (canvas.width / 9) * 7, (canvas.height / 16) * 15.17); // Draw text
+                } else if (aspectRatio === "1/1"){
+                    context.fillText(watermarkText, (canvas.width / 10) * 7.5, (canvas.height / 10) * 9.5); // Draw text
+                } else {
+                    context.fillText(watermarkText, (canvas.width / 16) * 12.5, (canvas.height / 9) * 8.5); // Draw text
+                }
+
 
                 const watermarkedImage = new Image();
                 watermarkedImage.src = canvas.toDataURL('image/png');
@@ -46,8 +60,6 @@ const createPost = async (image, infotext, taskID) => {
     requestData.append('watermarked-image', watermarkImg.src);
     requestData.append('infoText', infotext);
     requestData.append('task-id', taskID);
-    console.log(watermarkImg.src);
-    console.log(image);
     const headers = {
         'Connection': 'Keep-Alive', // Add the Keep-Alive header
     };

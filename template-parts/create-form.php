@@ -374,28 +374,62 @@ $actions = new WP_Query($args2);
                                         </div>
                                     <?php } ?>
                                 </div>
-<!--                                <div class="single-input positive-prompt">-->
-<!--                                    --><?php //if ( in_array( 'premium', (array) $user->roles ) ) { ?>
-<!--                                        <div class="prompt">-->
-<!--                                            <div class="whole-input">-->
-<!--                                                <textarea name="prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>-->
-<!--                                                <label for="positive-prompt">Prompt</label>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    --><?php //} else {?>
-<!--                                        <div class="whole-input single-input premium prompt">-->
-<!--                                            <a href="/premium">-->
-<!--                                                <div class="input-wrapper premium">-->
-<!--                                                    <textarea name="get-premium-prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>-->
-<!--                                                    <label for="positive-prompt">Prompt</label>-->
-<!--                                                </div>-->
-<!--                                                <div class="premium-area">-->
-<!--                                                    <p class="offer">To use this option you need <span>Premium</span></p>-->
-<!--                                                </div>-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                    --><?php //} ?>
-<!--                                </div>-->
+
+
+
+                                <div class="single-input aspect-ratio">
+                                    <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
+                                        <div class="whole-input">
+                                            <div class="input-wrapper">
+                                                <p class="step-title">Aspect Ratio</p>
+                                                <div class="radio-buttons-area">
+                                                    <div class="single-radio-button">
+                                                        <input type="radio" name="aspect-ratio" id="aspect-9" value="9/16" checked>
+                                                        <label for="aspect-9">9/16</label>
+                                                    </div>
+                                                    <div class="single-radio-button">
+                                                        <input type="radio" name="aspect-ratio" id="aspect-1" value="1/1">
+                                                        <label for="aspect-1">1/1</label>
+                                                    </div>
+                                                    <div class="single-radio-button">
+                                                        <input type="radio" name="aspect-ratio" id="aspect-16" value="16/9">
+                                                        <label for="aspect-16">16/9</label>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } else { ?>
+
+                                        <div class="whole-input single-input premium">
+                                            <a href="/premium">
+                                                <div class="input-wrapper">
+                                                    <label class="step-title">Aspect Ratio</label>
+                                                    <div class="radio-buttons-area">
+                                                        <div class="single-radio-button">
+                                                            <input type="radio" name="get-premium" id="aspect-9" value="9/16">
+                                                            <label for="aspect-9">9/16</label>
+                                                        </div>
+                                                        <div class="single-radio-button">
+                                                            <input type="radio" name="get-premium" id="aspect-1" value="1/1">
+                                                            <label for="aspect-1">1/1</label>
+                                                        </div>
+                                                    <div class="single-radio-button">
+                                                        <input type="radio" name="get-premium" id="aspect-16" value="16/9>
+                                                        <label for="aspect-16">16/9</label>
+                                                    </div>
+
+
+                                                </div>
+                                                </div>
+                                                <div class="premium-area">
+                                                    <p class="offer">To use this option you need <span>Premium</span></p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    <?php  } ?>
+                                </div>
                             </div>
                             <div class="right">
 

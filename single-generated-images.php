@@ -33,6 +33,14 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
     $isPremiumClass = "watermarked-image";
 }
 
+$imageSize = "";
+if(get_field('size') == "512x512"){
+    $imageSize = "square";
+} else if(get_field('size') == "960x512"){
+    $imageSize = "horizontal";
+} else {
+    $imageSize = "normal";
+}
 ?>
 <div class="single-generated-image-page">
     <div class="container">
@@ -55,7 +63,11 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
                 </div>
             </div>
             <div class="button-area">
-                <a class="single-button" href="<?php echo get_the_post_thumbnail_url(); ?>" target="_blank">Full size image</a>
+                <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
+                        <a class="single-button" href="<?php echo get_the_post_thumbnail_url(); ?>" target="_blank">Full size image</a>
+                <?php } else { ?>
+                    <a class="single-button" href="<?php echo get_field('watermarked_image', get_the_id()); ?>" target="_blank">Full size image</a>
+                <?php } ?>
                 <button class="upscale-single-image single-button" data-id="<?php echo get_field('task_id'); ?>">Upscale & download</button>
 
                 <?php if(in_array(get_the_id(), favorite_id_array())){ ?>
@@ -71,7 +83,7 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
             </div>
         </div>
         <div class="right">
-            <div class="image-area">
+            <div class="image-area <?php echo $imageSize; ?>">
                 <div class="image">
                     <?php if ( in_array( 'premium', (array) $user->roles ) ) {
                         the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass ));

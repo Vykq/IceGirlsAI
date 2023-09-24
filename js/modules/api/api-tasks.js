@@ -17,30 +17,37 @@ import getPercent from "./get-percent";
 import upscaleImage from "./upscale-image";
 const apiTasks = () => {
     const form = document.querySelector('.creation-form');
+    let isUpscaleInProgress = false;
 
     let stopped = false;
     form.querySelector('.clear').addEventListener('click', (e) => {
         e.preventDefault();
         document.querySelector('.choose-model').textContent = "Model";
         document.querySelector('.choose-scene').textContent = "Action";
-
         form.reset();
     });
 
+
+
+    let premiumBody = false;
+    if(document.querySelector('body').classList.contains('premium')){
+        premiumBody = true;
+    } else {
+        premiumBody = false;
+    }
+
     document.querySelector('.generate').addEventListener('click', async (e) => {
-        let premiumBody = false;
+
         e.preventDefault();
         switchGenerateButton(e.target, 'start');
-        if(document.querySelector('body').classList.contains('premium')){
-            premiumBody = true;
-        } else {
-            premiumBody = false;
-        }
 
         const taskID = await apiSendTask(premiumBody);
         setPercent('0');
         const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
-
+        let aspectRatio = "9/16"
+        if(document.querySelector('input[name="aspect-ratio"]')){
+            aspectRatio = document.querySelector('input[name="aspect-ratio"]:checked').value;
+        }
 
         setPercent('5');
         document.querySelector('.stop-generate').addEventListener('click', async(ev) =>{
@@ -121,25 +128,30 @@ const apiTasks = () => {
         const imgdata = await getImage(taskID);
         if(imgdata.image){
             switchGenerateButton(e.target, 'end');
-            const isImageLoaded = loadImage(imgdata.image, userStatus);
-            createPost(imgdata.image, imgdata.infotext, taskID);
+            loadImage(imgdata.image, userStatus, aspectRatio);
+            await createPost(imgdata.image, imgdata.infotext, taskID, aspectRatio);
             setPercent('100');
-            //Reveal upscale btn and check if user is a premium, if no popup show
             document.querySelector('.upscale').classList.remove('hidden');
-            document.querySelector('.upscale').addEventListener('click', async (e1) => {
-                e1.preventDefault();
-                if(userStatus){
-                    switchGenerateButton(e1.target, 'upscale');
-                }
-                const upscaledImage = await upscaleImage(userStatus, imgdata.image);
 
-                if(upscaledImage){
-                    document.querySelector('.upscale').disabled = true;
-                    switchGenerateButton(e1.target, 'end-upscale');
-                }
-            });
         } else {
             setPercent('Error');
+        }
+    });
+
+    document.querySelector('.upscale').addEventListener('click', async (e1) => {
+        e1.preventDefault();
+        if (premiumBody && !isUpscaleInProgress) { // Check if upscale is not in progress
+            isUpscaleInProgress = true; // Set upscale in progress
+            switchGenerateButton(e1.target, 'upscale');
+            const upscaledImage = await upscaleImage(premiumBody, document.querySelector('.generated-image').src);
+            if (upscaledImage) {
+                document.querySelector('.upscale').disabled = true;
+                switchGenerateButton(e1.target, 'end-upscale');
+            }
+            isUpscaleInProgress = false; // Reset upscale status after completion
+        } else {
+            const modal = document.querySelector('.premium-modal');
+            modal.classList.add('show');
         }
     });
 };

@@ -46,6 +46,9 @@
         .list{
           display: flex;
           gap:1rem;
+          @media (max-width: 800px) {
+            flex-direction: column;
+          }
         .info-title{
           font-size: 1rem;
           line-height: 1rem;
@@ -100,8 +103,14 @@
         aspect-ratio: 9/16;
         margin: 0 auto;
         @media (max-width: 768px){
-          width: 50%;
           margin: 0 auto;
+        }
+        &.square{
+          aspect-ratio: 1/1;
+        }
+        &.horizontal{
+          aspect-ratio: 16/9;
+          height: 100%;
         }
         .image{
           width: 100%;

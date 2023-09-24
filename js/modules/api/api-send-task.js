@@ -8,6 +8,41 @@ const apiSendTask = (isPremium) => {
     const allCheckboxes = tabContainer.querySelectorAll('input[type="checkbox"]');
     const allRadiosAndCheckboxes = tabContainer.querySelectorAll('input[type="radio"], input[type="checkbox"]');
 
+    let imageSize = {
+        width: 512,
+        height: 960,
+    }
+    if(document.querySelector('input[name="aspect-ratio"]')){
+        const imageArea = document.querySelector('.col-wrapper');
+        const aspectRatioInput = document.querySelector('input[name="aspect-ratio"]:checked');
+        imageArea.classList.remove('square', 'normal', 'horizontal');
+        if(aspectRatioInput.value === "9/16"){
+            imageSize = {
+                width: 512,
+                height: 960,
+            }
+            imageArea.classList.add('normal');
+        } else if(aspectRatioInput.value === "1/1"){
+            imageSize = {
+                width: 512,
+                height: 512,
+            }
+            imageArea.classList.add('square');
+        } else {
+            imageSize = {
+                width: 960,
+                height: 512,
+            }
+            imageArea.classList.add('horizontal');
+        }
+
+
+
+    } else {
+
+    }
+
+
     const checkpoints = document.querySelectorAll('input[name="checkpoint"]');
     let checkpoint = {
         sampler: '',
@@ -67,15 +102,20 @@ const apiSendTask = (isPremium) => {
         const selectedValuesString = selectedValues.join(', ');
         finalPrompt = midPrompt + ", " + selectedValuesString;
     } else {
-        const inputCount = allRadiosAndCheckboxes.length;
-        const filteredInputs = Array.from(allRadiosAndCheckboxes).filter(input => input.name !== 'get-premium');
-        const randomValues = getRandomValues(Array.from(filteredInputs), 5);
-        let randomValuesString = randomValues.map(input => input.value).join(", ");
-        if(isPremium){
-            finalPrompt = midPrompt + ", " +randomValuesString;
-        } else{
-            finalPrompt = randomValuesString;
+        if(midPrompt === ""){
+            const inputCount = allRadiosAndCheckboxes.length;
+            const filteredInputs = Array.from(allRadiosAndCheckboxes).filter(input => input.name !== 'get-premium');
+            const randomValues = getRandomValues(Array.from(filteredInputs), 5);
+            let randomValuesString = randomValues.map(input => input.value).join(", ");
+            if(isPremium){
+                finalPrompt = midPrompt + ", " +randomValuesString;
+            } else{
+                finalPrompt = randomValuesString;
+            }
+        } else {
+            finalPrompt = midPrompt;
         }
+
 
     }
 
@@ -83,8 +123,8 @@ const apiSendTask = (isPremium) => {
 
     const raw = JSON.stringify({
         "prompt": finalPrompt,
-        "width": 512,
-        "height": 960,
+        "width": imageSize.width,
+        "height": imageSize.height,
         "negative_prompt": checkpoint.negative,
         "override_settings": ({
             "sd_model_checkpoint" : checkpoint.name,

@@ -6,6 +6,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       gap:1rem;
+      position: relative;
       @media (max-width: 900px){
         grid-template-columns: 1fr 1fr;
       }
@@ -14,8 +15,14 @@
         aspect-ratio: 9/16;
         border-radius: .5rem;
         border:1px solid $go;
-        position: relative;
+        position: absolute;
         overflow: hidden;
+        &.square{
+          aspect-ratio: 1/1;
+        }
+        &.horizontal {
+          aspect-ratio: 16/9;
+        }
         a{
           display: block;
           width: 100%;

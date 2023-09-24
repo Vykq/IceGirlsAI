@@ -109,14 +109,24 @@
   }
 }
 
+.ptrn-button img{
+  width: 100%!important;
+  height: fit-content!important;
+  max-width: 75%;
+}
+
 .login-modal {
+  z-index: 999!important;
   .main-modal{
     width: 40%!important;
     aspect-ratio: unset!important;
     height: 90vh;
+    @media (max-width: 800px){
+      width: 80% !important;
+    }
   }
-  .content{
     display: flex;
+    .content{
     .wrapper{
       display: grid;
       width: 100%;

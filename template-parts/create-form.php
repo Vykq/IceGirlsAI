@@ -416,7 +416,7 @@ $actions = new WP_Query($args2);
                                                             <label for="aspect-1">1/1</label>
                                                         </div>
                                                     <div class="single-radio-button">
-                                                        <input type="radio" name="get-premium" id="aspect-16" value="16/9>
+                                                        <input type="radio" name="get-premium" id="aspect-16" value="16/9">
                                                         <label for="aspect-16">16/9</label>
                                                     </div>
 

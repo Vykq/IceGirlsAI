@@ -12,6 +12,8 @@ const openModals = () => {
     const modelTitle = document.querySelector('#current-model');
     const actionsInput = document.querySelectorAll('input[name="action"]');
     const actionTitle = document.querySelector('#current-scene');
+    const charsInput = document.querySelectorAll('input[name="char"]');
+    const charTitle = document.querySelector('#current-char');
     let openedModalClass = "";
 
 
@@ -71,7 +73,7 @@ const openModals = () => {
                         btn.textContent = modalText;
                     } else {
                         // If the text exceeds 26 characters, truncate it and add "..."
-                        btn.textContent = modalText.substring(0, 23) + '...';
+                        btn.textContent = modalText.substring(0, 11) + '...';
                     }
                 }
             })
@@ -91,7 +93,31 @@ const openModals = () => {
                         btn.textContent = modalText;
                     } else {
                         // If the text exceeds 26 characters, truncate it and add "..."
-                        btn.textContent = modalText.substring(0, 23) + '...';
+                        btn.textContent = modalText.substring(0, 11) + '...';
+                    }
+                }
+            })
+            closeModal();
+        })
+    })
+
+
+    charsInput.forEach(input =>{
+        input.addEventListener('change', (e) => {
+            charTitle.textContent = input.nextElementSibling.textContent;
+            saveNotify.classList.add('show');
+            openBtns.forEach(btn => {
+                if (btn.dataset.id === openedModalClass) {
+                    const modalText = 'Char: ' + input.nextElementSibling.textContent;
+                    if (modalText.length <= 26) {
+                        if(input.nextElementSibling.textContent === "None"){
+                            btn.textContent = 'Characters';
+                        } else {
+                            btn.textContent = modalText;
+                        }
+                    } else {
+                        // If the text exceeds 26 characters, truncate it and add "..."
+                        btn.textContent = modalText.substring(0, 11) + '...';
                     }
                 }
             })

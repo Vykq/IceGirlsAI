@@ -17,6 +17,10 @@
         }
         form{
           .form-area{
+            .grid{
+              grid-template-columns: 1fr 1fr 1fr;
+              gap:.5rem;
+            }
             .top{
               display: flex;
               flex-direction: column;

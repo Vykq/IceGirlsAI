@@ -2,7 +2,7 @@
 const hubPage = () => {
 
     var masonry = new MinimasonryMin({
-        container: '.generated-images-wrapper'
+        container: '.generated-images-wrapper',
     });
 
 }

@@ -19,6 +19,15 @@ $args2 = array(
     'order' => 'ASC'
 );
 
+
+$args3 = array(
+    'post_type' => 'chars',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'orderby' => 'DATE',
+    'order' => 'ASC'
+);
+
 $models = new WP_Query($args);
 
 if(in_array( 'premium', (array) $user->roles)){
@@ -43,6 +52,9 @@ if(in_array( 'premium', (array) $user->roles)){
                 </div>
                 <div class="single-btn">
                     <button class="open-modal choose-scene secondary-button" data-id="choose-scene">Action</button>
+                </div>
+                <div class="single-btn">
+                    <button class="open-modal choose-char secondary-button" data-id="choose-char">Characters</button>
                 </div>
             </div>
             <div class="single-btn">
@@ -333,6 +345,103 @@ $actions = new WP_Query($args2);
             </div>
         </div>
     </div>
+
+
+    <?php
+    wp_reset_postdata();
+    $chars = new WP_Query($args3);
+    ?>
+    <div class="backdrop models-modal-wrapper modals choose-char">
+        <div class="main-modal unique">
+            <div class="modal-wrapper">
+                <div class="top">
+                    <p class="title" id="current-char">Default</p>
+                    <div class="close-modal">
+                        <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffa702"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                    </div>
+                </div>
+                <div class="content">
+                    <?php if($chars->have_posts()) :
+                        $firstLoop = true;
+                        ?>
+                        <div class="actions">
+                            <div class="single-action">
+                                <div class="wrapper">
+                                            <div class="action-input">
+                                                <input type="radio" name="char" id="<?php echo createSlug('none'); ?>" value="" data-id="" checked/>
+                                                <label for="<?php echo createSlug('none'); ?>">None</label>
+                                                <div class="action-image">
+                                                    <img src="<?php echo get_template_directory_uri() . '/assets/images/char-none.png'; ?>" alt="None">
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                            <?php while($chars->have_posts()) : $chars->the_post(); ?>
+                                <div class="single-action">
+                                    <div class="wrapper">
+
+                                        <?php if(get_field('premium')) : ?>
+                                            <?php if(in_array( 'premium', (array) $user->roles )) : ?>
+                                                <div class="action-input">
+                                                    <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>"/>
+                                                    <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
+                                                    <div class="action-image">
+                                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    </div>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="action-input premium">
+                                                    <input disabled type="radio" name="char" id="premium-only<?php echo get_the_id(); ?>" value="" data-id="premium-only"/>
+                                                    <label for="premium-only<?php echo get_the_id(); ?>"><?php echo get_the_title(); ?></label>
+                                                    <div class="action-image">
+                                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    </div>
+                                                    <div class="premium-notify">
+                                                        <div class="image">
+                                                            <svg fill="#FFA702FF" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>unlock</title> <path d="M4 30.016v-14.016q0-0.832 0.576-1.408t1.44-0.576v-4q0-2.72 1.344-5.024t3.616-3.648 5.024-1.344q3.616 0 6.368 2.272t3.424 5.728h-4.16q-0.608-1.76-2.144-2.88t-3.488-1.12q-2.496 0-4.256 1.76t-1.728 4.256v4h16q0.8 0 1.408 0.576t0.576 1.408v14.016q0 0.832-0.576 1.408t-1.408 0.576h-20q-0.832 0-1.44-0.576t-0.576-1.408zM8 28h16v-9.984h-16v9.984z"></path> </g></svg>
+                                                        </div>
+                                                        <p class="gold">Premium</p>
+                                                        <p class="notify">Is required to use this option</p>
+                                                    </div>
+                                                </div>
+                                            <?php endif;?>
+                                        <?php else : ?>
+                                            <div class="action-input">
+                                                <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>"/>
+                                                <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
+                                                <div class="action-image">
+                                                    <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
+                                    </div>
+                                </div>
+                                <?php
+                                $firstLoop = false;
+                            endwhile; ?>
+                        </div>
+                    <?php else: ?>
+
+                    <div class="actions">
+                        <div class="single-action">
+                            <div class="wrapper">
+                                <div class="action-input">
+                                    <input type="radio" name="char" id="<?php echo createSlug('none'); ?>" value="" data-id="" checked/>
+                                    <label for="<?php echo createSlug('none'); ?>">None</label>
+                                    <div class="action-image">
+                                        <img src="<?php echo get_template_directory_uri() . '/assets/images/char-none.png'; ?>" alt="None">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 

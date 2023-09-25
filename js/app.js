@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
     profilePage();
   }
 
-  if(document.querySelector('.hub-page-template')){
+  if(document.querySelector('.generated-images-wrapper')){
     hubPage();
   }
 

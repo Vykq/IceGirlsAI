@@ -56,6 +56,12 @@ const apiSendTask = (isPremium) => {
         loraInput: '',
     }
 
+    const chars = document.querySelectorAll('input[name="char"]');
+    let char = {
+        triggerWord: '',
+        loraInput: '',
+    }
+
     let stepSlider = '';
     let details = '';
     let isAtLeastOneChecked = false;
@@ -97,6 +103,13 @@ const apiSendTask = (isPremium) => {
         }
     });
 
+    chars.forEach(input =>{
+        if(input.checked){
+            char.triggerWord = input.value;
+            char.loraInput = input.dataset.id;
+        }
+    });
+
     if(isAtLeastOneChecked) {
         //jeigu yra pazymeje nors 1
         const selectedValuesString = selectedValues.join(', ');
@@ -119,7 +132,7 @@ const apiSendTask = (isPremium) => {
 
     }
 
-    finalPrompt = addActionsToPrompt(finalPrompt, action);
+    finalPrompt = addActionsToPrompt(finalPrompt, action, char);
 
     const raw = JSON.stringify({
         "prompt": finalPrompt,
@@ -163,9 +176,9 @@ const apiSendTask = (isPremium) => {
 
 
     //ADD action LORA to prompt;
-    function addActionsToPrompt(prompt, action){
+    function addActionsToPrompt(prompt, action, char){
         let finalPrompt;
-        finalPrompt = action.triggerWord + ", " + prompt + action.loraInput + "<lora:more_details:" + details + ">";
+        finalPrompt = char.triggerWord + ", " + action.triggerWord + prompt + ", " + char.loraInput + " " + action.loraInput + " <lora:more_details:" + details + ">";
         return finalPrompt
     }
 

@@ -202,6 +202,28 @@ function theme_post_types()
         'menu_icon' => 'dashicons-format-image'
     ));
 
+
+    register_post_type('chars', array(
+        'rewrite' => array('characters' => __('Characters', 'slug', 'vyk')),
+        'has_archive' => false,
+        'public' => true,
+        'show_in_rest' => true,
+        'menu_position' => -2,
+        'labels' => array(
+            'name' => 'Characters',
+            'add_new_item' => 'Add character',
+            'edit_item' => 'Edit character',
+            'all_items' => 'All characters',
+            'singular_name' => 'Character'
+        ),
+        'supports' => array(
+            'title',
+            'page-attributes',
+            'thumbnail',
+        ),
+        'menu_icon' => 'dashicons-businesswoman'
+    ));
+
 }
 add_action('init', 'theme_post_types');
 

@@ -139,6 +139,9 @@
     aspect-ratio: unset!important;
     width: 33%!important;
     height: fit-content!important;
+    @media (max-width: 700px){
+      width: 80% !important;
+    }
     .modal-wrapper{
       padding:1.5rem;
       .title{

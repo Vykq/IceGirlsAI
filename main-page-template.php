@@ -100,7 +100,76 @@ $user_info = get_user_meta($user_id);
     </div>
 
     <?php endif; ?>
+
+    <?php
+    $top = array(
+                'post_type' => 'generated-images',
+                'posts_per_page' => 3,
+                'post_status' => 'publish',
+                'meta_key' => 'like_count', // Specify the custom field name
+                'orderby' => 'meta_value_num', // Order by the numerical value of the custom field
+                'order' => 'DESC', // Ascending order
+    );
+    $topPosts = new WP_Query($top);
+
+    $user = wp_get_current_user();
+    $isPremiumClass = "";
+    if ( in_array( 'premium', (array) $user->roles ) ) {
+        $isPremiumClass = "no-watermark-image";
+    } else {
+        $isPremiumClass = "watermarked-image";
+    }
+    ?>
+<div class="top-hub-area">
+    <div class="container">
+        <h6>Top Liked Posts</h6>
+        <?php if($topPosts->have_posts()) : ?>
+            <div class="generated-images-wrapper">
+                <?php while($topPosts->have_posts()) : $topPosts->the_post(); ?>
+                    <?php
+                    if(get_field('size', get_the_id()) == "512x512"){
+                        $imageSize = "square";
+                    } else if(get_field('size') == "960x512"){
+                        $imageSize = "horizontal";
+                    } else {
+                        $imageSize = "normal";
+                    }
+                    ?>
+                    <div class="single-image <?php echo $imageSize; ?>">
+                        <a href="<?php echo get_permalink(); ?>">
+                            <div class="single-wrapper">
+                                <div class="post-image">
+                                    <?php if ( in_array( 'premium', (array) $user->roles ) ) {
+                                         the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass ));
+                                    } else { ?>
+                                        <img class="lazy watermarked-image" loading="lazy" src="<?php echo get_field('watermarked_image', get_the_id()); ?>" alt="<?php echo get_the_title(); ?>">
+                                    <?php }?>
+                                    </div>
+                                <div class="hover-area">
+                                    <div class="hover-con">
+                                        <div class="wrapper">
+                                            <div class="left">
+                                                <img src="<?php echo get_theme_file_uri() . '/assets/images/like.svg';?>">
+                                            </div>
+                                            <div class="right">
+                                                <p><?php the_field('like_count', get_the_id()); ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                <?php endwhile; ?>
+            </div>
+            </div>
 </div>
+
+    <?php endif; ?>
+</div>
+
+
 
 <?php
 get_footer();

@@ -77,6 +77,10 @@ function remove_admin_bar_for_premium_users() {
     if (current_user_can('premium')) {
         show_admin_bar(false);
     }
+
+    if (current_user_can('subscriber')) {
+        show_admin_bar(false);
+    }
 }
 add_action('after_setup_theme', 'remove_admin_bar_for_premium_users');
 function theme_post_types()
@@ -224,6 +228,13 @@ function run_setPremiumForPatreons_after_login($user_login, $user) {
     setPremiumForPatreons($user_id);
 }
 function run_setPremiumForPatreons_after_registration($user_id) {
+    setPremiumForPatreons($user_id);
+}
+
+
+if(is_user_logged_in()){
+    $user = wp_get_current_user();
+    $user_id = $user->id;
     setPremiumForPatreons($user_id);
 }
 function setPremiumForPatreons($user_id){

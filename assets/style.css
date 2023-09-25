@@ -721,6 +721,48 @@ textarea {
   font-weight: 700;
 }
 
+.age-verification {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(15px) !important;
+}
+.age-verification .main-modal {
+  aspect-ratio: unset !important;
+  width: 33% !important;
+  height: fit-content !important;
+}
+.age-verification .main-modal .modal-wrapper {
+  padding: 1.5rem;
+}
+.age-verification .main-modal .modal-wrapper .title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #dedede;
+  text-align: center;
+  font-weight: 500;
+}
+.age-verification .main-modal .modal-wrapper .title span {
+  color: #FFA702;
+  font-weight: 700;
+}
+.age-verification .main-modal .modal-wrapper .subtitle {
+  margin: 1rem 0;
+  color: #dedede;
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+.age-verification .main-modal .modal-wrapper .subtitle a {
+  color: #FFA702;
+}
+.age-verification .main-modal .modal-wrapper .button-area {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.age-verification .main-modal .modal-wrapper .button-area span {
+  text-align: center;
+  cursor: pointer;
+}
+
 .spinner {
   position: absolute;
   width: 100%;

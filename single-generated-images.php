@@ -86,7 +86,7 @@ if(get_field('size') == "512x512"){
             <div class="image-area <?php echo $imageSize; ?>">
                 <div class="image">
                     <?php if ( in_array( 'premium', (array) $user->roles ) ) {
-                        the_post_thumbnail('hub-all', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass ));
+                        the_post_thumbnail('large', array( 'loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass ));
                     } else { ?>
                         <img class="lazy watermarked-image" loading="lazy" src="<?php echo get_field('watermarked_image', get_the_id()); ?>" alt="<?php echo get_the_title(); ?>">
                     <?php }?>

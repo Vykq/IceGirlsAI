@@ -41,7 +41,7 @@ get_header();
                         <p class="subprice">per month</p>
                     </div>
                     <div class="button-area">
-                    <a class="main-button" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
+                    <a class="main-button" target="_blank" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
                     </div>
                     <?php if(have_rows('premium_freatures')) : ?>
                         <ul class="benefits">

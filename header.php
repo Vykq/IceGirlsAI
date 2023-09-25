@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DR6P4VB37J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-DR6P4VB37J');
+    </script>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +20,7 @@
 <header>
     <?php
     $user = wp_get_current_user();
+    $current_url = site_url();
     ?>
     <div class="main-header">
         <div class="container">
@@ -46,7 +56,7 @@
                                 </li>
                             <?php } else {?>
                                 <li>
-                                    <span class="open-login-modal open-modal" data-id="login-modal">Log in</span>
+                                    <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( $current_url ); ?>">Log In</a>
                                 </li>
                             <?php } ?>
                         </ul>
@@ -90,7 +100,7 @@
                         </li>
                     <?php } else {?>
                         <li>
-                            <span class="open-login-modal open-modal" data-id="login-modal">Log in</span>
+                            <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( $current_url ); ?>">Log In</a>
                         </li>
                     <?php } ?>
                 </ul>

@@ -13,6 +13,7 @@ import customSelect from "./modules/custom-select";
 import sendContactForm from "./modules/send-form-contact";
 import hubPage from "./modules/hub-page";
 import profilePage from "./modules/profile-page";
+import ageVerification from "./modules/age-verification";
 
 window.addEventListener('DOMContentLoaded', () => {
   openModals();
@@ -59,5 +60,21 @@ window.addEventListener('DOMContentLoaded', () => {
   if(document.querySelector('.upscale-single-image')){
     upscaleSingleImage();
   }
+
+
+
+  if (document.querySelector('.age-verification')) {
+    ageVerification();
+    const popup = document.querySelector('.age-verification');
+    const html = document.querySelector('html');
+    if(localStorage.getItem('age') === '18'){
+      popup.classList.add('disabled');
+    }
+    else{
+        popup.classList.add('show');
+        html.classList.add('modal-is-open');
+    }
+  }
+
 
 })

@@ -131,3 +131,46 @@
     }
   }
 }
+
+.age-verification{
+  background-color: rgba(0, 0, 0, 0.75)!important;
+  backdrop-filter: blur(15px)!important;
+  .main-modal{
+    aspect-ratio: unset!important;
+    width: 33%!important;
+    height: fit-content!important;
+    .modal-wrapper{
+      padding:1.5rem;
+      .title{
+        font-size: 1.5rem;
+        line-height: 2rem;
+        color:#dedede;
+        text-align: center;
+        font-weight: 500;
+        span {
+          color:$go;
+          font-weight: 700;
+        }
+      }
+      .subtitle{
+        margin:1rem 0;
+        color:#dedede;
+        font-size: 1rem;
+        line-height: 1.25rem;
+        a{
+          color:$go;
+        }
+      }
+      .button-area{
+        display: flex;
+        gap:1rem;
+        margin:1rem 0;
+        span{
+          text-align: center;
+          cursor: pointer;
+        }
+      }
+    }
+
+  }
+}

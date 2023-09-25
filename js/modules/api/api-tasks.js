@@ -28,7 +28,6 @@ const apiTasks = () => {
     });
 
 
-
     let premiumBody = false;
     if(document.querySelector('body').classList.contains('premium')){
         premiumBody = true;
@@ -40,8 +39,9 @@ const apiTasks = () => {
 
         e.preventDefault();
         switchGenerateButton(e.target, 'start');
-
+        const whiteBlock = document.querySelector('#current-step')
         const taskID = await apiSendTask(premiumBody);
+        console.log(taskID);
         setPercent('0');
         const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
         let aspectRatio = "9/16"
@@ -55,7 +55,6 @@ const apiTasks = () => {
             let stopped = await deleteIdFromQueue(taskID);
             setPercent('');
             switchGenerateButton(e.target, 'stopped');
-
         })
 
 
@@ -63,8 +62,6 @@ const apiTasks = () => {
             let currentTaskID = apiGetQueueInfo.currentTaskId;
             let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
             let queueTasks = apiGetQueueInfo.taskObjects;
-            //console.log(queueTasks);
-            //console.log(taskID);
             if (currentTaskID !== taskID) {
                 setPercent('16');
                 if (userStatus) {
@@ -78,9 +75,8 @@ const apiTasks = () => {
                         setPercent('66');
                         apiGetQueueInfo = await apiGetQueue();
                         const currentPos = await getPosition(taskID);
-                        let status = await showQueueInfo(taskID);
+                        status = await showQueueInfo(taskID);
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                        //console.log(totalPendingTasksObj)
                         const totalPendingTasksCount = totalPendingTasksObj.length;
                         updateQueueInfo(currentPos.pos, totalPendingTasksCount, '');
                         await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
@@ -90,6 +86,7 @@ const apiTasks = () => {
                     setPercent('33');
                     while (currentTaskID !== taskID) {
                         setPercent('66');
+                        whiteBlock.textContent = 'Get PREMIUM to skip the queue';
                         apiGetQueueInfo = await apiGetQueue();
                         const currentPos = await getPosition(taskID);
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;

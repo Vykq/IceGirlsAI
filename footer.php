@@ -185,6 +185,21 @@
 <?php endif; ?>
 
 
+
+<!-- AGE POPUP -->
+<div class="backdrop age-verification">
+    <div class="main-modal">
+        <div class="modal-wrapper">
+            <p class="title">You must be over <span class="yellow">18 years old</span> to enter this website</p>
+            <p class="subtitle">By entering this site, you are certifying that you are of legal adult age. By using the site, you agree to our <a href="/terms-of-service/">Terms of Service.</a></p>
+            <div class="button-area">
+                <span class="main-button confirm-age">Confirm</span>
+                <span class="secondary-button decline-age">Decline</span>
+            </div>
+        </div>
+
+    </div>
+</div>
 <?php  wp_footer(); ?>
 </body>
 </html>

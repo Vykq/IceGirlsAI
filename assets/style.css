@@ -2933,6 +2933,7 @@ textarea {
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 @media (max-width: 1200px) {
   .single-generated-image-page .container {
@@ -3047,6 +3048,7 @@ textarea {
   height: 75vh;
   aspect-ratio: 9/16;
   margin: 0 auto;
+  margin-top: 2rem;
 }
 @media (max-width: 768px) {
   .single-generated-image-page .container .right .image-area {
@@ -3058,7 +3060,7 @@ textarea {
 }
 .single-generated-image-page .container .right .image-area.horizontal {
   aspect-ratio: 16/9;
-  height: 100%;
+  height: unset;
 }
 .single-generated-image-page .container .right .image-area .image {
   width: 100%;

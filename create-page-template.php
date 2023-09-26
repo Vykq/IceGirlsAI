@@ -29,7 +29,7 @@ get_header();
                     <p><span id="current-step"></span></p>
                     </div>
                     <span class="loader"></span>
-                    <p id="premium-queue">Queue: <span id="yourpos">1</span> / <span id="position-all">1</span></p>
+                    <p id="premium-queue">Queue: <span id="yourpos">1</span></p>
                 </div>
             </div>
             <div class="button-area">

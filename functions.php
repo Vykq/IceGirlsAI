@@ -1,6 +1,7 @@
 <?php
 require_once('lib/add_functions.php');
 require_once('lib/stable-diffusion-api.php');
+require_once('lib/free-premium.php');
 function webpack_files() {
     wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), time(), true);
     //wp_enqueue_script('gsap', get_theme_file_uri('assets/gsap.min.js'), array(), time(), true);
@@ -239,27 +240,26 @@ add_filter( 'body_class', function( $classes ) {
 
 
 
-// Hook the function to run after successful login
-add_action('wp_login', 'run_setPremiumForPatreons_after_login', 10, 2);
+//// Hook the function to run after successful login
+//add_action('wp_login', 'run_setPremiumForPatreons_after_login', 10, 2);
+//
+//// Hook the function to run after user registration
+//add_action('user_register', 'run_setPremiumForPatreons_after_registration', 10, 1);
+//
+//function run_setPremiumForPatreons_after_login($user_login, $user) {
+//    $user_id = $user->ID;
+//    setPremiumForPatreons($user_id);
+//}
+//function run_setPremiumForPatreons_after_registration($user_id) {
+//    setPremiumForPatreons($user_id);
+//}
 
-// Hook the function to run after user registration
-add_action('user_register', 'run_setPremiumForPatreons_after_registration', 10, 1);
 
-function run_setPremiumForPatreons_after_login($user_login, $user) {
-    $user_id = $user->ID;
-    setPremiumForPatreons($user_id);
-}
-function run_setPremiumForPatreons_after_registration($user_id) {
-    setPremiumForPatreons($user_id);
-}
+add_action('init', 'setPremiumForPatreons');
 
-
-if(is_user_logged_in()){
+function setPremiumForPatreons(){
     $user = wp_get_current_user();
     $user_id = $user->id;
-    setPremiumForPatreons($user_id);
-}
-function setPremiumForPatreons($user_id){
     $user_info = get_user_meta($user_id);
     $patreon_info = array();
     if($user_info) {
@@ -284,3 +284,4 @@ function setPremiumForPatreons($user_id){
         }
     }
 }
+

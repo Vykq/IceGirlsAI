@@ -14,7 +14,7 @@ const moveQueue = (ID, overID) => {
     return fetch(themeUrl.apiUrl + "agent-scheduler/v1/task/"+ ID +"/move/" + overID, requestOptions)
         .then(response => response.json())
         .then(data => {
-            whiteBlock.textContent = 'Your task will be done after last PREMIUM user task';
+            whiteBlock.textContent = 'Your task will be done after the last PREMIUM user task';
 
         })
         .catch(error => console.error('error', error));

@@ -92,3 +92,6 @@ function redirect_to_profile() {
     return $redirect_to;
 }
 add_filter('login_redirect', 'redirect_to_profile');
+
+
+

@@ -116,15 +116,21 @@ const apiSendTask = (isPremium) => {
         finalPrompt = midPrompt + ", " + selectedValuesString;
     } else {
         if(midPrompt === ""){
-            const inputCount = allRadiosAndCheckboxes.length;
-            const filteredInputs = Array.from(allRadiosAndCheckboxes).filter(input => input.name !== 'get-premium');
-            const randomValues = getRandomValues(Array.from(filteredInputs), 5);
-            let randomValuesString = randomValues.map(input => input.value).join(", ");
-            if(isPremium){
-                finalPrompt = midPrompt + ", " +randomValuesString;
-            } else{
-                finalPrompt = randomValuesString;
-            }
+
+
+            chars.forEach(input =>{
+                if(input.checked && input.id === "none"){
+                    const inputCount = allRadiosAndCheckboxes.length;
+                    const filteredInputs = Array.from(allRadiosAndCheckboxes).filter(input => input.name !== 'get-premium');
+                    const randomValues = getRandomValues(Array.from(filteredInputs), 5);
+                    let randomValuesString = randomValues.map(input => input.value).join(", ");
+                    if(isPremium){
+                        finalPrompt = midPrompt + ", " +randomValuesString;
+                    } else{
+                        finalPrompt = randomValuesString;
+                    }
+                }
+            });
         } else {
             finalPrompt = midPrompt;
         }
@@ -178,7 +184,7 @@ const apiSendTask = (isPremium) => {
     //ADD action LORA to prompt;
     function addActionsToPrompt(prompt, action, char){
         let finalPrompt;
-        finalPrompt = char.triggerWord + ", " + action.triggerWord + prompt + ", " + char.loraInput + " " + action.loraInput + " <lora:more_details:" + details + ">";
+        finalPrompt = char.triggerWord + ", " + action.triggerWord + " " + prompt + ", " + char.loraInput + " " + action.loraInput + " <lora:more_details:" + details + ">";
         return finalPrompt
     }
 

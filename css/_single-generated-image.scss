@@ -8,6 +8,7 @@
     @media (max-width: 768px){
       grid-template-columns: 1fr;
     }
+    margin-bottom: 2rem;
     .left{
       @media (max-width: 768px){
         order: 2;
@@ -102,6 +103,7 @@
         height: 75vh;
         aspect-ratio: 9/16;
         margin: 0 auto;
+        margin-top: 2rem;
         @media (max-width: 768px){
           margin: 0 auto;
         }
@@ -110,7 +112,7 @@
         }
         &.horizontal{
           aspect-ratio: 16/9;
-          height: 100%;
+          height: unset;
         }
         .image{
           width: 100%;

@@ -24,6 +24,7 @@ const apiTasks = () => {
         e.preventDefault();
         document.querySelector('.choose-model').textContent = "Model";
         document.querySelector('.choose-scene').textContent = "Action";
+        document.querySelector('.choose-char').textContent = "Characters";
         form.reset();
     });
 
@@ -78,7 +79,7 @@ const apiTasks = () => {
                         status = await showQueueInfo(taskID);
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                         const totalPendingTasksCount = totalPendingTasksObj.length;
-                        updateQueueInfo(currentPos.pos, totalPendingTasksCount, '');
+                        updateQueueInfo(currentPos.pos, '');
                         await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                     }
 
@@ -91,7 +92,7 @@ const apiTasks = () => {
                         const currentPos = await getPosition(taskID);
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                         const totalPendingTasksCount = totalPendingTasksObj.length;
-                        updateQueueInfo(currentPos.pos, totalPendingTasksCount, '');
+                        updateQueueInfo(currentPos.pos, '');
                         currentTaskID = apiGetQueueInfo.currentTaskId;
                         await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                     }
@@ -102,7 +103,7 @@ const apiTasks = () => {
                         const currentPos = await getPosition(taskID);
                         let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                         const totalPendingTasksCount = totalPendingTasksObj.length;
-                        await updateQueueInfo(currentPos.pos, totalPendingTasksCount, '');
+                        await updateQueueInfo(currentPos.pos, '');
                         status = await showQueueInfo(taskID); // Retry until status is "done"
                         await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                     }

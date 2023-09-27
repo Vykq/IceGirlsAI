@@ -1,9 +1,8 @@
 const updateQueueInfo = (pos, next) => {
-    const posElem = document.querySelector('#yourpos');
     const fullQueue = document.querySelector('#premium-queue');
-
+    const yourPos = +pos;
     if(next === ""){
-        posElem.textContent = +pos + 1;
+        fullQueue.textContent = "Queue: " + yourPos;
     } else {
         fullQueue.textContent = next;
     }

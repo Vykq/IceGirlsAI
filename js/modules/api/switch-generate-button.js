@@ -37,8 +37,9 @@ const switchGenerateButton = (button, status) =>{
             upscaleButton.classList.remove('hidden');
             upscaleButton.disabled = false;
             upscaleButton.textContent = "Upscale & download!";
+            document.querySelector('.upscale-text').classList.remove('hidden');
         }
-        document.querySelector('.upscale-text').classList.remove('hidden');
+
     } else if (status === "upscale") {
         button.textContent = "Upscaling, please wait...";
         spinner.classList.add('show');

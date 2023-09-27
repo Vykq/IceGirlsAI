@@ -18,8 +18,9 @@ import upscaleImage from "./upscale-image";
 const apiTasks = () => {
     const form = document.querySelector('.creation-form');
     let isUpscaleInProgress = false;
+    let taskID = "";
+    let stopGenerateFlag = false;
 
-    let stopped = false;
     form.querySelector('.clear').addEventListener('click', (e) => {
         e.preventDefault();
         document.querySelector('.choose-model').textContent = "Model";
@@ -39,10 +40,13 @@ const apiTasks = () => {
     document.querySelector('.generate').addEventListener('click', async (e) => {
 
         e.preventDefault();
-        switchGenerateButton(e.target, 'start');
-        const whiteBlock = document.querySelector('#current-step')
-        const taskID = await apiSendTask(premiumBody);
-        console.log(taskID);
+
+            switchGenerateButton(e.target, 'start');
+            const whiteBlock = document.querySelector('#current-step');
+            taskID = await apiSendTask(premiumBody);
+            console.log(taskID);
+
+
         setPercent('0');
         const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
         let aspectRatio = "9/16"
@@ -51,12 +55,7 @@ const apiTasks = () => {
         }
 
         setPercent('5');
-        document.querySelector('.stop-generate').addEventListener('click', async(ev) =>{
-            ev.preventDefault();
-            let stopped = await deleteIdFromQueue(taskID);
-            setPercent('');
-            switchGenerateButton(e.target, 'stopped');
-        })
+
 
 
             let apiGetQueueInfo = await apiGetQueue(userStatus);
@@ -66,75 +65,148 @@ const apiTasks = () => {
             if (currentTaskID !== taskID) {
                 setPercent('16');
                 if (userStatus) {
-                    const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
-                    const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                    const moveOverID = pendingTaskIds[positionToInsert];
-                    await moveQueue(taskID, moveOverID);
-                    let status = await showQueueInfo(taskID);
-                    setPercent('33');
-                    while (status !== "done") {
-                        setPercent('66');
-                        apiGetQueueInfo = await apiGetQueue();
-                        const currentPos = await getPosition(taskID);
-                        status = await showQueueInfo(taskID);
-                        let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                        const totalPendingTasksCount = totalPendingTasksObj.length;
-                        updateQueueInfo(currentPos.pos, '');
-                        await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                    if(!stopGenerateFlag) {
+                        const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
+                        const positionToInsert = await checkTasks(pendingTaskIds, taskID);
+                        const moveOverID = pendingTaskIds[positionToInsert];
+                        await moveQueue(taskID, moveOverID);
+                        setPercent('33');
+                        let status = await showQueueInfo(taskID);
+                        while (status !== "done") {
+                            if(!stopGenerateFlag) {
+                                setPercent('66');
+                                apiGetQueueInfo = await apiGetQueue();
+                                const currentPos = await getPosition(taskID);
+                                let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                const totalPendingTasksCount = totalPendingTasksObj.length;
+                                await updateQueueInfo(currentPos.pos, '');
+                                status = await showQueueInfo(taskID);
+                                console.log('89');
+                                console.log(status);
+                                if (stopGenerateFlag) {
+                                    break;
+                                }
+                                await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                            } else {
+                                break;
+                            }
+                        }
                     }
 
                 } else {
-                    setPercent('33');
-                    while (currentTaskID !== taskID) {
+                    if (!stopGenerateFlag) {
+                        setPercent('33');
+                        let currentTaskID = apiGetQueueInfo.currentTaskId;
+                        while (currentTaskID !== taskID) {
+                            if(!stopGenerateFlag) {
+                                setPercent('66');
+                                whiteBlock.textContent = 'Get PREMIUM to skip the queue';
+                                apiGetQueueInfo = await apiGetQueue();
+                                const currentPos = await getPosition(taskID);
+                                let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                const totalPendingTasksCount = totalPendingTasksObj.length;
+                                updateQueueInfo(currentPos.pos, '');
+                                currentTaskID = apiGetQueueInfo.currentTaskId;
+                                console.log('112');
+                                console.log(currentPos);
+                                if (taskID === "" || stopGenerateFlag) {
+                                    break;
+                                }
+                                await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                            } else {
+                                break;
+                            }
+                        }
+                        if(!stopGenerateFlag){
+                            let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
+                        }
+
+                    }
+
+                    if (!stopGenerateFlag) {
+                        let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
+                        while (status !== "done") {
+                            if(!stopGenerateFlag) {
+                                status = await showQueueInfo(taskID); // Retry until status is "done"
+                                setPercent('66');
+                                apiGetQueueInfo = await apiGetQueue();
+                                const currentPos = await getPosition(taskID);
+
+                                let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                const totalPendingTasksCount = totalPendingTasksObj.length;
+                                await updateQueueInfo(currentPos.pos, '');
+
+                                console.log('136');
+                                console.log(status);
+                                if (stopGenerateFlag) {
+                                    break;
+                                }
+                                await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                            } else {
+                                break;
+                            }
+                        }
                         setPercent('66');
-                        whiteBlock.textContent = 'Get PREMIUM to skip the queue';
-                        apiGetQueueInfo = await apiGetQueue();
-                        const currentPos = await getPosition(taskID);
-                        let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                        const totalPendingTasksCount = totalPendingTasksObj.length;
-                        updateQueueInfo(currentPos.pos, '');
-                        currentTaskID = apiGetQueueInfo.currentTaskId;
-                        await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                     }
-                    let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
-                    while (status !== "done") {
-                        setPercent('68');
-                        apiGetQueueInfo = await apiGetQueue();
-                        const currentPos = await getPosition(taskID);
-                        let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                        const totalPendingTasksCount = totalPendingTasksObj.length;
-                        await updateQueueInfo(currentPos.pos, '');
-                        status = await showQueueInfo(taskID); // Retry until status is "done"
-                        await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
-                    }
-                    setPercent('66');
                 }
 
             } else {
-                let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
-                setPercent('66');
-                while (status !== "done") {
-                    const currentPos = await getPosition(taskID);
-                    let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                    const totalPendingTasksCount = totalPendingTasksObj.length;
-                    await updateQueueInfo(currentPos.pos, totalPendingTasksCount, '');
-                    status = await showQueueInfo(taskID); // Retry until status is "done"
-                    await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+
+                if(!stopGenerateFlag) {
+                    let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
+                    setPercent('66');
+                    while (status !== "done") {
+                        if(!stopGenerateFlag) {
+                            setPercent('66');
+                            apiGetQueueInfo = await apiGetQueue();
+                            const currentPos = await getPosition(taskID);
+
+                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                            const totalPendingTasksCount = totalPendingTasksObj.length;
+                            await updateQueueInfo(currentPos.pos, '');
+                            status = await showQueueInfo(taskID); // Retry until status is "done"
+                            console.log('162');
+                            console.log(status);
+                            if (stopGenerateFlag) {
+                                break;
+                            }
+                            await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                        } else {
+                            break;
+                        }
+                    }
                 }
             }
-        setPercent('99');
-        const imgdata = await getImage(taskID);
-        if(imgdata.image){
-            switchGenerateButton(e.target, 'end');
-            loadImage(imgdata.image, userStatus, aspectRatio);
-            await createPost(imgdata.image, imgdata.infotext, taskID, aspectRatio);
-            setPercent('100');
-            document.querySelector('.upscale').classList.remove('hidden');
+            if(!stopGenerateFlag) {
+                setPercent('99');
+                const imgdata = await getImage(taskID);
+                if (imgdata.image) {
+                    switchGenerateButton(e.target, 'end');
+                    loadImage(imgdata.image, userStatus, aspectRatio);
+                    await createPost(imgdata.image, imgdata.infotext, taskID, aspectRatio);
+                    setPercent('100');
+                    document.querySelector('.upscale').classList.remove('hidden');
 
-        } else {
-            setPercent('Error');
-        }
+                } else {
+                    setPercent('Error');
+                }
+            } else {
+                switchGenerateButton(e.target, 'stopped');
+                stopGenerateFlag = false;
+            }
     });
+
+
+
+    document.querySelector('.stop-generate').addEventListener('click', async(ev) =>{
+        ev.preventDefault();
+        stopGenerateFlag = true;
+        if (taskID !== "") { // Check if taskID is not empty before attempting to delete
+            let stopped = await deleteIdFromQueue(taskID);
+            setPercent('');
+            taskID = ""; // Reset taskID after stopping
+        }
+    })
 
     document.querySelector('.upscale').addEventListener('click', async (e1) => {
         e1.preventDefault();

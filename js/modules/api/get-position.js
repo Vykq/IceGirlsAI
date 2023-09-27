@@ -15,10 +15,14 @@ const getPosition = (ID) => {
     return fetch(themeUrl.apiUrl + "agent-scheduler/v1/task/"+ ID +"/position", requestOptions)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             const pos = data.data.position;
             const status = data.data.status;
             return { pos, status };
         })
-        .catch(error => console.error('error', error));
+        .catch(error => {
+                return error;
+            }
+        );
 }
 export default getPosition;

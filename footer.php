@@ -151,7 +151,7 @@
                         </li>
                     <?php } else {?>
                         <li>
-                            <span class="open-login-modal open-modal" data-id="login-modal">Log in</span>
+                            <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( site_url() ); ?>">Log In</a>
                         </li>
                     <?php } ?>
                 </ul>

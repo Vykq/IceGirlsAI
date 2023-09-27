@@ -72,44 +72,6 @@
     </div>
 </header>
 
-<div class="mobile-menu-wrapper modals mobile-menu">
-    <div class="mobile-container">
-        <div class="close-mobile-menu close-modal">
-            <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>Close</title> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Close"> <rect id="Rectangle" fill-rule="nonzero" x="0" y="0" width="24" height="24"> </rect> <line x1="16.9999" y1="7" x2="7.00001" y2="16.9999" id="Path" stroke="#FFA702FF" stroke-width="2" stroke-linecap="round"> </line> <line x1="7.00006" y1="7" x2="17" y2="16.9999" id="Path" stroke="#FFA702FF" stroke-width="2" stroke-linecap="round"> </line> </g> </g> </g></svg>
-        </div>
-        <div class="menu-area">
-            <nav>
-                <ul class="mobile-menu">
-                    <li>
-                        <a href="<?php echo get_home_url(); ?>">Home</a>
-                    </li>
-                    <li>
-                        <a href="/create/">Create</a>
-                    </li>
-                    <li>
-                        <a href="/hub/">Hub</a>
-                    </li>
-                    <?php if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
-                        <li>
-                            <a href="/premium/">Premium</a>
-                        </li>
-                    <?php } ?>
-                    <?php if(is_user_logged_in()) { ?>
-                        <li>
-                            <a href="/account/">Account</a>
-                        </li>
-                    <?php } else {?>
-                        <li>
-                            <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( $current_url ); ?>">Log In</a>
-                        </li>
-                    <?php } ?>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div>
-
-
 <?php if(!is_user_logged_in()) {?>
 <div class="backdrop models-modal-wrapper modals login-modal">
 

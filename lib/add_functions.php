@@ -94,4 +94,30 @@ function redirect_to_profile() {
 add_filter('login_redirect', 'redirect_to_profile');
 
 
+function getCurrentPatronCount(){
+
+$curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://www.patreon.com/api/oauth2/api/campaigns/10233790/pledges?include=patron.null',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bearer 5WiC9NIcacysksuv5E9Zz0zMDyAK4Lk7WqIRCFJLg_w',
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+
+
+            $data = json_decode($response, true);
+            return $data['meta']['count'];
+        }
 

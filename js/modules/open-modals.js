@@ -67,7 +67,7 @@ const openModals = () => {
             saveNotify.classList.add('show');
             openBtns.forEach(btn => {
                 if (btn.dataset.id === openedModalClass) {
-                    const modalText = 'Model: ' + input.nextElementSibling.textContent;
+                    const modalText = 'Style: ' + input.nextElementSibling.textContent;
 
                     if (modalText.length <= 26) {
                         btn.textContent = modalText;

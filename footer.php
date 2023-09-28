@@ -184,8 +184,6 @@
 </div>
 <?php endif; ?>
 
-
-
 <!-- AGE POPUP -->
 <div class="backdrop age-verification">
     <div class="main-modal">
@@ -200,6 +198,15 @@
 
     </div>
 </div>
+
+<?php
+    if(get_field('show','modal')) {
+        get_template_part('template-parts/main-modal');
+    }
+
+?>
+
+
 <?php  wp_footer(); ?>
 </body>
 </html>

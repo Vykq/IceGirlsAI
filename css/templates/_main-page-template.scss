@@ -32,6 +32,7 @@
           font-size: 3rem;
           line-height: 3.5rem;
           color:$black;
+          text-align: center;
           @media (max-width: 900px){
             text-align: center;
           }
@@ -40,6 +41,7 @@
           font-size: 1rem;
           line-height: 1.5rem;
           color:$black;
+          text-align: center;
         }
         .button-wrapper{
           margin:1rem 0 0;

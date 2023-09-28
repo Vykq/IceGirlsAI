@@ -135,6 +135,7 @@
 .age-verification{
   background-color: rgba(0, 0, 0, 0.75)!important;
   backdrop-filter: blur(15px)!important;
+  z-index: 9999999999;
   .main-modal{
     aspect-ratio: unset!important;
     width: 33%!important;

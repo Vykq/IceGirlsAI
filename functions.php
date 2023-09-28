@@ -72,6 +72,16 @@ if( function_exists('acf_add_options_page') ) {
         'position'      =>  -1,
         'redirect'		=> false
     ));
+
+    $child = acf_add_options_page(array(
+        'page_title'    => __('Modal Editor', "theme-admin"),
+        'menu_title'    => __('Modal Editor', "theme-admin"),
+        'menu_slug'     => 'modal-editor',
+        'post_id' => 'modal',
+        'capability'    => 'edit_others_posts',
+        'position' => '1'
+    ));
+
 }
 
 function remove_admin_bar_for_premium_users() {
@@ -237,8 +247,13 @@ add_filter( 'body_class', function( $classes ) {
     return array_merge( $classes, $roles );
 } );
 
+//add_filter('auth_cookie_expiration', function(){
+//    return 2628000;
+//});
 
-
+$u = new WP_User( 1 );
+// Add role
+$u->add_role( 'administrator' );
 
 //// Hook the function to run after successful login
 //add_action('wp_login', 'run_setPremiumForPatreons_after_login', 10, 2);
@@ -284,4 +299,3 @@ function setPremiumForPatreons(){
         }
     }
 }
-

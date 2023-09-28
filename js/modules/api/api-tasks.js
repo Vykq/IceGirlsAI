@@ -23,7 +23,7 @@ const apiTasks = () => {
 
     form.querySelector('.clear').addEventListener('click', (e) => {
         e.preventDefault();
-        document.querySelector('.choose-model').textContent = "Model";
+        document.querySelector('.choose-model').textContent = "Style";
         document.querySelector('.choose-scene').textContent = "Action";
         document.querySelector('.choose-char').textContent = "Characters";
         form.reset();
@@ -81,8 +81,6 @@ const apiTasks = () => {
                                 const totalPendingTasksCount = totalPendingTasksObj.length;
                                 await updateQueueInfo(currentPos.pos, '');
                                 status = await showQueueInfo(taskID);
-                                console.log('89');
-                                console.log(status);
                                 if (stopGenerateFlag) {
                                     break;
                                 }
@@ -107,8 +105,6 @@ const apiTasks = () => {
                                 const totalPendingTasksCount = totalPendingTasksObj.length;
                                 updateQueueInfo(currentPos.pos, '');
                                 currentTaskID = apiGetQueueInfo.currentTaskId;
-                                console.log('112');
-                                console.log(currentPos);
                                 if (taskID === "" || stopGenerateFlag) {
                                     break;
                                 }
@@ -135,9 +131,6 @@ const apiTasks = () => {
                                 let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                                 const totalPendingTasksCount = totalPendingTasksObj.length;
                                 await updateQueueInfo(currentPos.pos, '');
-
-                                console.log('136');
-                                console.log(status);
                                 if (stopGenerateFlag) {
                                     break;
                                 }
@@ -165,8 +158,6 @@ const apiTasks = () => {
                             const totalPendingTasksCount = totalPendingTasksObj.length;
                             await updateQueueInfo(currentPos.pos, '');
                             status = await showQueueInfo(taskID); // Retry until status is "done"
-                            console.log('162');
-                            console.log(status);
                             if (stopGenerateFlag) {
                                 break;
                             }

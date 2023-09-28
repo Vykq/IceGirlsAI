@@ -1,5 +1,6 @@
 const switchGenerateButton = (button, status) =>{
     const stopBtn = document.querySelector('.stop-generate');
+    const generateBtn = document.querySelector('.generate');
     const spinner = document.querySelector('.spinner');
     const notifier = document.querySelector('.notifier');
     const percents = document.querySelector('#steps-all');
@@ -47,7 +48,8 @@ const switchGenerateButton = (button, status) =>{
         percents.classList.add('hide');
         queue.classList.add('hide');
         button.disabled = true;
-        currentStep.textContent = "Upscalling..."
+        currentStep.textContent = "Upscalling...";
+        generateBtn.disabled = true;
     } else if (status === "end-upscale") {
         button.textContent = "Upscaled";
         spinner.classList.remove('show');
@@ -56,6 +58,7 @@ const switchGenerateButton = (button, status) =>{
         queue.classList.add('hide');
         currentStep.classList.add('hide');
         button.disabled = true;
+        generateBtn.disabled = false;
     }
 
 }

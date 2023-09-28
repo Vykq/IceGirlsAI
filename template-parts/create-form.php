@@ -48,7 +48,7 @@ if(in_array( 'premium', (array) $user->roles)){
             </div>
             <div class="grid">
                 <div class="single-btn">
-                    <button class="open-modal choose-model secondary-button" data-id="choose-model">Model</button>
+                    <button class="open-modal choose-model secondary-button" data-id="choose-model">Style</button>
                 </div>
                 <div class="single-btn">
                     <button class="open-modal choose-scene secondary-button" data-id="choose-scene">Action</button>
@@ -303,15 +303,15 @@ $actions = new WP_Query($args2);
                                             <?php if(in_array( 'premium', (array) $user->roles )) : ?>
                                                 <div class="action-input">
                                                     <input type="radio" name="action" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?>/>
-                                                    <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
+                                                    <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                                     <div class="action-image">
                                                         <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                                     </div>
                                                 </div>
                                         <?php else : ?>
-                                        <div class="action-input premium">
+                                                <div class="action-input premium">
                                             <input disabled type="radio" name="action" id="premium-only<?php echo get_the_id(); ?>" value="" data-id="premium-only"/>
-                                            <label for="premium-only<?php echo get_the_id(); ?>"><?php echo get_the_title(); ?></label>
+                                            <label for="premium-only<?php echo get_the_id(); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                             <div class="action-image">
                                                 <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                             </div>
@@ -327,7 +327,7 @@ $actions = new WP_Query($args2);
                                         <?php else : ?>
                                         <div class="action-input">
                                             <input type="radio" name="action" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?>/>
-                                            <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
+                                            <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                             <div class="action-image">
                                                 <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                             </div>
@@ -384,7 +384,7 @@ $actions = new WP_Query($args2);
                                             <?php if(in_array( 'premium', (array) $user->roles )) : ?>
                                                 <div class="action-input">
                                                     <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>"/>
-                                                    <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
+                                                    <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                                     <div class="action-image">
                                                         <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                                     </div>
@@ -392,7 +392,7 @@ $actions = new WP_Query($args2);
                                             <?php else : ?>
                                                 <div class="action-input premium">
                                                     <input disabled type="radio" name="char" id="premium-only<?php echo get_the_id(); ?>" value="" data-id="premium-only"/>
-                                                    <label for="premium-only<?php echo get_the_id(); ?>"><?php echo get_the_title(); ?></label>
+                                                    <label for="premium-only<?php echo get_the_id(); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                                     <div class="action-image">
                                                         <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                                     </div>
@@ -408,7 +408,7 @@ $actions = new WP_Query($args2);
                                         <?php else : ?>
                                             <div class="action-input">
                                                 <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>"/>
-                                                <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
+                                                <label for="<?php echo createSlug(get_the_title()); ?>"><<?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                                 <div class="action-image">
                                                     <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                                 </div>

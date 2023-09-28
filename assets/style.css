@@ -724,6 +724,7 @@ textarea {
 .age-verification {
   background-color: rgba(0, 0, 0, 0.75) !important;
   backdrop-filter: blur(15px) !important;
+  z-index: 9999999999;
 }
 .age-verification .main-modal {
   aspect-ratio: unset !important;
@@ -930,6 +931,303 @@ textarea {
   color: #1D1D1D;
 }
 
+.backdrop.main-modal-blur {
+  z-index: 3;
+}
+.backdrop.main-modal-blur.open {
+  display: flex !important;
+}
+.backdrop.main-modal-blur.disabled {
+  display: none !important;
+}
+.backdrop.main-modal-blur .main-modal {
+  width: 50%;
+  margin: auto;
+  aspect-ratio: unset;
+}
+@media (max-width: 1280px) {
+  .backdrop.main-modal-blur .main-modal {
+    width: 75%;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper {
+  position: relative;
+  padding: 0;
+  height: 100%;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .close-modal-button {
+  position: absolute;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+}
+@media (max-width: 900px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .close-modal-button {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: auto;
+  border-radius: 0;
+  border: none;
+  padding: 0;
+  margin-top: 0;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 900px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .inner-col-wrapper {
+  border: 1px solid #FFA702;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  position: relative;
+  height: 100%;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .inner-col-wrapper.modal-right {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  border-radius: 0;
+  padding: 1.5rem;
+  justify-content: space-between;
+}
+@media (max-width: 900px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .inner-col-wrapper.modal-right {
+    padding-top: 2rem;
+  }
+}
+@media (max-width: 900px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .inner-col-wrapper.modal-left {
+    display: none;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .image-wrapper {
+  width: 100%;
+  height: 100%;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: none;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid.premium {
+  border: none;
+  border-radius: 0;
+  padding: 0rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .col-title {
+  color: #FFA702;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2rem;
+  text-transform: uppercase;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .whole-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .whole-price .price {
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #FFA702;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .whole-price .price span {
+  font-size: 75%;
+  line-height: 100%;
+  color: #dedede;
+  vertical-align: top;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .whole-price .subprice {
+  display: inline-block;
+  color: #dedede;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer {
+  margin: 1.5rem 0;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock, .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock-explain {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .cell {
+  background-color: #FFA702;
+  color: #1D1D1D;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  width: 50%;
+  text-align: center;
+  padding: 0.5rem 0.33rem;
+  font-weight: 500;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .cell.left {
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .cell.right {
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .innercell {
+  position: relative;
+  display: flex;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .innercell .divider {
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0);
+  background-color: #1D1D1D;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .innercell.days {
+  box-shadow: 0px 0px 11px 0px #FFA702;
+  overflow: hidden;
+  border-radius: 0.25rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .innercell.days .cell {
+  background-color: #1D1D1D;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .innercell.days .cell span {
+  color: #FFA702;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock .innercell.days .divider {
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0);
+  background-color: #FFA702;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock-explain {
+  margin-top: 0.5rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock-explain p {
+  text-align: right;
+  color: #BFB3A9;
+  font-size: 0.5rem;
+  line-height: 0.75rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock-explain p.green {
+  text-align: right;
+  color: #FFA702;
+  font-size: 0.5rem;
+  line-height: 0.75rem;
+}
+@media (max-width: 450px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .timer .clock-explain p {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .date-subtitle {
+  color: #dedede;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+  margin-bottom: 1rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .spots-area {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  place-items: center;
+  margin-bottom: 0;
+  margin-top: auto;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .spots-area .subtitle {
+  color: #FFA702;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+  text-align: left;
+  width: 80%;
+  margin-left: 0;
+  margin-right: auto;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .spots-area .people-area {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .spots-area .people-area p {
+  color: #FFA702;
+  font-size: 2.5rem;
+  line-height: 2.75rem;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .spots-area .people-area p .current-number {
+  font-size: 80%;
+  vertical-align: baseline;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .spots-area .people-area p .max-number {
+  font-weight: 600;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area .main-button {
+  text-align: center;
+  width: fit-content;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid ul li {
+  text-align: center;
+  width: 100%;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #919191;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid ul li:last-of-type {
+  border-bottom: none;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid ul li span {
+  color: #dedede;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .note-area {
+  margin-top: 0.75rem;
+  text-align: center;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .note-area p {
+  font-size: 0.8rem;
+  color: #dedede;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .premium-background {
+  background-color: #5c5c5c;
+  padding: 1.5rem;
+}
+
 .tml {
   width: 60%;
   margin: 0 auto;
@@ -1093,6 +1391,7 @@ textarea {
   font-size: 3rem;
   line-height: 3.5rem;
   color: #1D1D1D;
+  text-align: center;
 }
 @media (max-width: 900px) {
   .homepage-hero .hero-wrapper .content-area .content-wrapper .title {
@@ -1103,6 +1402,7 @@ textarea {
   font-size: 1rem;
   line-height: 1.5rem;
   color: #1D1D1D;
+  text-align: center;
 }
 .homepage-hero .hero-wrapper .content-area .content-wrapper .button-wrapper {
   margin: 1rem 0 0;
@@ -2083,6 +2383,7 @@ textarea {
   opacity: 0.2;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .model-image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .action-image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .model-image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .action-image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .model-image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .action-image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .model-image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .action-image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .model-image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .action-image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .model-image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .action-image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .model-image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .action-image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .model-image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .action-image {
+  overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;
@@ -2096,6 +2397,7 @@ textarea {
   object-fit: cover;
   object-position: 50% 0;
   transform: none;
+  transition: 0.2s all ease-in-out;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .premium-notify {
   position: absolute;
@@ -2134,6 +2436,9 @@ textarea {
   text-align: center;
   font-size: 0.8rem;
   line-height: 1.1rem;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-action:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-action:hover .action-image img {
+  transform: scale(1.2) !important;
 }
 .backdrop .main-modal .modal-wrapper .content .grid {
   display: grid;

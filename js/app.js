@@ -14,7 +14,8 @@ import sendContactForm from "./modules/send-form-contact";
 import hubPage from "./modules/hub-page";
 import profilePage from "./modules/profile-page";
 import ageVerification from "./modules/age-verification";
-
+import closeMainModal from "./modules/close-main-modal";
+import timer from "./modules/countdown-timer";
 window.addEventListener('DOMContentLoaded', () => {
   openModals();
   openModalOnLink();
@@ -28,6 +29,24 @@ window.addEventListener('DOMContentLoaded', () => {
     showTabs();
     updateRangeValue();
   }
+
+  if (document.querySelector('.main-modal-blur')) {
+    closeMainModal();
+    const popup = document.querySelector('.main-modal-blur');
+    const html = document.querySelector('html');
+    if(localStorage.getItem('premium-modal') === 'Off'){
+      popup.classList.add('disabled');
+    }
+    else{
+      setTimeout(function(){
+        popup.classList.add('open');
+        html.classList.add('modal-is-open');
+        console.log('1');
+      }, parseFloat(modal_timer*1000));
+    }
+      timer('.timer', deadline);
+  }
+
 
   if(document.querySelector('.account-page-template')){
     profilePage();

@@ -941,7 +941,7 @@ textarea {
   display: none !important;
 }
 .backdrop.main-modal-blur .main-modal {
-  width: 50%;
+  width: 33%;
   margin: auto;
   aspect-ratio: unset;
 }
@@ -983,12 +983,7 @@ textarea {
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-@media (max-width: 900px) {
-  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid {
-    grid-template-columns: 1fr;
-  }
+  grid-template-columns: 1fr;
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .inner-col-wrapper {
   border: 1px solid #FFA702;
@@ -2718,6 +2713,41 @@ textarea {
 .hub-page-template .container .generated-images-wrapper .single-image.horizontal {
   aspect-ratio: 16/9;
 }
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  transform: translate(-50%, -50%);
+}
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p {
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  color: #dedede;
+}
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p span {
+  color: #FFA702;
+  font-weight: 700;
+}
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.25rem;
+  font-weight: 300;
+}
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note span {
+  color: #FFA702;
+}
 .hub-page-template .container .generated-images-wrapper .single-image a {
   display: block;
   width: 100%;
@@ -2857,11 +2887,24 @@ textarea {
   line-height: 2rem;
   text-transform: uppercase;
 }
+.premium-page-template .container .grid .inner-col-wrapper .subtitle {
+  margin-top: 0.5rem;
+  color: #FFA702;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
 .premium-page-template .container .grid .inner-col-wrapper .whole-price {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.premium-page-template .container .grid .inner-col-wrapper .whole-price .row {
+  display: flex;
+  gap: 0.25rem;
 }
 .premium-page-template .container .grid .inner-col-wrapper .whole-price .price {
   font-size: 2rem;
@@ -2880,6 +2923,24 @@ textarea {
   color: #dedede;
   vertical-align: top;
 }
+.premium-page-template .container .grid .inner-col-wrapper .whole-price .old-price {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 600;
+  text-align: center;
+  color: #FFA702;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  text-decoration: line-through;
+}
+.premium-page-template .container .grid .inner-col-wrapper .whole-price .old-price span {
+  font-size: 75%;
+  line-height: 100%;
+  color: #dedede;
+  vertical-align: top;
+}
 .premium-page-template .container .grid .inner-col-wrapper .whole-price .subprice {
   display: inline-block;
   color: #dedede;
@@ -2891,11 +2952,19 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   margin: 1rem 0;
 }
 .premium-page-template .container .grid .inner-col-wrapper .button-area .main-button {
   text-align: center;
   width: fit-content;
+}
+.premium-page-template .container .grid .inner-col-wrapper .button-area .spots-left {
+  color: #FFA702;
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 500;
+  margin-top: 0.75rem;
 }
 .premium-page-template .container .grid .inner-col-wrapper ul {
   list-style-type: none;

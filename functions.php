@@ -2,6 +2,7 @@
 require_once('lib/add_functions.php');
 require_once('lib/stable-diffusion-api.php');
 require_once('lib/free-premium.php');
+require_once('vendor/autoload.php');
 function webpack_files() {
     wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), time(), true);
     //wp_enqueue_script('gsap', get_theme_file_uri('assets/gsap.min.js'), array(), time(), true);
@@ -295,7 +296,104 @@ function setPremiumForPatreons(){
 
         if($member === "member"){
             $user = get_user_by('ID', $user_id);
-            $user->set_role('premium');
-        }
+            $user->set_role('premium'); ?>
+        <?php }
     }
 }
+
+
+
+
+
+add_action('wp_head', 'setAffiliate');
+
+function setAffiliate(){
+    $user = wp_get_current_user();
+    $user_id = $user->id;
+    $user_info = get_user_meta($user_id);
+    $patreon_info = array();
+    if($user_info) {
+        foreach ($user_info as $key => $value) {
+            if (strpos($key, 'patreon') === 0) {
+                $patreon_info[$key] = $value;
+            }
+        }
+    }
+
+    if (isset($patreon_info['patreon_latest_patron_info'][0])) {
+        $patron_info = unserialize($patreon_info['patreon_latest_patron_info'][0]);
+        $relationships = $patron_info['data']['relationships'];
+
+        foreach($relationships as $rel){
+            $member = $rel['data'][0]['type'];
+        }
+
+        if($member === "member"){ ?>
+            <script type="text/javascript">
+                var goaffproOrder = {
+                    number : <?php echo $user_id; ?>,
+                    total: 15
+                }
+                goaffproTrackConversion(goaffproOrder);
+            </script>
+        <?php }
+    }
+}
+
+
+
+
+function delete_old_posts_media() {
+    global $wpdb;
+
+    // Define the post type you want to delete (e.g., 'post' for regular blog posts).
+    $post_type = 'generated-images';
+
+    // Define the number of days (in seconds) for posts to be considered "old."
+    $days_old = 4 * 24 * 60 * 60; // 7 days
+
+    // Calculate the date threshold (current time minus the specified number of seconds).
+    $date_threshold = current_time('timestamp') - $days_old;
+
+    // Get the list of post IDs to delete.
+    $post_ids = $wpdb->get_col(
+        $wpdb->prepare(
+            "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_date < %s",
+            $post_type,
+            date('Y-m-d H:i:s', $date_threshold)
+        )
+    );
+
+    // Loop through the post IDs and delete each post, its featured image, and custom field media.
+    foreach ($post_ids as $post_id) {
+        // Get the featured image ID.
+        $thumbnail_id = get_post_thumbnail_id($post_id);
+
+        // Get the "watermarked_image" custom field value (URL).
+        $watermarked_image_url = get_field('watermarked_image', $post_id);
+
+        // Delete the featured image.
+        if ($thumbnail_id) {
+            wp_delete_attachment($thumbnail_id, true);
+        }
+
+        // Delete the "watermarked_image" media file.
+        if ($watermarked_image_url) {
+            // Convert the URL to an attachment ID.
+            $attachment_id = attachment_url_to_postid($watermarked_image_url);
+
+            // Delete the attachment if it exists.
+            if ($attachment_id) {
+                wp_delete_attachment($attachment_id, true);
+            }
+        }
+
+        // Delete the post itself.
+        wp_delete_post($post_id, true);
+    }
+}
+
+// Hook this function to a specific action, e.g., 'init' or 'wp_loaded'.
+//add_action('init', 'delete_old_posts_media');
+//
+

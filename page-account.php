@@ -25,7 +25,7 @@ if(!is_user_logged_in()){ ?>
     $args = array(
         'post_type' => 'generated-images', // Your custom post type
         'author' => $user,
-        'posts_per_page' => 9, // Retrieve all posts by the author
+        'posts_per_page' => 12, // Retrieve all posts by the author
     );
 
     $images = new WP_Query($args);

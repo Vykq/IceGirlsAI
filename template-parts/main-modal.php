@@ -11,28 +11,6 @@ if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
                 </div>
                 <div class="content">
                     <div class="modal-grid wrapper">
-                        <div class="left">
-                            <div class="inner-col-wrapper modal-left">
-                                <div class="image-wrapper">
-                                    <?php
-                                    $the_query = new WP_Query( array(
-                                        'post_type'      => 'generated-images',
-                                        'orderby'        => 'rand',
-                                        'posts_per_page' => 1,
-                                        'meta_query'     => array(
-                                            array(
-                                                'key'   => 'size',
-                                                'value' => '512x960',
-                                                'compare' => '=',
-                                            ),
-                                        ),
-                                    ) );
-                                    while ( $the_query->have_posts() ) : $the_query->the_post();
-                                        the_post_thumbnail();
-                                    endwhile; ?>
-                                </div>
-                            </div>
-                        </div>
                         <div class="right">
                             <div class="inner-col-wrapper modal-right">
                                 <div class="right-title">

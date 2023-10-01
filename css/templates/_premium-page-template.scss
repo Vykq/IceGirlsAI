@@ -25,11 +25,24 @@
           line-height: 2rem;
           text-transform: uppercase;
         }
+        .subtitle{
+          margin-top: .5rem;
+          color:$go;
+          text-align: center;
+          font-size: 0.9rem;
+          font-weight: 400;
+          line-height: 1rem;
+          text-transform: uppercase;
+        }
         .whole-price{
           display: flex;
           align-items: center;
           justify-content: center;
           flex-direction: column;
+          .row{
+            display: flex;
+            gap:.25rem;
+          }
         .price{
           font-size: 2rem;
           line-height: 2rem;
@@ -47,6 +60,24 @@
             vertical-align: top;
           }
         }
+          .old-price{
+            font-size: 1rem;
+            line-height: 1rem;
+            font-weight: 600;
+            text-align: center;
+            color:$go;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: start;
+            text-decoration: line-through;
+            span{
+              font-size: 75%;
+              line-height: 100%;
+              color:#dedede;
+              vertical-align: top;
+            }
+          }
         .subprice{
           display: inline-block;
           color:#dedede;
@@ -59,10 +90,18 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          flex-direction: column;
           margin:1rem 0;
           .main-button {
             text-align: center;
             width: fit-content;
+          }
+          .spots-left{
+            color:$go;
+            font-size:1rem;
+            line-height: 1rem;
+            font-weight: 500;
+            margin-top: .75rem;
           }
         }
         ul{

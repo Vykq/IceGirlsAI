@@ -37,7 +37,7 @@
                     <nav>
                         <ul class="footer-menu">
                             <li>
-                                <a href="/affiliate/">Become an affiliate</a>
+                                <a href="https://icegirls.goaffpro.com/" target="_blank">Become an affiliate</a>
                             </li>
                             <li>
                                 <a href="mail:<?php the_field('email','api'); ?>"><?php the_field('email','api'); ?></a>

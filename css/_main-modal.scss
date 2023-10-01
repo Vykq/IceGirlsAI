@@ -10,7 +10,7 @@
     }
 
     .main-modal {
-      width: 50%;
+      width: 33%;
       margin: auto;
       aspect-ratio: unset;
       @media(max-width: 1280px) {
@@ -47,10 +47,7 @@
           margin-top: 0;
           .modal-grid{
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            @media (max-width: 900px){
-              grid-template-columns: 1fr;
-            }
+            grid-template-columns: 1fr;
             .inner-col-wrapper {
               border: 1px solid $go;
               border-radius: .5rem;

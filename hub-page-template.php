@@ -4,18 +4,32 @@
  */
 
 get_header();
-$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-$args = array(
-    'post_type' => 'generated-images',
-    'posts_per_page' => 12,
-    'post_status' => 'publish',
-    'paged' => $paged
 
-);
+
+$user = wp_get_current_user();
+if(in_array( 'premium', (array) $user->roles)) {
+    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+    $args = array(
+        'post_type' => 'generated-images',
+        'posts_per_page' => 12,
+        'post_status' => 'publish',
+        'paged' => $paged
+
+    );
+} else {
+    $args = array(
+        'post_type' => 'generated-images',
+        'posts_per_page' => 11,
+        'post_status' => 'publish',
+
+    );
+}
+
 
 $images = new WP_Query($args);
 
-$user = wp_get_current_user();
+
+
 $isPremiumClass = "";
 if ( in_array( 'premium', (array) $user->roles ) ) {
     $isPremiumClass = "no-watermark-image";
@@ -39,6 +53,7 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
                         $imageSize = "normal";
                     }
                     ?>
+                <?php if(get_field('watermarked_image', get_the_id())){ ?>
                     <div class="single-image <?php echo $imageSize; ?>">
                         <a href="<?php echo get_permalink(); ?>">
                             <div class="single-wrapper">
@@ -65,10 +80,34 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
                         </a>
 
                     </div>
+            <?php } ?>
                 <?php endwhile; ?>
+                <?php if(!in_array( 'premium', (array) $user->roles)) {
+                    $count = array(
+                        'post_type' => 'generated-images',
+                        'posts_per_page' => -1,
+                        'post_status' => 'publish',
+
+                    );
+                    $counter = new WP_Query($count);
+                    ?>
+                    <div class="single-image normal premium-notice">
+                        <a href="/premium/">
+                            <div class="single-wrapper premium-wrapper">
+                                <div class="premium-area">
+                                    <p class="offer">To view more images you need <span>Premium</span></p>
+                                    <p class="note">You can see only 11/<span><?php echo $counter->post_count; ?></span> images</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+
+
             </div>
         <?php
-            wp_reset_postdata(); ?>
+            wp_reset_postdata();
+                if(in_array( 'premium', (array) $user->roles)) {?>
             <div class="pagination">
                 <?php
                 echo paginate_links( array(
@@ -88,6 +127,7 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
                 ) );
                 ?>
             </div>
+                    <?php } ?>
             <?php endif; ?>
     </div>
 </div>

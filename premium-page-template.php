@@ -36,12 +36,20 @@ get_header();
             <div class="right">
                 <div class="inner-col-wrapper premium">
                     <p class="col-title"><?php the_field('premium_title'); ?></p>
+                    <?php if(get_field('premium_subtitle')) { ?>
+                        <p class="subtitle"><?php the_field('premium_subtitle'); ?></p>
+                    <?php } ?>
                     <div class="whole-price">
-                        <p class="price"> <span class="dollar">$</span><?php the_field('premium_price'); ?></p>
+                        <div class="row">
+                            <p class="price"> <span class="dollar">$</span><?php the_field('premium_price'); ?></p>
+                            <p class="old-price"> <span class="dollar">$</span><?php the_field('premium_old_price'); ?></p>
+                        </div>
+
                         <p class="subprice">per month</p>
                     </div>
                     <div class="button-area">
                     <a class="main-button" target="_blank" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
+                        <p class="spots-left"><?php echo getCurrentPatronCount(); ?>/100 spots left.</p>
                     </div>
                     <?php if(have_rows('premium_freatures')) : ?>
                         <ul class="benefits">

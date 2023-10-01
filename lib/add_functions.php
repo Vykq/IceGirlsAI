@@ -96,28 +96,57 @@ add_filter('login_redirect', 'redirect_to_profile');
 
 function getCurrentPatronCount(){
 
-$curl = curl_init();
+    $curl = curl_init();
 
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://www.patreon.com/api/oauth2/api/campaigns/10233790/pledges?include=patron.null',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_HTTPHEADER => array(
-                    'Authorization: Bearer 5WiC9NIcacysksuv5E9Zz0zMDyAK4Lk7WqIRCFJLg_w',
-                ),
-            ));
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.patreon.com/oauth2/v2/campaigns/11111306/members?include=currently_entitled_tiers&fields%5Btier%5D=patron_count&fields%5Bmember%5D=email',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer 5WiC9NIcacysksuv5E9Zz0zMDyAK4Lk7WqIRCFJLg_w',
+            'Cookie: __cf_bm=sDwnGsk9sJuOYtVgVJpJvEsAG0EM9282bBdldlXWp0Q-1696062070-0-Ae7c/7dbF/ySK4VrX+g/Co/Xt+SjcOWeZLWsgEGGJ3nOXII0TGRhPgZ1Wwk3hsYtf42yjx7wWKjFEd+9Q5eP+oXAjYTtOIT1hFLNTHcuRy6R; a_csrf=e1ws07llb1ud7f4RRSa_9xlqSl8sZvl08dFnSDdkhus; patreon_device_id=4d3b3606-22bc-4745-a591-fbf75de1cc13; AWSALBTG=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF; AWSALBTGCORS=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF'
+        ),
+    ));
 
-            $response = curl_exec($curl);
+    $response = curl_exec($curl);
 
-            curl_close($curl);
+    curl_close($curl);
+    $responseData = json_decode($response, true);
 
+    $tierPatronCounts = [];
 
-            $data = json_decode($response, true);
-            return $data['meta']['count'];
+    // Iterate through the "data" array in the JSON response
+    foreach ($responseData['data'] as $member) {
+        // Check if the "currently_entitled_tiers" data is not empty
+        if (!empty($member['relationships']['currently_entitled_tiers']['data'])) {
+            // Retrieve the tier ID from the "tier" data
+            $tierId = $member['relationships']['currently_entitled_tiers']['data'][0]['id'];
+
+            // Find the corresponding tier information from the "included" section
+            foreach ($responseData['included'] as $tierInfo) {
+                if ($tierInfo['id'] === $tierId && $tierInfo['type'] === 'tier') {
+                    // Get the patron count for this tier
+                    $patronCount = $tierInfo['attributes']['patron_count'];
+
+                    // Store the patron count in the array using the tier ID as the key
+                    $tierPatronCounts[$tierId] = $patronCount;
+                    //echo $patronCount;
+                    // You can also access the email of the member if needed
+                    $email = $member['attributes']['email'];
+                    //echo "Email: $email, Tier Patron Count: $patronCount\n";
+
+                    break; // Exit the inner loop once we find the tier information
+                }
+            }
+        }
+    }
+
+    // Now, you have an array $tierPatronCounts containing the patron counts for each tier
+    return $tierPatronCounts['10233790'];
         }
 

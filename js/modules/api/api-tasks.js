@@ -41,10 +41,9 @@ const apiTasks = () => {
 
         e.preventDefault();
 
-            switchGenerateButton(e.target, 'start');
-            const whiteBlock = document.querySelector('#current-step');
-            taskID = await apiSendTask(premiumBody);
-            console.log(taskID);
+        switchGenerateButton(e.target, 'start');
+        taskID = await apiSendTask(premiumBody);
+        console.log(taskID);
 
 
         setPercent('0');
@@ -58,7 +57,7 @@ const apiTasks = () => {
 
 
 
-            let apiGetQueueInfo = await apiGetQueue(userStatus);
+            let apiGetQueueInfo = await apiGetQueue();
             let currentTaskID = apiGetQueueInfo.currentTaskId;
             let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
             let queueTasks = apiGetQueueInfo.taskObjects;
@@ -94,11 +93,18 @@ const apiTasks = () => {
                 } else {
                     if (!stopGenerateFlag) {
                         setPercent('33');
+                        const randomizer = Math.floor(Math.random() * 2);
+                        if(randomizer === 1){
+                            console.log('s');
+                            const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
+                            const positionToInsert = await checkTasks(pendingTaskIds, taskID);
+                            const moveOverID = pendingTaskIds[positionToInsert];
+                            await moveQueue(taskID, moveOverID);
+                        }
                         let currentTaskID = apiGetQueueInfo.currentTaskId;
                         while (currentTaskID !== taskID) {
                             if(!stopGenerateFlag) {
                                 setPercent('66');
-                                whiteBlock.textContent = 'Get PREMIUM to skip the queue';
                                 apiGetQueueInfo = await apiGetQueue();
                                 const currentPos = await getPosition(taskID);
                                 let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;

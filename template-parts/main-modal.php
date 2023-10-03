@@ -79,7 +79,29 @@ if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
                                 <div class="spots-area">
                                     <p class="subtitle"><?php the_field('subtitle_2','modal'); ?></p>
                                     <div class="people-area">
-                                        <p><span class="current-number"><?php echo getCurrentPatronCount(); ?></span><span class="divider">/</span><span class="max-number"><?php the_field('max_people','modal'); ?></span> </p>
+                                        <?php
+
+                                        $currentPatrons = getCurrentPatronCount();
+                                        if ($currentPatrons < 20) {
+                                            $currentPatrons = $currentPatrons + 70;
+                                        } else if ($currentPatrons < 30) {
+                                            $currentPatrons = $currentPatrons + 60;
+                                        } else if ($currentPatrons < 40) {
+                                            $currentPatrons = $currentPatrons + 50;
+                                        } else if ($currentPatrons < 50) {
+                                            $currentPatrons = $currentPatrons + 40;
+                                        } else if ($currentPatrons < 60) {
+                                            $currentPatrons = $currentPatrons + 30;
+                                        } else if ($currentPatrons < 70) {
+                                            $currentPatrons = $currentPatrons + 20;
+                                        } else if ($currentPatrons < 80) {
+                                            $currentPatrons = $currentPatrons + 10;
+                                        } else if ($currentPatrons > 80 && $currentPatrons < 100) {
+
+                                        }
+
+                                        ?>
+                                        <p><span class="current-number"><?php echo $currentPatrons; ?></span><span class="divider">/</span><span class="max-number"><?php the_field('max_people','modal'); ?></span> </p>
                                     </div>
                                 </div>
 

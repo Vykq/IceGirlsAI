@@ -2215,6 +2215,16 @@ textarea {
 .creation .container .grid .right .upscale-text.hidden {
   display: none;
 }
+.creation .container .grid .right .button-area-premium {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+.creation .container .grid .right .button-area-premium a {
+  display: inline-block;
+  width: max-content;
+}
 
 .backdrop {
   position: fixed;
@@ -3449,4 +3459,193 @@ textarea {
   border-radius: 0.25rem;
   width: 100%;
   height: 100%;
+}
+
+.post-archive-page {
+  margin: 2.5rem 0;
+}
+.post-archive-page .container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1920px;
+}
+@media (max-width: 1200px) {
+  .post-archive-page .container {
+    width: 85%;
+  }
+}
+@media (max-width: 1024px) {
+  .post-archive-page .container {
+    width: 83%;
+  }
+}
+@media (max-width: 768px) {
+  .post-archive-page .container {
+    width: 90%;
+  }
+}
+.post-archive-page .container .posts-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 5rem;
+  column-gap: 2rem;
+}
+@media (max-width: 900px) {
+  .post-archive-page .container .posts-area {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+.post-archive-page .container .posts-area .single-post a {
+  width: 100%;
+  text-decoration: none;
+  text-transform: none;
+  height: 100%;
+}
+.post-archive-page .container .posts-area .single-post a .image-area {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.post-archive-page .container .posts-area .single-post a .image-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: none;
+  transition: 0.2s all ease-in-out;
+}
+.post-archive-page .container .posts-area .single-post a .post-info {
+  width: 100%;
+}
+.post-archive-page .container .posts-area .single-post a .post-info .date {
+  padding: 1rem 0 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: #dedede;
+}
+.post-archive-page .container .posts-area .single-post a .post-info .title {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: #FFA702;
+}
+.post-archive-page .container .posts-area .single-post a .post-info .content {
+  margin-top: 1rem;
+}
+.post-archive-page .container .posts-area .single-post a .post-info .content p {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: #dedede;
+}
+.post-archive-page .container .posts-area .single-post:hover .image-area img {
+  transform: scale(1.1);
+}
+
+.post-image-area {
+  margin: 2.5rem 0;
+}
+.post-image-area .container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1920px;
+}
+@media (max-width: 1200px) {
+  .post-image-area .container {
+    width: 85%;
+  }
+}
+@media (max-width: 1024px) {
+  .post-image-area .container {
+    width: 83%;
+  }
+}
+@media (max-width: 768px) {
+  .post-image-area .container {
+    width: 90%;
+  }
+}
+.post-image-area .container .image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  max-height: 700px;
+}
+.post-image-area .container .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: none;
+}
+
+.single-post .container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1920px;
+}
+@media (max-width: 1200px) {
+  .single-post .container {
+    width: 85%;
+  }
+}
+@media (max-width: 1024px) {
+  .single-post .container {
+    width: 83%;
+  }
+}
+@media (max-width: 768px) {
+  .single-post .container {
+    width: 90%;
+  }
+}
+.single-post .container .grid {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+  place-items: baseline;
+}
+@media (max-width: 500px) {
+  .single-post .container .grid {
+    grid-template-columns: 1fr;
+  }
+}
+.single-post .container .grid .left .image {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 500px) {
+  .single-post .container .grid .left .image {
+    aspect-ratio: 4/3;
+  }
+}
+.single-post .container .grid .left .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: none;
+}
+@media (max-width: 900px) {
+  .single-post .container .grid .left .image img {
+    object-fit: contain;
+  }
+}
+@media (max-width: 500px) {
+  .single-post .container .grid .left .image img {
+    object-fit: cover;
+  }
+}
+.single-post .container .grid .right {
+  color: #dedede;
+}
+.single-post .container .grid .right h1 {
+  color: #FFA702;
+  margin-bottom: 1.5rem;
+}
+.single-post .container .grid .right a {
+  color: #FFA702;
 }

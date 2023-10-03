@@ -210,6 +210,7 @@ function theme_post_types()
             'title',
             'page-attributes',
             'thumbnail',
+            'author'
         ),
         'menu_icon' => 'dashicons-format-image'
     ));
@@ -332,7 +333,7 @@ function setAffiliate(){
             <script type="text/javascript">
                 var goaffproOrder = {
                     number : <?php echo $user_id; ?>,
-                    total: 15
+                    total: 10
                 }
                 goaffproTrackConversion(goaffproOrder);
             </script>

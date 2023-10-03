@@ -29,8 +29,15 @@ get_header();
                     <p><span id="current-step"></span></p>
                     </div>
                     <span class="loader"></span>
-                    <p id="premium-queue">Queue: <span id="yourpos">1</span></p>
+                    <p id="premium-queue">Queue: <span id="yourpos">Calculating...</span></p>
                 </div>
+            </div>
+            <div class="button-area-premium">
+                <?php
+                $user = wp_get_current_user();
+                if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
+                    <a href="/premium/" target="_blank" class="main-button">Get premium</a>
+                <?php } ?>
             </div>
             <div class="button-area">
                 <button class="upscale main-button hidden">Upscale & download!</button>

@@ -49,7 +49,27 @@ get_header();
                     </div>
                     <div class="button-area">
                     <a class="main-button" target="_blank" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
-                        <p class="spots-left"><?php echo getCurrentPatronCount(); ?>/100 spots left.</p>
+                        <?php
+                        $currentPatrons = getCurrentPatronCount();
+                        if($currentPatrons < 20){
+                            $currentPatrons = $currentPatrons + 70;
+                        } else if ($currentPatrons < 30) {
+                            $currentPatrons = $currentPatrons + 60;
+                        } else if ($currentPatrons < 40) {
+                            $currentPatrons = $currentPatrons + 50;
+                        } else if ($currentPatrons < 50) {
+                            $currentPatrons = $currentPatrons + 40;
+                        } else if ($currentPatrons < 60) {
+                            $currentPatrons = $currentPatrons + 30;
+                        } else if ($currentPatrons < 70) {
+                            $currentPatrons = $currentPatrons + 20;
+                        } else if ($currentPatrons < 80) {
+                            $currentPatrons = $currentPatrons + 10;
+                        } else if ($currentPatrons > 80 && $currentPatrons < 100) {
+
+                        }
+                        ?>
+                        <p class="spots-left"><?php echo $currentPatrons; ?>/100 Took the deal.</p>
                     </div>
                     <?php if(have_rows('premium_freatures')) : ?>
                         <ul class="benefits">

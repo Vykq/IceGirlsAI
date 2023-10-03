@@ -1,0 +1,43 @@
+.single-post{
+  .container{
+    @include contentStructure();
+    .grid{
+      display: grid;
+      grid-template-columns: 0.5fr 1fr;
+      gap:2rem;
+      margin:2rem 0;
+      place-items: baseline;
+      @media (max-width: 500px){
+        grid-template-columns: 1fr;
+      }
+      .left{
+        .image{
+          width: 100%;
+          height: 100%;
+          @media (max-width: 500px){
+            aspect-ratio: 4/3;
+          }
+          img{
+            @include imageCover(50%, 50%);
+            @media (max-width: 900px){
+              object-fit: contain;
+            }
+            @media (max-width: 500px){
+              object-fit: cover;
+            }
+          }
+        }
+      }
+      .right{
+        h1{
+          color:$go;
+          margin-bottom: 1.5rem;
+        }
+        color:#dedede;
+        a{
+          color:$go;
+        }
+      }
+    }
+  }
+}

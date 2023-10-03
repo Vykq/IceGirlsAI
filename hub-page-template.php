@@ -13,7 +13,13 @@ if(in_array( 'premium', (array) $user->roles)) {
         'post_type' => 'generated-images',
         'posts_per_page' => 12,
         'post_status' => 'publish',
-        'paged' => $paged
+        'paged' => $paged,
+        'meta_query' => array(
+            array(
+                'key' => 'watermarked_image', // Replace with your actual custom field name
+                'compare' => 'EXISTS', // Check if the custom field exists
+            ),
+        ),
 
     );
 } else {
@@ -21,7 +27,12 @@ if(in_array( 'premium', (array) $user->roles)) {
         'post_type' => 'generated-images',
         'posts_per_page' => 11,
         'post_status' => 'publish',
-
+        'meta_query' => array(
+            array(
+                'key' => 'watermarked_image', // Replace with your actual custom field name
+                'compare' => 'EXISTS', // Check if the custom field exists
+            ),
+        ),
     );
 }
 

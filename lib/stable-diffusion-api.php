@@ -17,7 +17,7 @@ function sd_generate_image() {
             $post_id = wp_insert_post(array(
                 'post_title'    => $_POST['taskID'],
                 'post_status'   => 'publish',
-                'post_author'   => 1,
+                'post_author'   => $user->id,
                 'post_type' => 'taskids'
             ));
 

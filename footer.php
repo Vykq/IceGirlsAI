@@ -1,6 +1,6 @@
 </main>
 <?php
-
+$user = wp_get_current_user();
 ?>
 <footer>
     <div class="main-footer">
@@ -75,6 +75,9 @@
                                 <a href="/hub/">Hub</a>
                             </li>
                             <li>
+                                <a href="/blog/">Blog</a>
+                            </li>
+                            <li>
                                 <a href="/premium/">Premium</a>
                             </li>
                         </ul>
@@ -140,6 +143,9 @@
                     <li>
                         <a href="/hub/">Hub</a>
                     </li>
+                    <li>
+                        <a href="/blog/">Blog</a>
+                    </li>
                     <?php if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
                         <li>
                             <a href="/premium/">Premium</a>
@@ -161,7 +167,7 @@
 </div>
 
      <?php
-     $user = wp_get_current_user();
+
      if(!in_array( 'premium', (array) $user->roles )) : ?>
     <div class="backdrop models-modal-wrapper modals premium-modal">
     <div class="main-modal">

@@ -46,6 +46,9 @@
                             <li>
                                 <a href="/hub/">Hub</a>
                             </li>
+                            <li>
+                                <a href="/blog/">Blog</a>
+                            </li>
                             <?php if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
                                 <li>
                                     <a href="/premium/">Premium</a>

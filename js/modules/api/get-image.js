@@ -1,4 +1,4 @@
-const getImage = (Id) => {
+const getImage = (Id, isPremium) => {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -9,7 +9,12 @@ const getImage = (Id) => {
         redirect: 'follow'
     };
 
-    return fetch(themeUrl.apiUrl + "agent-scheduler/v1/results/" + Id, requestOptions)
+    let apiUrl = themeUrl.apiUrl;
+    if(!isPremium){
+        apiUrl = themeUrl.apiUrlFree;
+    }
+
+    return fetch(apiUrl + "agent-scheduler/v1/results/" + Id, requestOptions)
         .then(response => response.json())
         .then(data => {
             let image = data.data[0].image;

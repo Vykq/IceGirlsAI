@@ -10,14 +10,14 @@ function webpack_files() {
     //wp_enqueue_script('lenis', get_theme_file_uri('assets/lenis.min.js'), array(), time(), true);
     //wp_enqueue_script('imagesloaded', get_theme_file_uri('assets/imagesloaded.pkgd.min.js'), array(), time(), true);
     wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), time());
-    wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), time(), true);
+    wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), '1', true);
     wp_localize_script( 'webpack-js', 'themeUrl',
         array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce( 'wp-smart-sign-nonce' ),
             'themeUrl' => get_theme_file_uri(),
-           // 'apiUrl' => 'http://127.0.0.1:7860/',
             'apiUrl' => get_field('api_ip','api'),
+            'apiUrlFree' => get_field('api_ip_free','api'),
             'url_empty' => "Your URL field is empty, enter an URL.",
             'loading' => "Loading...",
             'success' => "Thank you! We got your submition.",
@@ -351,7 +351,7 @@ function delete_old_posts_media() {
     $post_type = 'generated-images';
 
     // Define the number of days (in seconds) for posts to be considered "old."
-    $days_old = 4 * 24 * 60 * 60; // 7 days
+    $days_old = 7 * 24 * 60 * 60; // 7 days
 
     // Calculate the date threshold (current time minus the specified number of seconds).
     $date_threshold = current_time('timestamp') - $days_old;

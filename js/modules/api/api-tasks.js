@@ -57,9 +57,10 @@ const apiTasks = () => {
 
 
 
-            let apiGetQueueInfo = await apiGetQueue();
+            let apiGetQueueInfo = await apiGetQueue(userStatus);
             let currentTaskID = apiGetQueueInfo.currentTaskId;
             let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+            console.log('total tasks:' + totalPendingTasksObj)
             let queueTasks = apiGetQueueInfo.taskObjects;
             if (currentTaskID !== taskID) {
                 setPercent('16');
@@ -68,18 +69,18 @@ const apiTasks = () => {
                         const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
                         const positionToInsert = await checkTasks(pendingTaskIds, taskID);
                         const moveOverID = pendingTaskIds[positionToInsert];
-                        await moveQueue(taskID, moveOverID);
+                        await moveQueue(taskID, moveOverID, userStatus);
                         setPercent('33');
-                        let status = await showQueueInfo(taskID);
+                        let status = await showQueueInfo(taskID, userStatus);
                         while (status !== "done") {
                             if(!stopGenerateFlag) {
                                 setPercent('66');
-                                apiGetQueueInfo = await apiGetQueue();
-                                const currentPos = await getPosition(taskID);
+                                apiGetQueueInfo = await apiGetQueue(userStatus);
+                                const currentPos = await getPosition(taskID, userStatus);
                                 let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                                 const totalPendingTasksCount = totalPendingTasksObj.length;
                                 await updateQueueInfo(currentPos.pos, '');
-                                status = await showQueueInfo(taskID);
+                                status = await showQueueInfo(taskID, userStatus);
                                 if (stopGenerateFlag) {
                                     break;
                                 }
@@ -99,14 +100,14 @@ const apiTasks = () => {
                             const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
                             const positionToInsert = await checkTasks(pendingTaskIds, taskID);
                             const moveOverID = pendingTaskIds[positionToInsert];
-                            await moveQueue(taskID, moveOverID);
+                            await moveQueue(taskID, moveOverID, userStatus);
                         }
                         let currentTaskID = apiGetQueueInfo.currentTaskId;
                         while (currentTaskID !== taskID) {
                             if(!stopGenerateFlag) {
                                 setPercent('66');
-                                apiGetQueueInfo = await apiGetQueue();
-                                const currentPos = await getPosition(taskID);
+                                apiGetQueueInfo = await apiGetQueue(userStatus);
+                                const currentPos = await getPosition(taskID,userStatus);
                                 let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                                 const totalPendingTasksCount = totalPendingTasksObj.length;
                                 updateQueueInfo(currentPos.pos, '');
@@ -120,19 +121,19 @@ const apiTasks = () => {
                             }
                         }
                         if(!stopGenerateFlag){
-                            let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
+                            let status = await showQueueInfo(taskID,userStatus); // Wait for the result of showQueueInfo
                         }
 
                     }
 
                     if (!stopGenerateFlag) {
-                        let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
+                        let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
                         while (status !== "done") {
                             if(!stopGenerateFlag) {
-                                status = await showQueueInfo(taskID); // Retry until status is "done"
+                                status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
                                 setPercent('66');
-                                apiGetQueueInfo = await apiGetQueue();
-                                const currentPos = await getPosition(taskID);
+                                apiGetQueueInfo = await apiGetQueue(userStatus);
+                                const currentPos = await getPosition(taskID, userStatus);
 
                                 let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                                 const totalPendingTasksCount = totalPendingTasksObj.length;
@@ -152,18 +153,18 @@ const apiTasks = () => {
             } else {
 
                 if(!stopGenerateFlag) {
-                    let status = await showQueueInfo(taskID); // Wait for the result of showQueueInfo
+                    let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
                     setPercent('66');
                     while (status !== "done") {
                         if(!stopGenerateFlag) {
                             setPercent('66');
-                            apiGetQueueInfo = await apiGetQueue();
-                            const currentPos = await getPosition(taskID);
+                            apiGetQueueInfo = await apiGetQueue(userStatus);
+                            const currentPos = await getPosition(taskID, userStatus);
 
                             let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
                             const totalPendingTasksCount = totalPendingTasksObj.length;
                             await updateQueueInfo(currentPos.pos, '');
-                            status = await showQueueInfo(taskID); // Retry until status is "done"
+                            status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
                             if (stopGenerateFlag) {
                                 break;
                             }
@@ -176,7 +177,7 @@ const apiTasks = () => {
             }
             if(!stopGenerateFlag) {
                 setPercent('99');
-                const imgdata = await getImage(taskID);
+                const imgdata = await getImage(taskID, userStatus);
                 if (imgdata.image) {
                     switchGenerateButton(e.target, 'end');
                     loadImage(imgdata.image, userStatus, aspectRatio);
@@ -197,12 +198,17 @@ const apiTasks = () => {
 
     document.querySelector('.stop-generate').addEventListener('click', async(ev) =>{
         ev.preventDefault();
+        ev.disabled = true;
         stopGenerateFlag = true;
         if (taskID !== "") { // Check if taskID is not empty before attempting to delete
-            let stopped = await deleteIdFromQueue(taskID);
+            let stopped = await deleteIdFromQueue(taskID, premiumBody);
             setPercent('');
             taskID = ""; // Reset taskID after stopping
         }
+    })
+
+    document.querySelector('.stop-generate').addEventListener('dblclick', async(ev) =>{
+        ev.preventDefault();
     })
 
     document.querySelector('.upscale').addEventListener('click', async (e1) => {

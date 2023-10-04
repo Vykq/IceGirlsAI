@@ -165,7 +165,12 @@ const apiSendTask = (isPremium) => {
         referrerPolicy: "unsafe-url",
     };
 
-    return fetch(themeUrl.apiUrl + "agent-scheduler/v1/queue/txt2img", requestOptions)
+    let apiUrl = themeUrl.apiUrl;
+    if(!isPremium){
+        apiUrl = themeUrl.apiUrlFree;
+    }
+
+    return fetch(apiUrl + "agent-scheduler/v1/queue/txt2img", requestOptions)
         .then(response => response.json())
         .then(data => {
             return data.task_id;

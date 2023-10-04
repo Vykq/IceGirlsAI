@@ -1,4 +1,4 @@
-const deleteIdFromQueue = (Id) => {
+const deleteIdFromQueue = (Id, isPremium) => {
 
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
@@ -10,7 +10,12 @@ const deleteIdFromQueue = (Id) => {
         redirect: 'follow'
     };
 
-    return fetch(themeUrl.apiUrl + "agent-scheduler/v1/task/" + Id, requestOptions)
+    let apiUrl = themeUrl.apiUrl;
+    if(!isPremium){
+        apiUrl = themeUrl.apiUrlFree;
+    }
+
+    return fetch(apiUrl + "agent-scheduler/v1/task/" + Id, requestOptions)
         .then(response => response.json())
         .then(data => {
             if(data.success){

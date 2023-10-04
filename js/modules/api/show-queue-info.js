@@ -1,5 +1,5 @@
 
-const showQueueInfo = (Id) => {
+const showQueueInfo = (Id, isPremium) => {
 
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
@@ -12,7 +12,12 @@ const showQueueInfo = (Id) => {
         keepalive: true
     };
 
-    return fetch(themeUrl.apiUrl + "agent-scheduler/v1/task/" + Id, requestOptions)
+    let apiUrl = themeUrl.apiUrl;
+    if(!isPremium){
+        apiUrl = themeUrl.apiUrlFree;
+    }
+
+    return fetch(apiUrl + "agent-scheduler/v1/task/" + Id, requestOptions)
         .then(response => response.json())
         .then(data => {
             return data.data.status;

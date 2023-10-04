@@ -1,6 +1,5 @@
-const moveQueue = (ID, overID) => {
-    const whiteBlock = document.querySelector('#current-step')
-    const orangeBlock = document.querySelector('#steps-all');
+const moveQueue = (ID, overID, isPremium) => {
+
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -11,10 +10,14 @@ const moveQueue = (ID, overID) => {
         redirect: 'follow'
     };
 
-    return fetch(themeUrl.apiUrl + "agent-scheduler/v1/task/"+ ID +"/move/" + overID, requestOptions)
+    let apiUrl = themeUrl.apiUrl;
+    if(!isPremium){
+        apiUrl = themeUrl.apiUrlFree;
+    }
+
+    return fetch(apiUrl + "agent-scheduler/v1/task/"+ ID +"/move/" + overID, requestOptions)
         .then(response => response.json())
         .then(data => {
-            whiteBlock.textContent = 'Your task will be done after the last PREMIUM user task';
         })
         .catch(error => console.error('error', error));
 }

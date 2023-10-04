@@ -17,6 +17,7 @@ const checkTasks = async (pendingTaskIds, taskID) => {
 
     return postData(themeUrl.ajax_url, data)
         .then((res) => {
+            console.log(res.position)
             return res.position;
         })
         .catch((error) => {

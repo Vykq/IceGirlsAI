@@ -1,4 +1,4 @@
-const getPosition = (ID) => {
+const getPosition = (ID, isPremium) => {
 
 
     const myHeaders = new Headers();
@@ -12,7 +12,12 @@ const getPosition = (ID) => {
         keepalive: true
     };
 
-    return fetch(themeUrl.apiUrl + "agent-scheduler/v1/task/"+ ID +"/position", requestOptions)
+    let apiUrl = themeUrl.apiUrl;
+    if(!isPremium){
+        apiUrl = themeUrl.apiUrlFree;
+    }
+
+    return fetch(apiUrl + "agent-scheduler/v1/task/"+ ID +"/position", requestOptions)
         .then(response => response.json())
         .then(data => {
             console.log(data);

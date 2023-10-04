@@ -13,6 +13,7 @@ const switchGenerateButton = (button, status) =>{
         notifier.classList.add('hide');
         percents.classList.remove('hide');
         queue.classList.remove('hide');
+        queue.textContent = "Queue: calculating...";
         if(document.querySelector('.generated-image')){
             const img = document.querySelector('.generated-image');
             img.classList.remove('show');
@@ -27,6 +28,7 @@ const switchGenerateButton = (button, status) =>{
         stopBtn.classList.add('hidden');
         spinner.classList.remove('show');
         notifier.classList.remove('hide');
+        queue.textContent = "";
     } else if (status === "end") {
         spinner.classList.remove('show');
         notifier.classList.add('hide');

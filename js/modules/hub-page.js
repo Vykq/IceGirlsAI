@@ -1,7 +1,7 @@
 
 const hubPage = () => {
-
-    var masonry = new MinimasonryMin({
+    console.log('work');
+    let masonry = new MinimasonryMin({
         container: '.generated-images-wrapper',
     });
 

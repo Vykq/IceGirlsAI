@@ -1,4 +1,4 @@
-const apiGetQueue = () => {
+const apiGetQueue = (isPremium) => {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -10,10 +10,16 @@ const apiGetQueue = () => {
         keepalive: true
     };
 
-    return fetch(themeUrl.apiUrl + "agent-scheduler/v1/queue", requestOptions)
+    let apiUrl = themeUrl.apiUrl;
+    if(!isPremium){
+        apiUrl = themeUrl.apiUrlFree;
+    }
+
+    return fetch(apiUrl + "agent-scheduler/v1/queue", requestOptions)
         .then(response => response.json())
         .then(data => {
             //console.log(data);
+            console.log(data);
             const pendingTasks = data.pending_tasks;
             const currentTaskId = data.current_task_id;
             const totalPendingTasks = data.total_pending_tasks;
@@ -29,7 +35,6 @@ const apiGetQueue = () => {
                 };
                 taskObjects.push(taskObject);
             }
-
             return { currentTaskId, totalPendingTasks, pendingTasks, taskObjects };
         })
         .catch(error => console.error('error', error));

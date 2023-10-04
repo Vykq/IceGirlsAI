@@ -36,34 +36,45 @@ add_action('wp_ajax_nopriv_premium_tasks', 'sd_premium_tasks');
 add_action('wp_ajax_premium_tasks', 'sd_premium_tasks');
 
 function sd_premium_tasks(){
-    $return['status'] = true;
+    if(is_user_logged_in()){
+        $user = wp_get_current_user();
+        if ( !in_array( 'Premium', (array) $user->roles ) ) {
+            $return['status'] = true;
 
-    $taskID = $_POST['taskID'];
-    $pendingTaskIds = $_POST['pendingTaskIds'];
-    $pendingTaskIdsArray = explode(',', $pendingTaskIds);
+            $taskID = $_POST['taskID'];
+            $pendingTaskIds = $_POST['pendingTaskIds'];
+            $pendingTaskIdsArray = explode(',', $pendingTaskIds);
 
-    $args = array(
-        'post_type' => 'taskids',
-        'posts_per_page' => -1,
-        'post_status' => 'publish'
-    );
+            $args = array(
+                'post_type' => 'taskids',
+                'posts_per_page' => -1,
+                'post_status' => 'publish'
+            );
 
-    $posts = new WP_Query($args);
-    $matchingTaskIds = array();
+            $posts = new WP_Query($args);
+            $matchingTaskIds = array();
 
-    if ($posts->have_posts()) {
-        while ($posts->have_posts()) :
-            $posts->the_post();
-            $postTitle = get_the_title();
-            if (in_array($postTitle, $pendingTaskIdsArray)) {
-                $matchingTaskIds[] = $postTitle; // Add matching task ID to the array
+            if ($posts->have_posts()) {
+                while ($posts->have_posts()) :
+                    $posts->the_post();
+                    $postTitle = get_the_title();
+                    if (in_array($postTitle, $pendingTaskIdsArray)) {
+                        $matchingTaskIds[] = $postTitle; // Add matching task ID to the array
+                    }
+                endwhile;
             }
-        endwhile;
+            $matchingTaskIds[] = $taskID; //here the aray is grayed out
+
+            $return['position'] = count($matchingTaskIds) + 1;
+
+            wp_send_json($return); // Send the JSON response
+        } else {
+            $return['status'] = false;
+            wp_send_json($return); // Send the JSON response
+        }
+    } else {
+        $return['status'] = false;
+        wp_send_json($return); // Send the JSON response
     }
-    $matchingTaskIds[] = $taskID; //here the aray is grayed out
-
-    $return['position'] = count($matchingTaskIds);
-
-    wp_send_json($return); // Send the JSON response
     exit;
 }

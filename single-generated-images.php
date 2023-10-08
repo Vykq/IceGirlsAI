@@ -87,7 +87,7 @@ if(get_field('size') == "512x512"){
                 <div class="single-image <?php echo $imageSize; ?>">
                         <div class="single-wrapper">
                             <div class="post-image">
-                                <img class="hub-single-image hide <?php echo $imageSize; ?>" data-id="<?php echo get_the_title(); ?>" src="<?php //echo $imageUrl; ?>" alt="">
+                                <img class="hub-single-image hide <?php echo $imageSize; ?>" data-id="<?php echo get_the_title(); ?>" src="<?php //echo $imageUrl; ?>" alt="IceGirls.AI generated image">
                             </div>
                         </div>
                     <div class="loaderis">

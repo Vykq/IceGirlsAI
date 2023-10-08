@@ -56,10 +56,10 @@ $user = wp_get_current_user();
                                 <a href="/contact-support/">Contact support</a>
                             </li>
                             <li>
-                                <a href="https://discord.gg/WMn24KArkB" target="_blank">Feedback</a>
+                                <a href="<?php the_field('discord','api'); ?>" target="_blank">Feedback</a>
                             </li>
                             <li>
-                                <a href="https://discord.gg/WMn24KArkB" target="_blank">Need help?</a>
+                                <a href="<?php the_field('discord','api'); ?>" target="_blank">Need help?</a>
                             </li>
                         </ul>
                     </nav>
@@ -157,7 +157,7 @@ $user = wp_get_current_user();
                         </li>
                     <?php } else {?>
                         <li>
-                            <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( site_url() ); ?>">Log In</a>
+                            <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( site_url() . '/account/' ); ?>">Log In</a>
                         </li>
                     <?php } ?>
                 </ul>

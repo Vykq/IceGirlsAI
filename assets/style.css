@@ -112,6 +112,21 @@ textarea {
   border-radius: 0.5rem;
   transition: 0.2s all ease-in-out;
 }
+.main-button.smaller {
+  background-color: transparent;
+  color: #FFA702;
+  font-size: 0.75rem;
+  line-height: 0.9rem;
+  padding: 0.25rem;
+  border-bottom: 1px solid #FFA702;
+  border-radius: 0;
+  text-align: center;
+  width: fit-content;
+  font-weight: 400;
+}
+.main-button.smaller:hoveR {
+  box-shadow: none;
+}
 .main-button.upscale {
   width: max-content;
   margin: 2rem auto 0;
@@ -2206,6 +2221,9 @@ textarea {
 .creation .container .grid .right .col-wrapper #steps-all.hide {
   display: none;
 }
+.creation .container .grid .right .col-wrapper #steps-all a {
+  color: #dedede;
+}
 .creation .container .grid .right .col-wrapper #premium-queue.hide {
   display: none;
 }
@@ -2718,6 +2736,7 @@ textarea {
   border-radius: 0.5rem;
   border: 1px solid #FFA702;
   position: relative;
+  position: absolute;
   overflow: hidden;
 }
 .hub-page-template .container .generated-images-wrapper .single-image.hide, .hub-page-template .container .generated-images-wrapper .premium-notice.hide {

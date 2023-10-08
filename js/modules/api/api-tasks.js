@@ -116,7 +116,7 @@ const apiTasks = () => {
                         let currentTaskID = apiGetQueueInfo.currentTaskId;
                         while (currentTaskID !== taskID) {
                             if(!stopGenerateFlag) {
-                                setPercent('66');
+                                setPercent('premium');
                                 apiGetQueueInfo = await apiGetQueue(userStatus);
                                 const currentPos = await getPosition(taskID,userStatus);
                                 let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;

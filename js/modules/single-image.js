@@ -21,35 +21,45 @@ const singleImage = (isPremium) => {
         const image = wrapper.querySelector('.hub-single-image');
 
         spinner.classList.add('show');
-        return fetch(apiUrl + "agent-scheduler/v1/task/" + image.dataset.id + "/results?zip=false", requestOptions)
+        fetch(apiUrl + "agent-scheduler/v1/task/" + image.dataset.id + "/results?zip=false", requestOptions)
             .then(response => response.json())
             .then(data => {
-                let APIimage = data.data[0].image;
-                image.src = APIimage;
-                spinner.classList.remove('show');
-                image.classList.remove('hide');
+                if(data.success !== false){
+                    console.log('false');
+                    let APIimage = data.data[0].image;
+                    image.src = APIimage;
+                    spinner.classList.remove('show');
+                    image.classList.remove('hide');
+                } else {
+                    apiUrl = themeUrl.apiUrlFree;
 
+                    // You can add more error handling logic here if needed
+
+
+                    fetch(apiUrl + "agent-scheduler/v1/task/" + image.dataset.id + "/results?zip=false", requestOptions)
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.success !== false){
+                                let APIimage = data.data[0].image;
+                                image.src = APIimage;
+                                spinner.classList.remove('show');
+                                image.classList.remove('hide');
+                            } else {
+                                wrapper.classList.add('hide');
+                            }
+                        })
+                        .catch(retryError => {
+                            console.error(retryError);
+                            // Handle the retry error if needed
+                        });
+                }
             })
             .catch(error => {
                 console.error(error); // Log the error for debugging purposes
 
                 // Handle the error here and switch to the alternative API URL
-                apiUrl = themeUrl.apiUrlFree;
 
-                // You can add more error handling logic here if needed
-
-
-                fetch(apiUrl + "agent-scheduler/v1/task/" + image.dataset.id + "/results?zip=false", requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handle the response from the alternative API
-                    })
-                    .catch(retryError => {
-                        console.error(retryError);
-                        // Handle the retry error if needed
-                    });
-                }
-            );
+            });
 
 
     })

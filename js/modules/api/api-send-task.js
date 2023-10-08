@@ -143,13 +143,8 @@ const apiSendTask = (isPremium) => {
     const raw = JSON.stringify({
         "enable_hr": true,
         "denoising_strength": 0.35,
-        "firstphase_width": 0,
-        "firstphase_height": 0,
         "hr_scale": 1.2,
         "hr_upscaler": "4xUltrasharp_4xUltrasharpV10",
-        "hr_second_pass_steps": 0,
-        "hr_resize_x": 0,
-        "hr_resize_y": 0,
         "prompt": finalPrompt,
         "width": imageSize.width,
         "height": imageSize.height,

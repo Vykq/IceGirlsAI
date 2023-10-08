@@ -60,7 +60,7 @@
                                 </li>
                             <?php } else {?>
                                 <li>
-                                    <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( $current_url ); ?>">Log In</a>
+                                    <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( $current_url ) . '/account/'; ?>">Log In</a>
                                 </li>
                             <?php } ?>
                         </ul>

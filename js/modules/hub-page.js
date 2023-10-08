@@ -1,17 +1,14 @@
 
 const hubPage = (isPremium) => {
     console.log('work');
-    // let masonry = new MinimasonryMin({
-    //     container: '.generated-images-wrapper',
-    // });
+    let masonry = new MinimasonryMin({
+        container: '.generated-images-wrapper',
+    });
 
     // JavaScript code to load images asynchronously
 
-    const imageContainer = document.querySelector(".generated-images-wrapper");
     const imgWrapper = document.querySelectorAll('.single-image');
     const reversedImgWrapper = Array.from(imgWrapper).reverse();
-    const images = imageContainer.querySelectorAll('.hub-single-image');
-
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -34,13 +31,18 @@ const hubPage = (isPremium) => {
             return fetch(apiUrl + "agent-scheduler/v1/task/" + image.dataset.id + "/results?zip=false", requestOptions)
                 .then(response => response.json())
                 .then(data => {
-                    let APIimage = data.data[0].image;
-                    image.src = APIimage;
-                    spinner.classList.remove('show');
-                    image.classList.remove('hide');
+                    if(data.success !== false){
+                        let APIimage = data.data[0].image;
+                        image.src = APIimage;
+                        spinner.classList.remove('show');
+                        image.classList.remove('hide');
+                    } else {
+                        wrapper.remove();
+                        wrapper.classList.add('hide');
+                    }
                 })
                 .catch(error => {
-                        return error;
+                    wrapper.classList.add('hide');
                     }
                 );
 

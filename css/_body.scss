@@ -77,6 +77,21 @@ textarea{
   border:none;
   border-radius: 0.5rem;
   transition: .2s all ease-in-out;
+  &.smaller{
+    background-color:transparent;
+    color:$go;
+    font-size: 0.75rem;
+    line-height: 0.9rem;
+    padding:0.25rem;
+    border-bottom: 1px solid $go;
+    border-radius: 0;
+    text-align: center;
+    width: fit-content;
+    font-weight: 400;
+    &:hoveR{
+      box-shadow:none;
+    }
+  }
   &.upscale {
     width: max-content;
     margin: 2rem auto 0;

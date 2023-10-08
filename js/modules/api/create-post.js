@@ -1,4 +1,6 @@
-const createPost = async (image, infotext, taskID, aspectRatio) => {
+import switchGenerateButton from "./switch-generate-button";
+
+const createPost = async (postId, image, infotext, taskID, aspectRatio) => {
     async function addWatermark(image) {
         return new Promise((resolve) => {
             //watermark
@@ -56,10 +58,9 @@ const createPost = async (image, infotext, taskID, aspectRatio) => {
     const watermarkImg = await addWatermark(image);
     const requestData = new FormData();
     requestData.append('action', 'create_generated_post');
-    requestData.append('image', image);
-    requestData.append('watermarked-image', watermarkImg.src);
     requestData.append('infoText', infotext);
     requestData.append('task-id', taskID);
+    requestData.append('postid', postId);
     const headers = {
         'Connection': 'Keep-Alive', // Add the Keep-Alive header
     };

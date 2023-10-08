@@ -31,6 +31,9 @@
   border-color: #FFF #FFF transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+  &.hide{
+    display: none;
+  }
 }
 .loader::after {
   content: '';

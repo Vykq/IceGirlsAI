@@ -15,6 +15,7 @@ import deleteIdFromQueue from "./delete-id-from-queue";
 import setPercent from "./set-percent";
 import getPercent from "./get-percent";
 import upscaleImage from "./upscale-image";
+import addTaskToUser from "./add-task-to-user";
 const apiTasks = () => {
     const form = document.querySelector('.creation-form');
     let isUpscaleInProgress = false;
@@ -42,11 +43,21 @@ const apiTasks = () => {
         e.preventDefault();
 
         switchGenerateButton(e.target, 'start');
-        taskID = await apiSendTask(premiumBody);
+        const taskInfo = await apiSendTask(premiumBody);
+        taskID = taskInfo.task_id;
         console.log(taskID);
+        if(taskID === undefined){
+         switchGenerateButton(e.target, 'error');
+            setPercent('Error');
+            const fullQueue = document.querySelector('#premium-queue');
+            fullQueue.textContent = "Please try again.";
+         return;
+        }
 
 
         setPercent('0');
+        const postID = await addTaskToUser(taskID, taskInfo.raw);
+
         const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
         let aspectRatio = "9/16"
         if(document.querySelector('input[name="aspect-ratio"]')){
@@ -181,7 +192,7 @@ const apiTasks = () => {
                 if (imgdata.image) {
                     switchGenerateButton(e.target, 'end');
                     loadImage(imgdata.image, userStatus, aspectRatio);
-                    await createPost(imgdata.image, imgdata.infotext, taskID, aspectRatio);
+                    await createPost(postID, imgdata.image, imgdata.infotext, taskID, aspectRatio);
                     setPercent('100');
                     document.querySelector('.upscale').classList.remove('hidden');
 

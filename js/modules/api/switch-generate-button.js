@@ -2,6 +2,7 @@ const switchGenerateButton = (button, status) =>{
     const stopBtn = document.querySelector('.stop-generate');
     const generateBtn = document.querySelector('.generate');
     const spinner = document.querySelector('.spinner');
+    const loader = spinner.querySelector('.loader');
     const notifier = document.querySelector('.notifier');
     const percents = document.querySelector('#steps-all');
     const queue = document.querySelector('#premium-queue');
@@ -61,6 +62,12 @@ const switchGenerateButton = (button, status) =>{
         currentStep.classList.add('hide');
         button.disabled = true;
         generateBtn.disabled = false;
+    } else if (status === "error"){
+        loader.classList.add('hide');
+        notifier.classList.add('show');
+        button.classList.remove('hidden');
+        stopBtn.classList.add('hidden');
+        percents.classList.remove('hide');
     }
 
 }

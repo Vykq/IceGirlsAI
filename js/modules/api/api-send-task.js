@@ -141,6 +141,15 @@ const apiSendTask = (isPremium) => {
     finalPrompt = addActionsToPrompt(finalPrompt, action, char);
 
     const raw = JSON.stringify({
+        "enable_hr": true,
+        "denoising_strength": 0.35,
+        "firstphase_width": 0,
+        "firstphase_height": 0,
+        "hr_scale": 1.2,
+        "hr_upscaler": "4xUltrasharp_4xUltrasharpV10",
+        "hr_second_pass_steps": 0,
+        "hr_resize_x": 0,
+        "hr_resize_y": 0,
         "prompt": finalPrompt,
         "width": imageSize.width,
         "height": imageSize.height,
@@ -173,7 +182,10 @@ const apiSendTask = (isPremium) => {
     return fetch(apiUrl + "agent-scheduler/v1/queue/txt2img", requestOptions)
         .then(response => response.json())
         .then(data => {
-            return data.task_id;
+            return {
+                task_id: data.task_id, // Return task_id
+                raw: JSON.parse(raw), // Return the raw object
+            };
         })
         .catch(error => console.error('error', error));
 

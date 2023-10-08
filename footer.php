@@ -27,7 +27,7 @@ $user = wp_get_current_user();
                                 <a href="/privacy-policy/">Privacy Policy</a>
                             </li>
                             <li>
-                                <a href="/2257/">2257</a>
+                                <a href="/2257-2/">2257</a>
                             </li>
                         </ul>
                     </nav>

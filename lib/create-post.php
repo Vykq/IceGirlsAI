@@ -11,17 +11,11 @@ add_action('wp_ajax_create_generated_post', 'create_generated_post');
 function create_generated_post() {
     $response = array(); // Create an array to hold the response data
     if (isset($_POST['action']) && $_POST['action'] === 'create_generated_post') {
-            if ($_POST['image'] && $_POST['infoText']) {
-                $imageData = $_POST['image'];
-                $watermarkImageData = $_POST['watermarked-image'];
+            if ($_POST['infoText'] && $_POST['task-id']) {
+                if($_POST['task-id'] !== "undefined"){
                 $infoText = $_POST['infoText'];
                 $current_user = wp_get_current_user();
-                $post_id = wp_insert_post(array(
-                    'post_title' => 'Generated Image Post',
-                    'post_type' => 'generated-images',
-                    'post_status' => 'publish',
-                    'post_author' => $current_user->ID
-                ));
+                $post_id = $_POST['postid'];
 
                 if ($post_id) {
                     $pattern = '/(.+?)\s*<lora:/';
@@ -47,6 +41,7 @@ function create_generated_post() {
 
                     // Set the uploaded image as the post's featured image/thumbnail
 
+
                     update_field('prompt', $prompt, $post_id);
                     update_field('size', $info['Size'], $post_id);
                     update_field('model', $info['Model'], $post_id);
@@ -54,58 +49,10 @@ function create_generated_post() {
                     update_field('details', $loras['more_details'], $post_id);
                     update_field('task_id', $_POST['task-id'], $post_id);
                     update_field('like_count', '0', $post_id);
-                    $response['success'] = 'post created';
+                    $response['success'] = 'post updated';
                 }
 
-
-
-                $decodedWatermarkedImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $watermarkImageData));
-                $uploadWaterImage = wp_upload_bits('generated_image.png', null, $decodedWatermarkedImage);
-                if ($uploadWaterImage['error'] == false) {
-                    // Add the uploaded image to the media library
-                    $file_path = $uploadWaterImage['file'];
-                    $file_name = basename($file_path);
-                    $attachment = array(
-                        'post_mime_type' => 'image/png', // Adjust mime type accordingly
-                        'post_title'     => 'Generated Image', // Adjust title
-                        'post_content'   => '',
-                        'post_status'    => 'inherit'
-                    );
-                    $attach_id = wp_insert_attachment($attachment, $file_path);
-
-                    $attach_data = wp_generate_attachment_metadata($attach_id, $file_path);
-                    wp_update_attachment_metadata($attach_id, $attach_data);
-                    update_field('watermarked_image', wp_get_attachment_url($attach_id), $post_id);
-                } else {
-                    // Error uploading image
-                    $response['error'] = 'Error uploading image';
-                }
-
-
-
-
-
-                $decodedImage = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
-                $upload = wp_upload_bits('generated_image.png', null, $decodedImage);
-                if ($upload['error'] == false) {
-                    // Add the uploaded image to the media library
-                    $file_path = $upload['file'];
-                    $file_name = basename($file_path);
-                    $attachment = array(
-                        'post_mime_type' => 'image/png', // Adjust mime type accordingly
-                        'post_title'     => 'Generated Image', // Adjust title
-                        'post_content'   => '',
-                        'post_status'    => 'inherit'
-                    );
-                    $attach_id = wp_insert_attachment($attachment, $file_path);
-
-                    $attach_data = wp_generate_attachment_metadata($attach_id, $file_path);
-                    wp_update_attachment_metadata($attach_id, $attach_data);
-                    set_post_thumbnail($post_id, $attach_id);
-                } else {
-                    // Error uploading image
-                    $response['error'] = 'Error uploading image';
-                }
+            }
             }
 
     } else {

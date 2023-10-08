@@ -10,13 +10,17 @@
       @media (max-width: 900px){
         grid-template-columns: 1fr 1fr;
       }
-      .single-image{
+      .single-image, .premium-notice{
         width: 100%;
         aspect-ratio: 9/16;
         border-radius: .5rem;
         border:1px solid $go;
-        position: absolute;
+        position: relative;
+        //position: absolute;
         overflow: hidden;
+        &.hide{
+          display: none;
+        }
         &.square{
           aspect-ratio: 1/1;
         }
@@ -118,6 +122,11 @@
             img{
               transition: .4s all ease-in-out;
               @include imageCover(50%, 0);
+              opacity: 1;
+              &.hide{
+                transition: .4s all ease-in-out;
+                opacity: 0;
+              }
             }
           }
         }

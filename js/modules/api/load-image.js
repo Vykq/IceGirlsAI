@@ -45,7 +45,7 @@ const loadImage = (image, isPremium, aspectRatio) => {
             }
 
 
-            imageElement.src = canvas.toDataURL('image/png'); // Update imageElement with combined content
+            imageElement.src = canvas.toDataURL('image/jpg'); // Update imageElement with combined content
 
             imageElement.classList.add('show');
             generateButton.disabled = false;

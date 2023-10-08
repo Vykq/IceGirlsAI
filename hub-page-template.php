@@ -7,45 +7,50 @@ get_header();
 
 
 $user = wp_get_current_user();
+
+$url = $_SERVER['REQUEST_URI'];
+$arrVals = explode("/", $url);
+if (isset($arrVals[3])) {
+    $pageNumber = $arrVals[3]; // This will give you the page number, e.g., "6"
+} else {
+    $pageNumber = 1;
+}
+
+$info = getHistoryFromApi($pageNumber);
+$total = 0; // Initialize total to 0
+$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+
 if(in_array( 'premium', (array) $user->roles)) {
-    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
     $args = array(
         'post_type' => 'generated-images',
-        'posts_per_page' => 12,
         'post_status' => 'publish',
+        'posts_per_page' => 12,
         'paged' => $paged,
         'meta_query' => array(
             array(
-                'key' => 'watermarked_image', // Replace with your actual custom field name
-                'compare' => 'EXISTS', // Check if the custom field exists
-            ),
-            array(
-                'key' => '_thumbnail_id'
-            ),
-        ),
-
+                'key' => 'premium', // Replace 'premium' with your ACF field name
+                'value' => true,
+                'compare' => '='
+            )
+        )
     );
 } else {
     $args = array(
         'post_type' => 'generated-images',
-        'posts_per_page' => 11,
         'post_status' => 'publish',
+        'posts_per_page' => 11,
+        'paged' => $paged,
         'meta_query' => array(
             array(
-                'key' => 'watermarked_image', // Replace with your actual custom field name
-                'compare' => 'EXISTS', // Check if the custom field exists
-            ),
-            array(
-                'key' => '_thumbnail_id'
-            ),
-        ),
+                'key' => 'premium', // Replace 'premium' with your ACF field name
+                'value' => true,
+                'compare' => '='
+            )
+        )
     );
 }
 
-
 $images = new WP_Query($args);
-
-
 
 $isPremiumClass = "";
 if ( in_array( 'premium', (array) $user->roles ) ) {
@@ -55,15 +60,21 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
 }
 
 ?>
-
 <div class="hub-page-template">
     <div class="container">
         <?php if($images->have_posts()) : ?>
             <div class="generated-images-wrapper">
-                <?php while($images->have_posts()) : $images->the_post(); ?>
-                        <?php if(get_field('size', get_the_id()) == "512x512"){
+                <?php while($images->have_posts()): $images->the_post(); ?>
+                    <?php
+//                    $imageData = getImageFromAPI($image); // Get image data which includes status
+//                    if($imageData){
+//                        $status = $imageData['status'];
+//                        //$imageUrl = $imageData['image'];
+//                    }
+
+                       if(get_field('size', get_the_id()) == "512x512"){
                             $imageSize = "square";
-                        } else if(get_field('size') == "960x512"){
+                        } else if(get_field('size', get_the_id()) == "960x512"){
                             $imageSize = "horizontal";
                         } else {
                             $imageSize = "normal";
@@ -73,17 +84,13 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
                         <a href="<?php echo get_permalink(); ?>">
                             <div class="single-wrapper">
                                 <div class="post-image">
-                                    <?php if ( in_array( 'premium', (array) $user->roles ) ) {
-                                                the_post_thumbnail('hub-all', array('loading' => 'lazy', 'class' => 'lazy ' . $isPremiumClass));
-                                    } else { ?>
-                                        <img class="lazy watermarked-image" loading="lazy" src="<?php echo get_field('watermarked_image', get_the_id()); ?>" alt="<?php echo get_the_title(); ?>">
-                                    <?php }?>
+                                    <img class="hub-single-image hide <?php echo $imageSize; ?>" data-id="<?php echo get_the_title(); ?>" src="<?php //echo $imageUrl; ?>" alt="">
                                     </div>
                                 <div class="hover-area">
                                     <div class="hover-con">
                                         <div class="wrapper">
                                             <div class="left">
-                                                <img src="<?php echo get_theme_file_uri() . '/assets/images/like.svg';?>">
+                                                <img loading="lazy" src="<?php echo get_theme_file_uri() . '/assets/images/like.svg';?>">
                                             </div>
                                             <div class="right">
                                                 <p><?php the_field('like_count', get_the_id()); ?></p>
@@ -93,22 +100,42 @@ if ( in_array( 'premium', (array) $user->roles ) ) {
                                 </div>
                             </div>
                         </a>
-                    </div>
-            <?php endwhile; ?>
-                <?php if(!in_array( 'premium', (array) $user->roles)) {
-                    wp_reset_query();
-                    $counter = wp_count_posts('generated-images')->publish;
-                    ?>
-                    <div class="single-image normal premium-notice">
-                        <a href="/premium/">
-                            <div class="single-wrapper premium-wrapper">
-                                <div class="premium-area">
-                                    <p class="offer">To view more images you need <span>Premium</span></p>
-                                    <p class="note">You can see only 11/<span><?php echo $counter; ?></span> images</p>
-                                </div>
+                        <div class="loaderis">
+                            <div class="spinner">
+                                <span class="loader"></span>
                             </div>
-                        </a>
+                        </div>
                     </div>
+
+
+            <?php endwhile; ?>
+                <?php if(!in_array( 'premium', (array) $user->roles) && $images->post_count > 10) {
+                    //wp_reset_query();
+                    $args = array(
+                        'post_type' => 'generated-images',
+                        'post_status' => 'publish',
+                        'posts_per_page' => -1,
+                        'paged' => $paged,
+                        'meta_query' => array(
+                            array(
+                                'key' => 'premium', // Replace 'premium' with your ACF field name
+                                'value' => true,
+                                'compare' => '='
+                            )
+                        )
+                    );
+                    $count = new WP_Query($args);
+                ?>
+                <div class="normal premium-notice">
+                    <a href="/premium/">
+                        <div class="single-wrapper premium-wrapper">
+                            <div class="premium-area">
+                                <p class="offer">To view more images you need <span>Premium</span></p>
+                                <p class="note">You can see only 11/<span><?php echo $count->post_count; ?></span> images</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
                 <?php } ?>
 
 

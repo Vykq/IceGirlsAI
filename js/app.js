@@ -16,6 +16,8 @@ import profilePage from "./modules/profile-page";
 import ageVerification from "./modules/age-verification";
 import closeMainModal from "./modules/close-main-modal";
 import timer from "./modules/countdown-timer";
+import accountPage from "./modules/account-page";
+import singleImage from "./modules/single-image";
 window.addEventListener('DOMContentLoaded', () => {
   openModals();
   openModalOnLink();
@@ -52,9 +54,19 @@ window.addEventListener('DOMContentLoaded', () => {
     profilePage();
   }
 
+  if(document.querySelector('.single-generated-image-page')){
+    singleImage();
+  }
+
+
   if(document.querySelector('.generated-images-wrapper')){
     hubPage();
   }
+
+  if(document.querySelector('.last-creations-wrapper')){
+    accountPage();
+  }
+
 
   if(document.querySelector('form.content-removal')){
     sendRemovalForm();

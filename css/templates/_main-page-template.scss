@@ -12,6 +12,17 @@
       height: 100%;
       img{
         @include imageCover(50%, 50%);
+        &.mobile{
+          display: none;
+          @media (max-width: 900px){
+            display: block;
+          }
+        }
+        &.desktop{
+          @media (max-width: 900px){
+            display: none;
+          }
+        }
       }
     }
     .content-area{

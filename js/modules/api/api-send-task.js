@@ -12,6 +12,8 @@ const apiSendTask = (isPremium) => {
         width: 512,
         height: 960,
     }
+
+
     if(document.querySelector('input[name="aspect-ratio"]')){
         const imageArea = document.querySelector('.col-wrapper');
         const aspectRatioInput = document.querySelector('input[name="aspect-ratio"]:checked');

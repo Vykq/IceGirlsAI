@@ -4,12 +4,12 @@ require_once('lib/stable-diffusion-api.php');
 require_once('lib/free-premium.php');
 require_once('vendor/autoload.php');
 function webpack_files() {
-    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '1aaa', true);
+    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '2a1', true);
     //wp_enqueue_script('gsap', get_theme_file_uri('assets/gsap.min.js'), array(), time(), true);
     //wp_enqueue_script('ScrollTrigger', get_theme_file_uri('assets/ScrollTrigger.min.js'), array(), time(), true);
     //wp_enqueue_script('lenis', get_theme_file_uri('assets/lenis.min.js'), array(), time(), true);
     //wp_enqueue_script('imagesloaded', get_theme_file_uri('assets/imagesloaded.pkgd.min.js'), array(), time(), true);
-    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '1');
+    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '2a1');
     wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), '1', true);
     wp_localize_script( 'webpack-js', 'themeUrl',
         array(

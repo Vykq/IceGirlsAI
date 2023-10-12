@@ -1382,6 +1382,19 @@ textarea {
   object-position: 50% 50%;
   transform: none;
 }
+.homepage-hero .hero-wrapper .image img.mobile {
+  display: none;
+}
+@media (max-width: 900px) {
+  .homepage-hero .hero-wrapper .image img.mobile {
+    display: block;
+  }
+}
+@media (max-width: 900px) {
+  .homepage-hero .hero-wrapper .image img.desktop {
+    display: none;
+  }
+}
 .homepage-hero .hero-wrapper .content-area {
   position: absolute;
   top: 50%;
@@ -2466,6 +2479,66 @@ textarea {
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-action:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-action:hover .action-image img {
   transform: scale(1.2) !important;
 }
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 0.25rem;
+  border: 1px solid #FFA702;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .icon, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .icon, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .icon, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .icon {
+  width: 4rem;
+  height: 4rem;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .icon svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .icon svg, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .icon svg, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .icon svg {
+  width: 100%;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .icon svg path, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .icon svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .icon svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .icon svg path {
+  transition: 0.2s all ease-in-out;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .title {
+  color: #dedede;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+}
+@media (max-width: 500px) {
+  .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .title {
+    font-size: 0.8rem;
+  }
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .cta {
+  color: #FFA702;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  position: relative;
+}
+@media (max-width: 500px) {
+  .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .cta {
+    font-size: 0.7rem;
+  }
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .cta:before, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .cta:before, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .cta:before, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .cta:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #FFA702;
+  transition: 0.2s all ease-in-out;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn:hover .cta:before, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn:hover .cta:before, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn:hover .cta:before, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn:hover .cta:before {
+  width: 100%;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn:hover .icon, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn:hover .icon, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn:hover .icon, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn:hover .icon {
+  animation: tilt-shaking 0.2s infinite;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn:hover .icon svg path, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn:hover .icon svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn:hover .icon svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn:hover .icon svg path {
+  fill: #FFA702;
+}
 .backdrop .main-modal .modal-wrapper .content .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2656,7 +2729,7 @@ textarea {
   height: unset !important;
 }
 
-.saved-notify {
+.saved-notify, .error-notify {
   position: fixed;
   top: 0rem;
   right: 1rem;
@@ -2668,57 +2741,74 @@ textarea {
   transform: translateY(-100%);
   transition: 0.4s all ease-in;
 }
-.saved-notify.show {
+.saved-notify.show, .error-notify.show {
   top: 1rem;
   display: block;
   transform: translateY(0%);
 }
-.saved-notify .notify-wrapper .grid {
+.saved-notify .notify-wrapper .grid, .error-notify .notify-wrapper .grid {
   display: grid;
   grid-template-columns: 2rem 1fr;
   gap: 1rem;
 }
-.saved-notify .notify-wrapper .grid .left .img {
+.saved-notify .notify-wrapper .grid .left .img, .error-notify .notify-wrapper .grid .left .img {
   width: 100%;
   height: 100%;
 }
-.saved-notify .notify-wrapper .grid .left .img svg {
+.saved-notify .notify-wrapper .grid .left .img svg, .error-notify .notify-wrapper .grid .left .img svg {
   width: 100%;
   height: 100%;
 }
-.saved-notify .notify-wrapper .grid .right .white {
+.saved-notify .notify-wrapper .grid .right .white, .error-notify .notify-wrapper .grid .right .white {
   color: #FFF;
   font-size: 1rem;
   line-height: 1rem;
   margin-bottom: 0.25rem;
 }
-.saved-notify .notify-wrapper .grid .right .gray {
+.saved-notify .notify-wrapper .grid .right .gray, .error-notify .notify-wrapper .grid .right .gray {
   color: #dedede;
   font-size: 0.8rem;
   line-height: 0.8rem;
 }
 
-.hub-page-template .container {
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.hub-page-template .container, .testinis-page-template .container {
   width: 80%;
   margin: 0 auto;
   max-width: 1920px;
 }
 @media (max-width: 1200px) {
-  .hub-page-template .container {
+  .hub-page-template .container, .testinis-page-template .container {
     width: 85%;
   }
 }
 @media (max-width: 1024px) {
-  .hub-page-template .container {
+  .hub-page-template .container, .testinis-page-template .container {
     width: 83%;
   }
 }
 @media (max-width: 768px) {
-  .hub-page-template .container {
+  .hub-page-template .container, .testinis-page-template .container {
     width: 90%;
   }
 }
-.hub-page-template .container .generated-images-wrapper {
+.hub-page-template .container .generated-images-wrapper, .testinis-page-template .container .generated-images-wrapper {
   margin: 3rem 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -2726,11 +2816,11 @@ textarea {
   position: relative;
 }
 @media (max-width: 900px) {
-  .hub-page-template .container .generated-images-wrapper {
+  .hub-page-template .container .generated-images-wrapper, .testinis-page-template .container .generated-images-wrapper {
     grid-template-columns: 1fr 1fr;
   }
 }
-.hub-page-template .container .generated-images-wrapper .single-image, .hub-page-template .container .generated-images-wrapper .premium-notice {
+.hub-page-template .container .generated-images-wrapper .single-image, .hub-page-template .container .generated-images-wrapper .premium-notice, .testinis-page-template .container .generated-images-wrapper .single-image, .testinis-page-template .container .generated-images-wrapper .premium-notice {
   width: 100%;
   aspect-ratio: 9/16;
   border-radius: 0.5rem;
@@ -2739,60 +2829,60 @@ textarea {
   position: absolute;
   overflow: hidden;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.hide, .hub-page-template .container .generated-images-wrapper .premium-notice.hide {
+.hub-page-template .container .generated-images-wrapper .single-image.hide, .hub-page-template .container .generated-images-wrapper .premium-notice.hide, .testinis-page-template .container .generated-images-wrapper .single-image.hide, .testinis-page-template .container .generated-images-wrapper .premium-notice.hide {
   display: none;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.square, .hub-page-template .container .generated-images-wrapper .premium-notice.square {
+.hub-page-template .container .generated-images-wrapper .single-image.square, .hub-page-template .container .generated-images-wrapper .premium-notice.square, .testinis-page-template .container .generated-images-wrapper .single-image.square, .testinis-page-template .container .generated-images-wrapper .premium-notice.square {
   aspect-ratio: 1/1;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.horizontal, .hub-page-template .container .generated-images-wrapper .premium-notice.horizontal {
+.hub-page-template .container .generated-images-wrapper .single-image.horizontal, .hub-page-template .container .generated-images-wrapper .premium-notice.horizontal, .testinis-page-template .container .generated-images-wrapper .single-image.horizontal, .testinis-page-template .container .generated-images-wrapper .premium-notice.horizontal {
   aspect-ratio: 16/9;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a {
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a, .testinis-page-template .container .generated-images-wrapper .single-image.premium-notice a, .testinis-page-template .container .generated-images-wrapper .premium-notice.premium-notice a {
   width: 100%;
   height: 100%;
   display: block;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper {
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper, .testinis-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper, .testinis-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper {
   width: 100%;
   margin: 0 auto;
   text-align: center;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area {
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area, .testinis-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area, .testinis-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 80%;
   transform: translate(-50%, -50%);
 }
-.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area p {
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area p, .testinis-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p, .testinis-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area p {
   font-size: 1.25rem;
   line-height: 1.5rem;
   color: #dedede;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p span, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area p span {
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p span, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area p span, .testinis-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area p span, .testinis-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area p span {
   color: #FFA702;
   font-weight: 700;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area .note {
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area .note, .testinis-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note, .testinis-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area .note {
   margin-top: 1rem;
   font-size: 0.9rem;
   line-height: 1.25rem;
   font-weight: 300;
 }
-.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note span, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area .note span {
+.hub-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note span, .hub-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area .note span, .testinis-page-template .container .generated-images-wrapper .single-image.premium-notice a .premium-wrapper .premium-area .note span, .testinis-page-template .container .generated-images-wrapper .premium-notice.premium-notice a .premium-wrapper .premium-area .note span {
   color: #FFA702;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a, .hub-page-template .container .generated-images-wrapper .premium-notice a {
+.hub-page-template .container .generated-images-wrapper .single-image a, .hub-page-template .container .generated-images-wrapper .premium-notice a, .testinis-page-template .container .generated-images-wrapper .single-image a, .testinis-page-template .container .generated-images-wrapper .premium-notice a {
   display: block;
   width: 100%;
   height: 100%;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper {
   padding: 0.5rem;
   height: 100%;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area {
   transform: translateY(100%);
   position: absolute;
   left: 0;
@@ -2804,39 +2894,39 @@ textarea {
   border-radius: 0.5rem 0.5rem 0 0;
   padding: 0.25rem 0.5rem;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con {
   width: 95%;
   margin: 0 auto;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.25rem;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .left, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .left {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .left, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .left, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .left, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .left {
   width: 1.5rem;
   height: 1.5rem;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .left img, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .left img {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .left img, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .left img, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .left img, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .left img {
   width: 100%;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .right p, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .right p {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .right p, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .right p, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper .hover-area .hover-con .wrapper .right p, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper .hover-area .hover-con .wrapper .right p {
   color: #dedede;
   font-size: 1rem;
   line-height: 1.5rem;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper:hover .hover-area, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper:hover .hover-area {
+.hub-page-template .container .generated-images-wrapper .single-image a .single-wrapper:hover .hover-area, .hub-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper:hover .hover-area, .testinis-page-template .container .generated-images-wrapper .single-image a .single-wrapper:hover .hover-area, .testinis-page-template .container .generated-images-wrapper .premium-notice a .single-wrapper:hover .hover-area {
   opacity: 1;
   transform: translateY(0%);
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .post-image, .hub-page-template .container .generated-images-wrapper .premium-notice a .post-image {
+.hub-page-template .container .generated-images-wrapper .single-image a .post-image, .hub-page-template .container .generated-images-wrapper .premium-notice a .post-image, .testinis-page-template .container .generated-images-wrapper .single-image a .post-image, .testinis-page-template .container .generated-images-wrapper .premium-notice a .post-image {
   width: 100%;
   height: 100%;
   border-radius: 0.25rem;
   overflow: hidden;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .post-image img, .hub-page-template .container .generated-images-wrapper .premium-notice a .post-image img {
+.hub-page-template .container .generated-images-wrapper .single-image a .post-image img, .hub-page-template .container .generated-images-wrapper .premium-notice a .post-image img, .testinis-page-template .container .generated-images-wrapper .single-image a .post-image img, .testinis-page-template .container .generated-images-wrapper .premium-notice a .post-image img {
   transition: 0.4s all ease-in-out;
   width: 100%;
   height: 100%;
@@ -2845,35 +2935,35 @@ textarea {
   transform: none;
   opacity: 1;
 }
-.hub-page-template .container .generated-images-wrapper .single-image a .post-image img.hide, .hub-page-template .container .generated-images-wrapper .premium-notice a .post-image img.hide {
+.hub-page-template .container .generated-images-wrapper .single-image a .post-image img.hide, .hub-page-template .container .generated-images-wrapper .premium-notice a .post-image img.hide, .testinis-page-template .container .generated-images-wrapper .single-image a .post-image img.hide, .testinis-page-template .container .generated-images-wrapper .premium-notice a .post-image img.hide {
   transition: 0.4s all ease-in-out;
   opacity: 0;
 }
-.hub-page-template .container .generated-images-wrapper .single-image:hover .post-image img, .hub-page-template .container .generated-images-wrapper .premium-notice:hover .post-image img {
+.hub-page-template .container .generated-images-wrapper .single-image:hover .post-image img, .hub-page-template .container .generated-images-wrapper .premium-notice:hover .post-image img, .testinis-page-template .container .generated-images-wrapper .single-image:hover .post-image img, .testinis-page-template .container .generated-images-wrapper .premium-notice:hover .post-image img {
   transform: scale(1.1);
 }
-.hub-page-template .container .pagination {
+.hub-page-template .container .pagination, .testinis-page-template .container .pagination {
   margin-bottom: 5rem;
   display: flex;
   gap: 0.5rem;
   justify-content: end;
 }
-.hub-page-template .container .pagination .page-numbers {
+.hub-page-template .container .pagination .page-numbers, .testinis-page-template .container .pagination .page-numbers {
   color: #dedede;
   padding: 0.5rem;
   font-weight: 500;
 }
-.hub-page-template .container .pagination .current {
+.hub-page-template .container .pagination .current, .testinis-page-template .container .pagination .current {
   color: #1D1D1D;
   background-color: #FFA702;
   padding: 0.5rem;
   font-weight: 700;
 }
-.hub-page-template .container .pagination a {
+.hub-page-template .container .pagination a, .testinis-page-template .container .pagination a {
   border-bottom: 1px solid #1D1D1D;
   transition: 0.2s all ease-in;
 }
-.hub-page-template .container .pagination a:hover {
+.hub-page-template .container .pagination a:hover, .testinis-page-template .container .pagination a:hover {
   border-bottom: 1px solid #FFA702;
 }
 
@@ -3033,6 +3123,131 @@ textarea {
   color: #dedede;
 }
 
+.reviews-block {
+  margin: 5rem 0;
+}
+.reviews-block .container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1920px;
+  position: relative;
+}
+@media (max-width: 1200px) {
+  .reviews-block .container {
+    width: 85%;
+  }
+}
+@media (max-width: 1024px) {
+  .reviews-block .container {
+    width: 83%;
+  }
+}
+@media (max-width: 768px) {
+  .reviews-block .container {
+    width: 90%;
+  }
+}
+.reviews-block .container .icon {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+}
+.reviews-block .container .icon.left {
+  top: 50%;
+  left: 5rem;
+  transform: translate(0, -50%);
+}
+@media (max-width: 660px) {
+  .reviews-block .container .icon.left {
+    left: 3rem;
+  }
+}
+@media (max-width: 440px) {
+  .reviews-block .container .icon.left {
+    display: none;
+  }
+}
+.reviews-block .container .icon.right {
+  top: 50%;
+  right: 5rem;
+  transform: translate(0, -50%);
+}
+@media (max-width: 660px) {
+  .reviews-block .container .icon.right {
+    right: 3rem;
+  }
+}
+@media (max-width: 525px) {
+  .reviews-block .container .icon.right {
+    display: none;
+  }
+}
+.reviews-block .container .wrapper {
+  border-radius: 0.5rem;
+  border: 3px solid #FFA702;
+  padding: 1.5rem;
+  background-color: #292929;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.2s all ease-in-out;
+  gap: 1rem;
+}
+@media (max-width: 525px) {
+  .reviews-block .container .wrapper {
+    align-items: end;
+  }
+}
+@media (max-width: 440px) {
+  .reviews-block .container .wrapper {
+    align-items: center;
+  }
+}
+.reviews-block .container .wrapper .title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #dedede;
+  font-weight: 500;
+}
+.reviews-block .container .wrapper .title p b, .reviews-block .container .wrapper .title p strong {
+  color: #FFA702;
+}
+.reviews-block .container .wrapper .button-wrapper a {
+  color: #1D1D1D;
+  background-color: #FFA702;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  display: block;
+}
+.reviews-block .container .wrapper .note {
+  color: #dedede;
+  font-size: 0.9rem;
+}
+.reviews-block .container .wrapper:hover {
+  box-shadow: 0px 0px 20px 0px #FFA702;
+}
+.reviews-block:hover .icon {
+  animation: tilt-shaking 0.2s infinite;
+}
+
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg) translate(0, -50%);
+  }
+  25% {
+    transform: rotate(5deg) translate(0, -50%);
+  }
+  50% {
+    transform: rotate(0eg) translate(0, -50%);
+  }
+  75% {
+    transform: rotate(-5deg) translate(0, -50%);
+  }
+  100% {
+    transform: rotate(0deg) translate(0, -50%);
+  }
+}
 .account-page-template {
   margin: 2rem 0;
 }

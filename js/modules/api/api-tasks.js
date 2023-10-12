@@ -16,6 +16,7 @@ import setPercent from "./set-percent";
 import getPercent from "./get-percent";
 import upscaleImage from "./upscale-image";
 import addTaskToUser from "./add-task-to-user";
+import checkPrompt from "./check-prompt";
 const apiTasks = () => {
     const form = document.querySelector('.creation-form');
     let isUpscaleInProgress = false;
@@ -37,6 +38,33 @@ const apiTasks = () => {
     } else {
         premiumBody = false;
     }
+
+    if (premiumBody) {
+        const promptInput = document.querySelector('textarea[name="prompt"]');
+
+
+        promptInput.addEventListener('blur', async (e) => {
+            console.log('test');
+            const wordArray = []; // Create an empty array to store the words
+            const promptValue = promptInput.value;
+            const words = promptValue.split(/[,\s]+/);
+            wordArray.push(...words);
+            const goodPrompt = await checkPrompt(wordArray);
+            console.log(goodPrompt)
+            if(goodPrompt.response === false){
+                document.querySelector('.generate').disabled = true;
+                document.querySelector('.error-notify').classList.add('show');
+                document.querySelector('#keyword').textContent = goodPrompt.matchingWords;
+                setTimeout(function() {
+                    document.querySelector('.error-notify').classList.remove('show');
+                }, 1000);
+            } else {
+                document.querySelector('.generate').disabled = false;
+            }
+
+        });
+    }
+
 
     document.querySelector('.generate').addEventListener('click', async (e) => {
 

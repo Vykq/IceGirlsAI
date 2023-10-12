@@ -12,7 +12,8 @@ $user_info = get_user_meta($user_id);
     <section class="homepage-hero">
         <div class="hero-wrapper">
             <div class="image">
-                <img src="<?php echo get_field('homepage_hero_image'); ?>" alt="<?php echo get_field('title'); ?>">
+                <img src="<?php echo get_field('homepage_hero_image'); ?>" class="desktop" alt="<?php echo get_field('title'); ?>">
+                <img src="<?php echo get_field('homepage_hero_image_mobile'); ?>" class="mobile" alt="<?php echo get_field('title'); ?>">
             </div>
             <div class="content-area">
                 <div class="content-wrapper">

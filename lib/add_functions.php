@@ -120,33 +120,34 @@ function getCurrentPatronCount(){
 
     $tierPatronCounts = [];
 
-    // Iterate through the "data" array in the JSON response
-    foreach ($responseData['data'] as $member) {
-        // Check if the "currently_entitled_tiers" data is not empty
-        if (!empty($member['relationships']['currently_entitled_tiers']['data'])) {
-            // Retrieve the tier ID from the "tier" data
-            $tierId = $member['relationships']['currently_entitled_tiers']['data'][0]['id'];
+    if(!empty($response['error'])) {
+        // Iterate through the "data" array in the JSON response
+        foreach ($responseData['data'] as $member) {
+            // Check if the "currently_entitled_tiers" data is not empty
+            if (!empty($member['relationships']['currently_entitled_tiers']['data'])) {
+                // Retrieve the tier ID from the "tier" data
+                $tierId = $member['relationships']['currently_entitled_tiers']['data'][0]['id'];
 
-            // Find the corresponding tier information from the "included" section
-            foreach ($responseData['included'] as $tierInfo) {
-                if ($tierInfo['id'] === $tierId && $tierInfo['type'] === 'tier') {
-                    // Get the patron count for this tier
-                    $patronCount = $tierInfo['attributes']['patron_count'];
+                // Find the corresponding tier information from the "included" section
+                foreach ($responseData['included'] as $tierInfo) {
+                    if ($tierInfo['id'] === $tierId && $tierInfo['type'] === 'tier') {
+                        // Get the patron count for this tier
+                        $patronCount = $tierInfo['attributes']['patron_count'];
 
-                    // Store the patron count in the array using the tier ID as the key
-                    $tierPatronCounts[$tierId] = $patronCount;
-                    //echo $patronCount;
-                    // You can also access the email of the member if needed
-                    $email = $member['attributes']['email'];
-                    //echo "Email: $email, Tier Patron Count: $patronCount\n";
+                        // Store the patron count in the array using the tier ID as the key
+                        $tierPatronCounts[$tierId] = $patronCount;
+                        //echo $patronCount;
+                        // You can also access the email of the member if needed
+                        $email = $member['attributes']['email'];
+                        //echo "Email: $email, Tier Patron Count: $patronCount\n";
 
-                    break; // Exit the inner loop once we find the tier information
+                        break; // Exit the inner loop once we find the tier information
+                    }
                 }
             }
         }
+        return $tierPatronCounts['10233790'];
     }
 
-    // Now, you have an array $tierPatronCounts containing the patron counts for each tier
-    return $tierPatronCounts['10233790'];
         }
 

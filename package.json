@@ -24,6 +24,7 @@
     "dev": "webpack --mode development --watch"
   },
   "dependencies": {
+    "minimasonry": "^1.3.2",
     "purejswatermark": "0.0.7"
   }
 }

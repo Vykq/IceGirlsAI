@@ -26,6 +26,32 @@ function getModelName($model) {
     return $cpName;
 }
 
+
+add_action('wp_ajax_nopriv_get_nice_cp_title', 'getNiceCpName');
+add_action('wp_ajax_get_nice_cp_title', 'getNiceCpName');
+function getNiceCpName() {
+    $response = array(); // Create an array to hold the response data
+    $model = $_POST['model'];
+    $args = array(
+        'post_type' => 'checkpoints',
+        'posts_per_page' => -1,
+        'post_status' => 'publish'
+    );
+    $cpName = "";
+    $models = new WP_Query($args);
+    if($models->have_posts()) :
+        while($models->have_posts()):
+            $models->the_post();
+            if($model == get_field('real_checkpoint_name')) :
+                $cpName = get_the_title();
+                $response['model'] = $cpName;
+            endif;
+        endwhile;
+    endif;
+    wp_send_json($response);
+    die();
+}
+
 //favorite posts array
 function favorite_id_array() {
     if (!empty( $_COOKIE['liked_post_ids'])) {

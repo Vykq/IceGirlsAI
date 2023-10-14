@@ -1,4 +1,4 @@
-.single-generated-image-page{
+.single-generated-image-page, .new-single-generated-image-page{
   .container{
     @include contentStructure();
     display:grid;
@@ -45,8 +45,11 @@
           margin-bottom: 1rem;
         }
         .list{
-          display: flex;
           gap:1rem;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          aspect-ratio: 16/9;
           @media (max-width: 800px) {
             flex-direction: column;
           }
@@ -215,8 +218,12 @@
               img{
                 transition: .4s all ease-in-out;
                 @include imageCover(50%, 0);
-                opacity: 1;
+                opacity: 0;
                 width: 100%;
+                &.show{
+                  transition: .4s all ease-in-out;
+                  opacity: 1;
+                }
                 &.hide{
                   transition: .4s all ease-in-out;
                   opacity: 0;

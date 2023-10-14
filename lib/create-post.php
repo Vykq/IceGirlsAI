@@ -28,6 +28,7 @@ function create_generated_post() {
                     foreach ($matches as $match) {
                         $loras[$match[1]] = $match[2];
                     }
+                    var_dump($loras);
                     // Step 3: Extract info
                     $pattern = '/<lora:.*?<\/lora>/';
                     $infoText = preg_replace($pattern, '', $infoText);

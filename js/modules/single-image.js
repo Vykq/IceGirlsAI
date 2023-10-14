@@ -30,6 +30,7 @@ const singleImage = (isPremium) => {
                     image.src = APIimage;
                     spinner.classList.remove('show');
                     image.classList.remove('hide');
+                    image.classList.add('show');
                 } else {
                     apiUrl = themeUrl.apiUrlFree;
 
@@ -44,6 +45,7 @@ const singleImage = (isPremium) => {
                                 image.src = APIimage;
                                 spinner.classList.remove('show');
                                 image.classList.remove('hide');
+                                image.classList.add('show');
                             } else {
                                 wrapper.classList.add('hide');
                             }

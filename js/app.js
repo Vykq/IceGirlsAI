@@ -19,6 +19,7 @@ import timer from "./modules/countdown-timer";
 import accountPage from "./modules/account-page";
 import singleImage from "./modules/single-image";
 import testinis from "./modules/testinis";
+import singleImageTwo from "./modules/single-image2";
 window.addEventListener('DOMContentLoaded', () => {
   openModals();
   openModalOnLink();
@@ -59,14 +60,13 @@ window.addEventListener('DOMContentLoaded', () => {
     singleImage();
   }
 
+  if(document.querySelector('.single-image-id')){
+    singleImageTwo();
+  }
 
   //if(document.querySelector('.generated-images-wrapper')){
   if(document.querySelector('.hub-page-template')){
     hubPage();
-  }
-
-  if(document.querySelector('.testinis-page-template')){
-    testinis();
   }
 
   if(document.querySelector('.last-creations-wrapper')){

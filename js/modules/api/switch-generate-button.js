@@ -15,6 +15,7 @@ const switchGenerateButton = (button, status) =>{
         percents.classList.remove('hide');
         queue.classList.remove('hide');
         queue.textContent = "Queue: calculating...";
+        currentStep.textContent = "";
         if(document.querySelector('.generated-image')){
             const img = document.querySelector('.generated-image');
             img.classList.remove('show');

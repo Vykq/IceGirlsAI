@@ -115,6 +115,7 @@ const apiSendTask = (isPremium) => {
     if(isAtLeastOneChecked) {
         //jeigu yra pazymeje nors 1
         const selectedValuesString = selectedValues.join(', ');
+        console.log(selectedValuesString);
         finalPrompt = midPrompt + ", " + selectedValuesString;
     } else {
         if(midPrompt === ""){
@@ -196,10 +197,36 @@ const apiSendTask = (isPremium) => {
 
 
     //ADD action LORA to prompt;
-    function addActionsToPrompt(prompt, action, char){
-        let finalPrompt;
-        finalPrompt = char.triggerWord + ", " + action.triggerWord + " " + prompt + ", " + char.loraInput + " " + action.loraInput + " <lora:more_details:" + details + ">";
-        return finalPrompt
+    // function addActionsToPrompt(prompt, action, char){
+    //     let finalPrompt;
+    //     finalPrompt = char.triggerWord + ", " + action.triggerWord + " " + prompt + ", " + char.loraInput + " " + action.loraInput + " <lora:more_details:" + details + ">";
+    //     return finalPrompt
+    // }
+
+    function addActionsToPrompt(prompt, action, char) {
+        const triggerPairs = [
+            { trigger: char.triggerWord, value: char.loraInput },
+            { trigger: action.triggerWord, value: action.loraInput },
+            // Add more trigger pairs as needed
+        ];
+
+        let finalPrompt = "";
+
+        for (const { trigger, value } of triggerPairs) {
+            if (trigger) {
+                finalPrompt += trigger;
+            }
+
+
+            if (value) {
+                finalPrompt += ", " + value;
+            }
+
+
+        }
+        finalPrompt += prompt;
+        finalPrompt += " <lora:more_details:" + details + ">";
+        return finalPrompt;
     }
 
 

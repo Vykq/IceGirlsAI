@@ -17,9 +17,10 @@ const upscaleSingleImage = () => {
             modal.classList.add('show');
         }
 
-
+        console.log(button.dataset.id);
         const image = await getImage(button.dataset.id);
         if(image.image){
+            console.log(image.image);
             const upscaledImage = await upscaleImage(premiumBody, image.image)
             if(upscaledImage) {
                 button.disabled = true;

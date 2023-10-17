@@ -32,20 +32,23 @@
           }
         }
       }
-      .image-info-block{
+      .image-info-block {
         border: 1px solid $go;
         border-radius: 0.5rem;
-        padding:1rem;
+        padding: 1rem;
         background-color: $black;
-        .top{
+
+        .top {
           font-size: 1.5rem;
           line-height: 2rem;
-          color:#FFF;
+          color: #FFF;
           font-weight: 500;
           margin-bottom: 1rem;
+          margin-top: 1rem;
         }
-        .list{
-          gap:1rem;
+
+        .list {
+          gap: 1rem;
           display: flex;
           flex-direction: column;
           position: relative;
@@ -53,25 +56,263 @@
           @media (max-width: 800px) {
             flex-direction: column;
           }
-        .info-title{
-          font-size: 1rem;
-          line-height: 1rem;
-          flex-basis: 20%;
-          color:$go;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          &.prompt{
-            flex-basis: 40%;
+
+          .info-title {
+            font-size: 1rem;
+            line-height: 1rem;
+            flex-basis: 20%;
+            color: $go;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            &.prompt {
+              flex-basis: 40%;
+            }
+
+            span {
+              color: #FFF;
+              font-weight: 600;
+              font-size: 1.25rem;
+              line-height: 1.25rem;
+            }
           }
-          span{
-            color:#FFF;
-            font-weight: 600;
+        }
+        .actions-chars{
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap:1rem;
+          .top{
             font-size: 1.25rem;
-            line-height: 1.25rem;
+            margin-bottom: .5rem;
+          }
+        .actions-wrapper, .chars-wrapper, .style-wrapper {
+          .actions-grid, .chars-grid, .style-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+
+            .single-action, .single-char, .single-style {
+              aspect-ratio: 9/16;
+              width: 100%;
+              cursor: pointer;
+              border-radius: 10px;
+              overflow: hidden;
+
+              .wrapper {
+                position: relative;
+                height: 100%;
+
+                .model-input, .action-input, .char-input, .style-input {
+                  position: absolute;
+                  z-index: 3;
+                  width: 100%;
+                  height: 100%;
+                  top: 0;
+                  left: 0;
+
+                  label {
+                    color: #FFF;
+                    position: absolute;
+                    bottom: 1rem;
+                    right: 1rem;
+                    border-radius: .25rem;
+                    background-color: $black;
+                    padding: .25rem 0.75rem;
+                    font-size: .8rem;
+                    font-weight: 400;
+                    border: 1px solid $black;
+                    z-index: 3;
+                  }
+
+                  input {
+                    cursor: pointer;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    z-index: 3;
+                    appearance: none;
+                    opacity: 0;
+                    -moz-appearance: none;
+                    border-radius: 0;
+
+                    &:checked {
+                      border: 2px solid $go;
+                      opacity: 1;
+
+                      + label {
+                        border: 1px solid $go;
+                        color: $go;
+                      }
+
+                    }
+
+                    &:disabled {
+                      ~ .action-image, ~ .model-image {
+                        opacity: .2;
+                      }
+                    }
+                  }
+
+                  .model-image, .action-image, .char-image {
+                    overflow: hidden;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 2;
+
+                    img {
+                      @include imageCover(50%, 0);
+                      transition: .2s all ease-in-out;
+                    }
+                  }
+
+                  .style-image {
+                    overflow: hidden;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 2;
+
+                    img {
+                      @include imageCover(50%, 0);
+                      transition: .2s all ease-in-out;
+                    }
+                  }
+
+                  .premium-notify {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    padding: 1rem;
+
+                    .image {
+                      width: 4rem;
+                      height: 4rem;
+                      @media (max-width: 1000px) {
+                        width: 2rem;
+                        height: 2rem;
+                      }
+
+                      svg {
+                        width: 100%;
+                        height: 100%;
+                      }
+                    }
+
+                    .gold {
+                      font-size: 1.5rem;
+                      line-height: 2rem;
+                      color: $go;
+                      font-weight: 600;
+                    }
+
+                    .notify {
+                      color: #dedede;
+                      text-align: center;
+                      font-size: 0.8rem;
+                      line-height: 1.1rem;
+                    }
+                  }
+                }
+              }
+
+              &:hover {
+                .model-image, .action-image, .char-image, .style-image{
+                  img {
+                    transform: scale(1.2) !important;
+                  }
+                }
+              }
+
+              &.discord-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                border-radius: .25rem;
+                border: 1px solid $go;
+
+                .icon {
+                  width: 4rem;
+                  height: 4rem;
+
+                  svg {
+                    width: 100%;
+
+                    path {
+                      transition: .2s all ease-in-out;
+                    }
+                  }
+                }
+
+                .title {
+                  color: #dedede;
+                  font-size: 1.2rem;
+                  line-height: 1.5rem;
+                  font-weight: 500;
+                  @media (max-width: 500px) {
+                    font-size: 0.8rem;
+                  }
+                }
+
+                .cta {
+                  color: $go;
+                  font-weight: 700;
+                  font-size: 1rem;
+                  line-height: 1.2rem;
+                  position: relative;
+                  @media (max-width: 500px) {
+                    font-size: 0.7rem;
+                  }
+
+                  &:before {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 0;
+                    height: 1px;
+                    background-color: $go;
+                    transition: .2s all ease-in-out;
+                  }
+                }
+
+                &:hover {
+                  .cta {
+                    &:before {
+                      width: 100%;
+                    }
+                  }
+
+                  .icon {
+                    animation: tilt-shaking .2s infinite;
+
+                    svg {
+                      path {
+                        fill: $go;
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
           }
         }
-        }
+      }
       }
       .button-area{
         display: flex;
@@ -109,6 +350,9 @@
         margin-top: 2rem;
         @media (max-width: 768px){
           margin: 0 auto;
+        }
+        @media (max-width: 400px){
+          height: unset;
         }
         &.square{
           aspect-ratio: 1/1;

@@ -1,9 +1,15 @@
-const singleImageTwo = () => {
+const singleImageTwo = async () => {
 
+    const mainInfoBlock = document.querySelector('#taskid');
     const taskID = document.querySelector('#taskid').dataset.id;
     const singleImage = document.querySelector('#singleImage');
+    const imageArea = document.querySelector('.image-area');
     const infoList = document.querySelector('#infolist');
     const infoLoader = infoList.querySelector('.loaderis .spinner');
+    const actionsChars = document.createElement('div');
+    actionsChars.classList.add('actions-chars');
+    mainInfoBlock.append(actionsChars);
+
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -19,7 +25,8 @@ const singleImageTwo = () => {
                     const imageElement = loadImage(APIimage);
                     const getInfoData = imageInfoData(apiUrl, taskID);
                     const seed = getSeed(infoText);
-
+                    const spinner = singleImage.querySelector('.spinner');
+                    spinner.classList.remove('show');
                     imageElement.classList.add('hub-single-image');
                     imageElement.classList.add('show');
                 } else {
@@ -60,9 +67,6 @@ const singleImageTwo = () => {
             postImage.classList.add('post-image');
             singleWrapper.append(postImage);
 
-            const spinner = singleImage.querySelector('.spinner');
-            spinner.classList.remove('show');
-
             const imgEl = document.createElement('img');
             imgEl.classList.add('hub-single-image');
             imgEl.alt = "IceGirls.ai generated image"; //ADD prompt?
@@ -76,7 +80,6 @@ const singleImageTwo = () => {
         const seed = infotext.match(/Seed: (\d+)/);
         return seed;
     }
-
     function imageInfoData(apiUrl, taskID){
         const myHeaders = new Headers();
         myHeaders.append("accept", "application/json");
@@ -97,12 +100,16 @@ const singleImageTwo = () => {
                     const cleanPrompt = prompt.replace(/<lora:[^>]+>/g, '');
                     const checkPointNice = await getNiceCpName(checkPoint);
 
-                    const infoItems = [
-                        { label: "Checkpoint", value: checkPointNice },
-                        { label: "Size", value: imageSize },
-                        { label: "Image Quality", value: steps },
-                        { label: "Prompt", value: cleanPrompt },
-                    ]
+                    let imageClass = "normal";
+                    if(imageSize == "512x512"){
+                        imageClass = "square";
+                    } else if (imageSize == "960x512"){
+                        imageClass = 'horizontal';
+                    }
+
+                    singleImage.classList.add(imageClass);
+                    imageArea.classList.add(imageClass);
+
                     const matches = prompt.match(/<lora:([^:]+):([^>]+)>/g);
                     const loraInfo = matches.map(match => {
                         const [, key, value] = match.match(/<lora:([^:]+):([^>]+)>/);
@@ -112,9 +119,26 @@ const singleImageTwo = () => {
                         return { key: formattedLabel, value };
                     });
 
+                    const loraInfoWp = await getLoraInformation(matches);
+
+                    const finalPrompt = cleanPrompTriggers(cleanPrompt, loraInfoWp);
+
+
+                    const infoItems = [
+                        { label: "Size", value: imageSize },
+                        { label: "Image Quality", value: steps },
+                        { label: "Prompt", value: finalPrompt },
+                    ]
+
+
+
                     loraInfo.forEach(lora => {
-                        infoItems.push({ label: lora.key, value: lora.value });
+                        if(lora.key == "MoreDetails") {
+                            infoItems.push({ label: lora.key, value: lora.value });
+                        }
                     });
+
+
 
                     infoLoader.classList.remove('show');
                     infoItems.forEach(info => {
@@ -131,7 +155,8 @@ const singleImageTwo = () => {
 
                         infoList.appendChild(listItem);
                     });
-                    console.log(loraInfo)
+
+                    createLoraOutputs(loraInfoWp, checkPointNice);
                 }
 
             })
@@ -141,6 +166,194 @@ const singleImageTwo = () => {
 
     }
 
+
+    function cleanPrompTriggers(cleanPrompt, loraInfoWp){
+        console.log('here');
+        console.log(loraInfoWp);
+        let finalPrompt = cleanPrompt;
+
+        // Iterate through the "Actions" and "Chars" objects
+        for (const key in loraInfoWp) {
+            if (loraInfoWp.hasOwnProperty(key)) {
+                const info = loraInfoWp[key];
+                finalPrompt = finalPrompt.replace(info.trigger, '');
+            }
+        }
+
+        finalPrompt = finalPrompt.replace(/^[, ]+/, '');
+        console.log('final ' + finalPrompt)
+
+        return finalPrompt;
+    }
+
+    function createLoraOutputs(loraInfoWp, style){
+        createStyle(style);
+        createActions(loraInfoWp.Actions);
+        createChars(loraInfoWp.Chars);
+
+    }
+
+
+    function createStyle(style){
+        if(style.length !== 0){
+            const styleWrapper = document.createElement('div');
+            styleWrapper.classList.add('style-wrapper');
+            actionsChars.append(styleWrapper);
+            console.log(style);
+
+            const title = document.createElement('p');
+            title.classList.add('top');
+            title.textContent = "Style";
+            styleWrapper.append(title);
+
+            const styleGrid = document.createElement('div');
+            styleGrid.classList.add('chars-grid');
+            styleWrapper.append(styleGrid);
+
+            const singleStyle = document.createElement('div');
+            singleStyle.classList.add('single-style');
+            styleGrid.append(singleStyle);
+
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('wrapper');
+            singleStyle.append(wrapper);
+
+            const styleInput = document.createElement('div');
+            styleInput.classList.add('style-input');
+            wrapper.append(styleInput);
+
+            const label = document.createElement('label');
+            label.textContent = style.model;
+            styleInput.append(label);
+
+            const styleImage = document.createElement('div');
+            styleImage.classList.add('style-image');
+            styleInput.append(styleImage);
+
+            const image = document.createElement('img');
+            image.src = style.image;
+            styleImage.append(image);
+        }
+    }
+    function createChars(chars){
+            if(chars.length !== 0){
+                const charsWrapper = document.createElement('div');
+                charsWrapper.classList.add('chars-wrapper');
+                actionsChars.append(charsWrapper);
+                console.log(chars);
+
+                const title = document.createElement('p');
+                title.classList.add('top');
+                title.textContent = "Charachter";
+                charsWrapper.append(title);
+
+                const charsGrid = document.createElement('div');
+                charsGrid.classList.add('chars-grid');
+                charsWrapper.append(charsGrid);
+
+                const singleChar = document.createElement('div');
+                singleChar.classList.add('single-char');
+                charsGrid.append(singleChar);
+
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('wrapper');
+                singleChar.append(wrapper);
+
+                const charInput = document.createElement('div');
+                charInput.classList.add('char-input');
+                wrapper.append(charInput);
+
+                const label = document.createElement('label');
+                label.textContent = chars.title;
+                charInput.append(label);
+
+                const charImage = document.createElement('div');
+                charImage.classList.add('char-image');
+                charInput.append(charImage);
+
+                const image = document.createElement('img');
+                image.src = chars.image;
+                charImage.append(image);
+            }
+
+    }
+
+    function createActions(actions){
+        if(actions.length !== 0) {
+            const actionsWrapper = document.createElement('div');
+            actionsWrapper.classList.add('actions-wrapper');
+            actionsChars.append(actionsWrapper);
+            console.log(actions);
+
+            const title = document.createElement('p');
+            title.classList.add('top');
+            title.textContent = "Actions";
+            actionsWrapper.append(title);
+
+            const actionsGrid = document.createElement('div');
+            actionsGrid.classList.add('actions-grid');
+            actionsWrapper.append(actionsGrid);
+
+            const singleAction = document.createElement('div');
+            singleAction.classList.add('single-action');
+            actionsGrid.append(singleAction);
+
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('wrapper');
+            singleAction.append(wrapper);
+
+            const actionInput = document.createElement('div');
+            actionInput.classList.add('action-input');
+            wrapper.append(actionInput);
+
+            const label = document.createElement('label');
+            label.textContent = actions.title;
+            actionInput.append(label);
+
+            const actionImage = document.createElement('div');
+            actionImage.classList.add('action-image');
+            actionInput.append(actionImage);
+
+            const image = document.createElement('img');
+            image.src = actions.image;
+            actionImage.append(image);
+        }
+
+
+    }
+
+
+    function getLoraInformation(loras){
+        return new Promise((resolve, reject) => {
+            const postData = async (url, data) => {
+                let res = await fetch(url, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    body: requestData,
+                });
+
+                return await res.json(); // Parse the response as JSON
+            }
+
+            const requestData = new FormData();
+            requestData.append('action', 'get_lora_info');
+            requestData.append('loras', loras);
+
+            postData(themeUrl.ajax_url, requestData)
+                .then((res) => {
+                    if (res) {
+                        const Actions = res.actions;
+                        const Chars = res.chars;
+                        resolve({ Actions, Chars });
+                    } else {
+                        reject("Failed");
+                    }
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
 
     function getNiceCpName(name) {
         return new Promise((resolve, reject) => {
@@ -161,7 +374,8 @@ const singleImageTwo = () => {
             postData(themeUrl.ajax_url, requestData)
                 .then((res) => {
                     if (res) {
-                        resolve(res.model);
+                        console.log(res);
+                        resolve(res);
                     } else {
                         reject("Failed to get nice CP title");
                     }

@@ -1,5 +1,5 @@
 import MinimasonryMin from "minimasonry";
-const hubPage = () => {
+const hubPage = async () => {
 
     const isPremium = false;
     let firstScroll = true; // Initialize firstScroll
@@ -22,11 +22,11 @@ const hubPage = () => {
 
     fetch(apiUrl + API_ENDPOINT)
         .then(response => response.json())
-        .then(data => {
-            if(data.total) {
+        .then(async data => { // Add 'async' here
+            if (data.total) {
                 const total = data.total;
                 const tasks = data.tasks;
-                createWrapper(total, tasks);
+                await createWrapper(total, tasks); // This should work now
                 let masonry = new MinimasonryMin({
                     container: '.generated-images-wrapper',
                 });
@@ -106,7 +106,7 @@ const hubPage = () => {
     }
 
 
-    function createWrapper(total, tasks){
+    async function createWrapper(total, tasks){
 
         tasks.forEach(task => {
             //console.log(task);

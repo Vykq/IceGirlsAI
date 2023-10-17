@@ -20,7 +20,7 @@ import accountPage from "./modules/account-page";
 import singleImage from "./modules/single-image";
 import testinis from "./modules/testinis";
 import singleImageTwo from "./modules/single-image2";
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   openModals();
   openModalOnLink();
 
@@ -61,12 +61,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   if(document.querySelector('.single-image-id')){
-    singleImageTwo();
+    await singleImageTwo();
   }
 
   //if(document.querySelector('.generated-images-wrapper')){
   if(document.querySelector('.hub-page-template')){
-    hubPage();
+    await hubPage();
   }
 
   if(document.querySelector('.last-creations-wrapper')){

@@ -8,9 +8,9 @@ get_header();
 
 
 ?>
-    <div class="testinis-page-template">
+    <div class="test-page-template" style="background-color: white">
         <div class="container">
-
+            SVEIki
         </div>
     </div>
 

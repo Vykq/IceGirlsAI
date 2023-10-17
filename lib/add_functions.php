@@ -27,6 +27,64 @@ function getModelName($model) {
 }
 
 
+
+
+add_action('wp_ajax_nopriv_get_lora_info', 'getLoraInfo');
+add_action('wp_ajax_get_lora_info', 'getLoraInfo');
+function getLoraInfo() {
+    $response = array(); // Create an array to hold the response data
+    $loras = $_POST['loras'];
+    $lorasArray = explode(',', $loras);
+    $charsInfo = array();
+    $actionsInfo = array();
+    foreach ($lorasArray as $lora){
+        $args = array(
+            'post_type' => 'chars',
+            'post_status' => 'publish',
+            'posts_per_page' => -1
+        );
+        $chars = new WP_Query($args);
+
+        if($chars->have_posts()):
+            while($chars->have_posts()) : $chars->the_post();
+                if(get_field('lora_name',get_the_id()) == $lora){
+                    $charsInfo['title'] = get_the_title();
+                    $charsInfo['image'] = get_the_post_thumbnail_url();
+                    $charsInfo['trigger'] = get_field('trigger_word',get_the_id());
+                    $charsInfo['type'] = "Character";
+                }
+            endwhile;
+                $response['chars'] = $charsInfo;
+        endif;
+        wp_reset_query();
+
+
+        $args = array(
+            'post_type' => 'actions',
+            'post_status' => 'publish',
+            'posts_per_page' => -1
+        );
+        $actions = new WP_Query($args);
+
+        if($actions->have_posts()):
+            while($actions->have_posts()) : $actions->the_post();
+                if(get_field('lora_name',get_the_id()) == $lora){
+                    $actionsInfo['title'] = get_the_title();
+                    $actionsInfo['image'] = get_the_post_thumbnail_url();
+                    $actionsInfo['trigger'] = get_field('trigger_word',get_the_id());
+                    $actionsInfo['type'] = "Action";
+                }
+            endwhile;
+            $response['actions'] = $actionsInfo;
+        endif;
+
+    }
+
+    wp_send_json($response);
+    die();
+}
+
+
 add_action('wp_ajax_nopriv_get_nice_cp_title', 'getNiceCpName');
 add_action('wp_ajax_get_nice_cp_title', 'getNiceCpName');
 function getNiceCpName() {
@@ -45,6 +103,8 @@ function getNiceCpName() {
             if($model == get_field('real_checkpoint_name')) :
                 $cpName = get_the_title();
                 $response['model'] = $cpName;
+                $response['image'] = get_the_post_thumbnail_url();
+                $response['type'] = "Style";
             endif;
         endwhile;
     endif;
@@ -134,7 +194,7 @@ function getCurrentPatronCount(){
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'GET',
         CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer 5WiC9NIcacysksuv5E9Zz0zMDyAK4Lk7WqIRCFJLg_w',
+            'Authorization: Bearer UPCTqrr5rA8cf2v4A5sZwbMpD2Ag550tqTtx-rKeAK8',
             'Cookie: __cf_bm=sDwnGsk9sJuOYtVgVJpJvEsAG0EM9282bBdldlXWp0Q-1696062070-0-Ae7c/7dbF/ySK4VrX+g/Co/Xt+SjcOWeZLWsgEGGJ3nOXII0TGRhPgZ1Wwk3hsYtf42yjx7wWKjFEd+9Q5eP+oXAjYTtOIT1hFLNTHcuRy6R; a_csrf=e1ws07llb1ud7f4RRSa_9xlqSl8sZvl08dFnSDdkhus; patreon_device_id=4d3b3606-22bc-4745-a591-fbf75de1cc13; AWSALBTG=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF; AWSALBTGCORS=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF'
         ),
     ));
@@ -146,7 +206,7 @@ function getCurrentPatronCount(){
 
     $tierPatronCounts = [];
 
-    if(!empty($response['error'])) {
+
         // Iterate through the "data" array in the JSON response
         foreach ($responseData['data'] as $member) {
             // Check if the "currently_entitled_tiers" data is not empty
@@ -172,8 +232,9 @@ function getCurrentPatronCount(){
                 }
             }
         }
-        return $tierPatronCounts['10233790'];
-    }
+        //return $tierPatronCounts['10233790'];
+        return '98';
 
-        }
+
+}
 

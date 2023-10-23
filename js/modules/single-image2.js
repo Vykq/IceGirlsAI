@@ -9,11 +9,41 @@ const singleImageTwo = async () => {
     const actionsChars = document.createElement('div');
     actionsChars.classList.add('actions-chars');
     mainInfoBlock.append(actionsChars);
+    let seed = "";
+    let styles = {
+        'style' : '',
+        'action' : '',
+        'char' : '',
+        'prompt' : '',
+        'seed' : '',
+    }
+
+    if(document.querySelector('.reuse-settings')){
+        document.querySelector('.reuse-settings').disabled = true;
+
+        document.querySelector('.reuse-settings').addEventListener('click', (e) =>{
+            e.preventDefault();
+            const baseUrl = '/create/';
+            const queryParams = [];
+
+            for (const key in styles) {
+                if (styles[key]) {
+                    queryParams.push(`${key}=${encodeURIComponent(styles[key])}`);
+                }
+            }
+
+            const queryString = queryParams.join('&');
+            const url = baseUrl + (queryString ? `?${queryString}` : '');
+
+            window.location.href = url; // Navigate to the new page
+        })
+    }
+
+
 
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
-
     let apiUrl = themeUrl.apiUrl;
 
         return fetch(apiUrl + "agent-scheduler/v1/task/" + taskID + "/results?zip=false")
@@ -24,11 +54,14 @@ const singleImageTwo = async () => {
                     let infoText = data.data[0].infotext;
                     const imageElement = loadImage(APIimage);
                     const getInfoData = imageInfoData(apiUrl, taskID);
-                    const seed = getSeed(infoText);
+                    seed = getSeed(infoText);
                     const spinner = singleImage.querySelector('.spinner');
                     spinner.classList.remove('show');
                     imageElement.classList.add('hub-single-image');
                     imageElement.classList.add('show');
+                    if(document.querySelector('.reuse-settings')){
+                        document.querySelector('.reuse-settings').disabled = false;
+                    }
                 } else {
                     apiUrl = themeUrl.apiUrlFree;
 
@@ -37,10 +70,18 @@ const singleImageTwo = async () => {
                         .then(data => {
                             if(data.success !== false){
                                 let APIimage = data.data[0].image;
+                                let infoText = data.data[0].infotext;
                                 const imageElement = loadImage(APIimage);
+                                const getInfoData = imageInfoData(apiUrl, taskID);
+                                const seed = getSeed(infoText);
+                                const spinner = singleImage.querySelector('.spinner');
+                                spinner.classList.remove('show');
                                 imageElement.classList.add('hub-single-image');
                                 imageElement.classList.add('show');
-                            } else {
+                                if(document.querySelector('.reuse-settings')){
+                                    document.querySelector('.reuse-settings').disabled = false;
+                                }
+                            }else {
                                //TODO: Error
                             }
                         })
@@ -57,7 +98,10 @@ const singleImageTwo = async () => {
 
             });
 
-        function loadImage(APIimage){
+
+
+
+    function loadImage(APIimage){
 
             const singleWrapper = document.createElement('div');
             singleWrapper.classList.add('single-wrapper');
@@ -78,6 +122,7 @@ const singleImageTwo = async () => {
 
     function getSeed(infotext) {
         const seed = infotext.match(/Seed: (\d+)/);
+        styles['seed'] = seed[1];
         return seed;
     }
     function imageInfoData(apiUrl, taskID){
@@ -123,6 +168,7 @@ const singleImageTwo = async () => {
 
                     const finalPrompt = cleanPrompTriggers(cleanPrompt, loraInfoWp);
 
+                    styles['prompt'] = finalPrompt;
 
                     const infoItems = [
                         { label: "Size", value: imageSize },
@@ -196,6 +242,7 @@ const singleImageTwo = async () => {
 
     function createStyle(style){
         if(style.length !== 0){
+            styles['style'] = style.model;
             const styleWrapper = document.createElement('div');
             styleWrapper.classList.add('style-wrapper');
             actionsChars.append(styleWrapper);
@@ -237,6 +284,7 @@ const singleImageTwo = async () => {
     }
     function createChars(chars){
             if(chars.length !== 0){
+                styles['char'] = chars.title;
                 const charsWrapper = document.createElement('div');
                 charsWrapper.classList.add('chars-wrapper');
                 actionsChars.append(charsWrapper);
@@ -280,6 +328,7 @@ const singleImageTwo = async () => {
 
     function createActions(actions){
         if(actions.length !== 0) {
+            styles['action'] = actions.title;
             const actionsWrapper = document.createElement('div');
             actionsWrapper.classList.add('actions-wrapper');
             actionsChars.append(actionsWrapper);

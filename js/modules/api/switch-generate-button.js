@@ -7,6 +7,7 @@ const switchGenerateButton = (button, status) =>{
     const percents = document.querySelector('#steps-all');
     const queue = document.querySelector('#premium-queue');
     const currentStep = document.querySelector('#current-step');
+    const sameSeedBtn = document.querySelector('.seed-button');
     if(status === "start"){
         button.classList.add('hidden');
         stopBtn.classList.remove('hidden');
@@ -16,6 +17,7 @@ const switchGenerateButton = (button, status) =>{
         queue.classList.remove('hide');
         queue.textContent = "Queue: calculating...";
         currentStep.textContent = "";
+        sameSeedBtn.classList.add('hidden');
         if(document.querySelector('.generated-image')){
             const img = document.querySelector('.generated-image');
             img.classList.remove('show');
@@ -30,12 +32,14 @@ const switchGenerateButton = (button, status) =>{
         stopBtn.classList.add('hidden');
         spinner.classList.remove('show');
         notifier.classList.remove('hide');
+        sameSeedBtn.classList.add('hidden');
         queue.textContent = "";
     } else if (status === "end") {
         spinner.classList.remove('show');
         notifier.classList.add('hide');
         button.classList.remove('hidden');
         stopBtn.classList.add('hidden');
+        sameSeedBtn.classList.remove('hidden');
 
         if(document.querySelector('.upscale')){
             const upscaleButton = document.querySelector('.upscale');
@@ -52,6 +56,7 @@ const switchGenerateButton = (button, status) =>{
         percents.classList.add('hide');
         queue.classList.add('hide');
         button.disabled = true;
+        sameSeedBtn.classList.add('hidden');
         currentStep.textContent = "Upscalling...";
         generateBtn.disabled = true;
     } else if (status === "end-upscale") {
@@ -60,12 +65,14 @@ const switchGenerateButton = (button, status) =>{
         notifier.classList.add('hide');
         percents.classList.add('hide');
         queue.classList.add('hide');
+        sameSeedBtn.classList.remove('hidden');
         currentStep.classList.add('hide');
         button.disabled = true;
         generateBtn.disabled = false;
     } else if (status === "error"){
         loader.classList.add('hide');
         notifier.classList.add('show');
+        sameSeedBtn.classList.add('hidden');
         button.classList.remove('hidden');
         stopBtn.classList.add('hidden');
         percents.classList.remove('hide');

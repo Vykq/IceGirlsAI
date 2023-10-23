@@ -81,7 +81,7 @@ if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
                                     <div class="people-area">
                                         <?php
 
-                                        $currentPatrons = getCurrentPatronCount();
+                                        $currentPatrons = getPremiumUserCount();
                                         if ($currentPatrons < 20) {
                                             $currentPatrons = $currentPatrons + 70;
                                         } else if ($currentPatrons < 30) {

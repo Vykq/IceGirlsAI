@@ -41,7 +41,11 @@ if(!is_user_logged_in()){ ?>
                     <div class="account-info-area">
                         <?php if($userPatreon) { ?>
                             <div class="avatar-area">
-                                <img src="<?php echo $patreon_image_url; ?>" alt="IceGirls.Ai member <?php echo $patreon_username; ?>">
+                                <?php if($patreon_image_url) : ?>
+                                    <img src="<?php echo $patreon_image_url; ?>" alt="IceGirls.Ai member <?php echo $patreon_username; ?>">
+                                    <?php else: ?>
+                                    <img src="<?php echo get_template_directory_uri() . '/assets/images/logo.png'; ?>" alt="IceGirls.Ai member <?php echo $userName; ?>">
+                                <?php endif; ?>
                             </div>
                         <?php } else { ?>
                             <div class="avatar-area">

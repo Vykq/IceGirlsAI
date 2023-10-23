@@ -1,4 +1,4 @@
-const apiSendTask = (isPremium) => {
+const apiSendTask = (isPremium, oldSeed) => {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -7,6 +7,14 @@ const apiSendTask = (isPremium) => {
     const allRadios = tabContainer.querySelectorAll('input[type="radio"]');
     const allCheckboxes = tabContainer.querySelectorAll('input[type="checkbox"]');
     const allRadiosAndCheckboxes = tabContainer.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+
+    let seed;
+
+
+
+
+
+
 
     let imageSize = {
         width: 512,
@@ -94,6 +102,7 @@ const apiSendTask = (isPremium) => {
     allRadiosAndCheckboxes.forEach(input => {
         if (input.checked) {
             selectedValues.push(input.value);
+            selectedValues.push(input.dataset.lora);
             isAtLeastOneChecked = true;
         }
     });
@@ -122,15 +131,19 @@ const apiSendTask = (isPremium) => {
 
 
             chars.forEach(input =>{
-                if(input.checked && input.id === "none"){
+                if (input.checked && input.id === "none") {
                     const inputCount = allRadiosAndCheckboxes.length;
                     const filteredInputs = Array.from(allRadiosAndCheckboxes).filter(input => input.name !== 'get-premium');
                     const randomValues = getRandomValues(Array.from(filteredInputs), 5);
                     let randomValuesString = randomValues.map(input => input.value).join(", ");
-                    if(isPremium){
-                        finalPrompt = midPrompt + ", " +randomValuesString;
-                    } else{
-                        finalPrompt = randomValuesString;
+
+                    // Filter out empty data-lora values
+                    let randomValuesLoras = randomValues.map(input => input.dataset.lora).filter(Boolean).join(", ");
+                    console.log(randomValuesLoras);
+                    if (isPremium) {
+                        finalPrompt = midPrompt + ", " + randomValuesString + " " + randomValuesLoras;
+                    } else {
+                        finalPrompt = randomValuesString + " " + randomValuesLoras;
                     }
                 }
             });
@@ -162,6 +175,8 @@ const apiSendTask = (isPremium) => {
             "string"
         ],
         "steps": +stepSlider,
+        "seed": seed,
+        "restore_faces": true,
     });
 
     const requestOptions = {
@@ -224,7 +239,10 @@ const apiSendTask = (isPremium) => {
 
 
         }
-        finalPrompt += prompt;
+        if(prompt){
+            finalPrompt += " " + prompt;
+        }
+
         finalPrompt += " <lora:more_details:" + details + ">";
         return finalPrompt;
     }

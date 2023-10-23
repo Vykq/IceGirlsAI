@@ -1,6 +1,7 @@
 import apiSendTask from "./api-send-task";
 import apiGetQueue from "./api-get-queue";
 import showQueueInfo from "./show-queue-info";
+import getSeed from "./get-seed";
 import getImage from "./get-image";
 import loadImage from "./load-image";
 import getPosition from "./get-position";
@@ -22,6 +23,8 @@ const apiTasks = () => {
     let isUpscaleInProgress = false;
     let taskID = "";
     let stopGenerateFlag = false;
+    let seed = "";
+    let lastSeed = '';
 
     form.querySelector('.clear').addEventListener('click', (e) => {
         e.preventDefault();
@@ -66,14 +69,24 @@ const apiTasks = () => {
     }
 
 
+        const currentURL = window.location.href;
+        const match = currentURL.match(/[?&]seed=([^&]+)/);
+        if(match) {
+            seed = match ? match[1] : null;
+        } else {
+        }
+
+
     document.querySelector('.generate').addEventListener('click', async (e) => {
 
         e.preventDefault();
 
         switchGenerateButton(e.target, 'start');
-        const taskInfo = await apiSendTask(premiumBody);
+        console.log('naujas seed' + seed);
+        const taskInfo = await apiSendTask(premiumBody, seed);
         taskID = taskInfo.task_id;
         console.log(taskID);
+
         if(taskID === undefined){
          switchGenerateButton(e.target, 'error');
             setPercent('Error');
@@ -101,6 +114,7 @@ const apiTasks = () => {
             let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
             console.log('total tasks:' + totalPendingTasksObj)
             let queueTasks = apiGetQueueInfo.taskObjects;
+
             if (currentTaskID !== taskID) {
                 setPercent('16');
                 if (userStatus) {
@@ -193,6 +207,7 @@ const apiTasks = () => {
 
                 if(!stopGenerateFlag) {
                     let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
+                    seed = await getSeed(taskID, userStatus);
                     setPercent('66');
                     while (status !== "done") {
                         if(!stopGenerateFlag) {
@@ -204,6 +219,7 @@ const apiTasks = () => {
                             const totalPendingTasksCount = totalPendingTasksObj.length;
                             await updateQueueInfo(currentPos.pos, '');
                             status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
+                            seed = await getSeed(taskID, userStatus);
                             if (stopGenerateFlag) {
                                 break;
                             }
@@ -218,6 +234,14 @@ const apiTasks = () => {
                 setPercent('99');
                 const imgdata = await getImage(taskID, userStatus);
                 if (imgdata.image) {
+                    let tempseed = imgdata.infotext;
+                    const seedMatch = tempseed.match(/Seed: (\d+)/);
+
+                    if (seedMatch) {
+                        seed = seedMatch[1];
+                        lastSeed = seed;
+                        console.log('padarytas: ' + seed); // The extracted seed value as a string
+                    }
                     switchGenerateButton(e.target, 'end');
                     loadImage(imgdata.image, userStatus, aspectRatio);
                     await createPost(postID, imgdata.image, imgdata.infotext, taskID, aspectRatio);
@@ -231,6 +255,18 @@ const apiTasks = () => {
                 switchGenerateButton(e.target, 'stopped');
                 stopGenerateFlag = false;
             }
+    });
+
+
+    document.querySelector('#seed').addEventListener('input', async (e)=> {
+        if(document.querySelector('#seed').checked){
+            seed = lastSeed;
+            console.log(seed);
+        } else {
+            seed = '';
+            console.log(seed);
+            console.log('tuscias');
+        }
     });
 
 

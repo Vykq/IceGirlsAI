@@ -41,8 +41,13 @@ get_header();
                     <?php } ?>
                     <div class="whole-price">
                         <div class="row">
-                            <p class="price"> <span class="dollar">$</span><?php the_field('premium_price'); ?></p>
-                            <p class="old-price"> <span class="dollar">$</span><?php the_field('premium_old_price'); ?></p>
+                            <?php if(get_field('premium_price') < get_field('premium_old_price')) { ?>
+                                <p class="price"> <span class="dollar">$</span><?php the_field('premium_price'); ?></p>
+                                <p class="old-price"> <span class="dollar">$</span><?php the_field('premium_old_price'); ?></p>
+                            <?php } else { ?>
+                                <p class="price"> <span class="dollar">$</span><?php the_field('premium_price'); ?></p>
+                            <?php } ?>
+
                         </div>
 
                         <p class="subprice">per month</p>
@@ -50,7 +55,7 @@ get_header();
                     <div class="button-area">
                     <a class="main-button" target="_blank" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
                         <?php
-                        $currentPatrons = getCurrentPatronCount();
+                        $currentPatrons = getPremiumUserCount();
                         if($currentPatrons < 20){
                             $currentPatrons = $currentPatrons + 70;
                         } else if ($currentPatrons < 30) {
@@ -69,7 +74,7 @@ get_header();
 
                         }
                         ?>
-                        <p class="spots-left"><?php echo $currentPatrons; ?>/100 Took the deal.</p>
+                        <p class="spots-left"><?php echo $currentPatrons; ?> users took the deal.</p>
                     </div>
                     <?php if(have_rows('premium_freatures')) : ?>
                         <ul class="benefits">

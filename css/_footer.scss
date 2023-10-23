@@ -1,5 +1,5 @@
 .main-footer{
-  background-color: #292929;
+  background-color: #1f1f1f;
   padding:3rem 0;
   border-top:.5rem solid $go;
   .container{
@@ -57,7 +57,7 @@
 }
 
 .bottom-footer{
-  background-color: $black;
+  background-color: $blacktr;
   padding:2rem 0;
   .container{
     @include contentStructure();

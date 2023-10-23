@@ -216,12 +216,12 @@
   }
   &:hover{
     .icon{
-      animation: tilt-shaking .2s infinite;
+      animation: tilt-shaking-premium .2s infinite;
     }
   }
 }
 
-@keyframes tilt-shaking {
+@keyframes tilt-shaking-premium {
   0% { transform: rotate(0deg) translate(0, -50%); }
   25% { transform: rotate(5deg) translate(0, -50%); }
   50% { transform: rotate(0eg) translate(0, -50%); }

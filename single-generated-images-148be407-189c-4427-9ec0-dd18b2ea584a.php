@@ -36,13 +36,7 @@ get_header(); ?>
                             </div>
                         </div>
                     <?php } ?>
-                    <?php
-                    $user = wp_get_current_user();
-                    if ( in_array( 'premium', (array) $user->roles ) ) { ?>
-                        <button class="single-button reuse-settings">Reuse image settings</button>
-                    <?php } else { ?>
-                        <a href="/premium/" class="single-button">Reuse image settings</a>
-                    <?php } ?>
+
                 </div>
             </div>
 

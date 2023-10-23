@@ -20,6 +20,8 @@ import accountPage from "./modules/account-page";
 import singleImage from "./modules/single-image";
 import testinis from "./modules/testinis";
 import singleImageTwo from "./modules/single-image2";
+
+import Splide from "../assets/splide.min";
 window.addEventListener('DOMContentLoaded', async () => {
   openModals();
   openModalOnLink();
@@ -112,6 +114,39 @@ window.addEventListener('DOMContentLoaded', async () => {
         html.classList.add('modal-is-open');
     }
   }
+
+
+
+  if (document.querySelector('.featured-block')) {
+
+    var elms = document.querySelectorAll( '.logo-slider' );
+
+
+    for ( var i = 0; i < elms.length; i++ ) {
+      const slider = new Splide( elms[ i ], {
+        width: '100%',
+        perPage: 3,
+        gap: '1.5rem',
+        pagination: false,
+        arrows: true,
+        focus  : 'center',
+        breakpoints: {
+          900: {
+            perPage: 2,
+            focus  : 'left',
+          },
+          700: {
+            perPage: 1,
+            gap: 0,
+          },
+        }
+      } );
+      slider.mount();
+
+    }
+  }
+
+
 
 
 })

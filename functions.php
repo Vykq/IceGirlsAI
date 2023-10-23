@@ -4,13 +4,15 @@ require_once('lib/stable-diffusion-api.php');
 require_once('lib/free-premium.php');
 require_once('vendor/autoload.php');
 function webpack_files() {
-    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '2.5', true);
+    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '3', true);
     //wp_enqueue_script('gsap', get_theme_file_uri('assets/gsap.min.js'), array(), time(), true);
     //wp_enqueue_script('ScrollTrigger', get_theme_file_uri('assets/ScrollTrigger.min.js'), array(), time(), true);
     //wp_enqueue_script('lenis', get_theme_file_uri('assets/lenis.min.js'), array(), time(), true);
     //wp_enqueue_script('imagesloaded', get_theme_file_uri('assets/imagesloaded.pkgd.min.js'), array(), time(), true);
-    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '2.5');
+    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '3');
     wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), '1', true);
+    wp_enqueue_script('splide-js', get_theme_file_uri('assets/splide.min.js'), array(), '4.1.3', true);
+    wp_enqueue_style('splide-styles', get_theme_file_uri('assets/splide.min.css'), array(), '4.1.3');
     wp_localize_script( 'webpack-js', 'themeUrl',
         array(
             'ajax_url' => admin_url('admin-ajax.php'),
@@ -92,6 +94,10 @@ function remove_admin_bar_for_premium_users() {
 
     if (current_user_can('subscriber')) {
         show_admin_bar(false);
+    }
+
+    if(current_user_can('administrator')) {
+        show_admin_bar('true');
     }
 }
 add_action('after_setup_theme', 'remove_admin_bar_for_premium_users');
@@ -333,7 +339,7 @@ function setAffiliate(){
             <script type="text/javascript">
                 var goaffproOrder = {
                     number : <?php echo $user_id; ?>,
-                    total: 10
+                    total: 15
                 }
                 goaffproTrackConversion(goaffproOrder);
             </script>

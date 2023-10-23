@@ -36,6 +36,36 @@ if(in_array( 'premium', (array) $user->roles)){
     $validate = '';
 
 }
+
+fixPrompt();
+
+if (isset($_GET['prompt'])) {
+        $promptArray = explode(", ", $_GET['prompt']);
+        $allAnswers = array();
+        $removedValues = array(); // Array to store removed values
+
+        if ($tabs) {
+            foreach ($tabs as $tab) {
+                foreach ($tab['question'] as $question) {
+                    foreach ($question['answers'] as $answer) {
+                        array_push($allAnswers, trim($answer['input_value']));
+                    }
+                }
+            }
+        }
+
+        $promptArray = array_map('trim', $promptArray);
+
+        // Iterate over the elements and store removed values in $removedValues
+        foreach ($promptArray as $value) {
+            if (in_array($value, $allAnswers)) {
+                $removedValues[] = $value;
+            }
+        }
+
+        // Use array_diff to remove values from $promptArray that are also in $allAnswers
+        $promptArray = array_diff($promptArray, $allAnswers);
+    }
 ?>
 <form action="" class="creation-form">
     <div class="form-area">
@@ -67,7 +97,7 @@ if(in_array( 'premium', (array) $user->roles)){
         <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
         <div class="main-prompt prompt-preview-area show">
                     <div class="whole-input">
-                        <textarea name="prompt" id="positive-prompt-2" placeholder="Enter Your prompt"></textarea>
+                        <textarea name="prompt" id="positive-prompt-2" placeholder="Enter Your prompt"><?php echo ($_GET['prompt']) ? fixPrompt() : "" ;?></textarea>
                         <label for="positive-prompt">Prompt</label>
                     </div>
         </div>
@@ -111,7 +141,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                                                     <div class="radio-buttons-area">
                                                                         <?php foreach ($question['answers'] as $answer) : ?>
                                                                             <div class="single-radio-button">
-                                                                                <input type="radio" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" />
+                                                                                <input <?php checkAnswer($answer['input_value']); ?> type="radio" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" data-lora="<?php echo $answer['lora']; ?>"/>
                                                                                 <label for="<?php echo $answer['id']; ?>"><?php echo $answer['input_text']; ?></label>
                                                                             </div>
                                                                         <?php endforeach; ?>
@@ -124,7 +154,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                                                 <div class="checkbox-buttons-area">
                                                                      <?php foreach ($question['answers'] as $answer) : ?>
                                                                          <div class="single-checkbox-button">
-                                                                             <input type="checkbox" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" />
+                                                                             <input <?php checkAnswer($answer['input_value']); ?> type="checkbox" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" data-lora="<?php echo $answer['lora']; ?>"/>
                                                                              <label for="<?php echo $answer['id']; ?>"><?php echo $answer['input_text']; ?></label>
                                                                          </div>
                                                                      <?php endforeach; ?>
@@ -158,7 +188,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                                     <div class="checkbox-buttons-area">
                                                         <?php foreach ($question['answers'] as $answer) : ?>
                                                             <div class="single-checkbox-button">
-                                                                <input class="premium" type="checkbox" name="<?php echo 'get-premium'; ?>" id="<?php echo 'get-premium-' . $answer['id']; ?>" value="<?php echo 'get-premium-' . $answer['input_value']; ?>" />
+                                                                <input <?php checkAnswer($answer['input_value']); ?> class="premium" type="checkbox" name="<?php echo 'get-premium'; ?>" id="<?php echo 'get-premium-' . $answer['id']; ?>" value="<?php echo 'get-premium-' . $answer['input_value']; ?>" data-lora="<?php echo $answer['lora']; ?>"/>
                                                                 <label for="<?php echo 'get-premium-' . $answer['id']; ?>"><?php echo $answer['input_text']; ?></label>
                                                             </div>
                                                         <?php endforeach; ?>
@@ -178,7 +208,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                     <div class="radio-buttons-area">
                                     <?php foreach ($question['answers'] as $answer) : ?>
                                         <div class="single-radio-button">
-                                            <input type="radio" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" />
+                                            <input <?php checkAnswer($answer['input_value']); ?>  type="radio" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" data-lora="<?php echo $answer['lora']; ?>"/>
                                             <label for="<?php echo $answer['id']; ?>"><?php echo $answer['input_text']; ?></label>
                                         </div>
                                     <?php endforeach; ?>
@@ -191,7 +221,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                     <div class="checkbox-buttons-area">
                                     <?php foreach ($question['answers'] as $answer) : ?>
                                         <div class="single-checkbox-button">
-                                            <input type="checkbox" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" />
+                                            <input <?php checkAnswer($answer['input_value']); ?> type="checkbox" name="<?php echo createSlug($question['question_title']); ?>" id="<?php echo $answer['id']; ?>" value="<?php echo $answer['input_value']; ?>" data-lora="<?php echo $answer['lora']; ?>"/>
                                             <label for="<?php echo $answer['id']; ?>"><?php echo $answer['input_text']; ?></label>
                                         </div>
                                     <?php endforeach; ?>
@@ -233,7 +263,7 @@ if(in_array( 'premium', (array) $user->roles)){
                                         <?php if(get_field('premium')) : ?>
                                             <?php if(in_array( 'premium', (array) $user->roles )) : ?>
                                                 <div class="model-input">
-                                                    <input type="radio" name="checkpoint" id="<?php echo createSlug(get_the_title()); ?>" data-id="<?php echo get_field('sampler'); ?>" data-neg="<?php echo get_field('negative_prompt'); ?>" data-cfg="<?php echo get_field('cfg'); ?>" value="<?php echo get_field('real_checkpoint_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?> />
+                                                    <input type="radio" name="checkpoint" id="<?php echo createSlug(get_the_title()); ?>" data-id="<?php echo get_field('sampler'); ?>" data-neg="<?php echo get_field('negative_prompt'); ?>" data-cfg="<?php echo get_field('cfg'); ?>" value="<?php echo get_field('real_checkpoint_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?> <?php echo checkIfChecked(get_the_title()); ?>/>
                                                     <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
                                                     <div class="model-image">
                                                         <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
@@ -309,7 +339,7 @@ $actions = new WP_Query($args2);
                                         <?php if(get_field('premium')) : ?>
                                             <?php if(in_array( 'premium', (array) $user->roles )) : ?>
                                                 <div class="action-input">
-                                                    <input type="radio" name="action" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?>/>
+                                                    <input type="radio" name="action" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?> <?php echo checkIfChecked(get_the_title()); ?>/>
                                                     <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                                     <div class="action-image">
                                                         <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
@@ -397,7 +427,7 @@ $actions = new WP_Query($args2);
                                         <?php if(get_field('premium')) : ?>
                                             <?php if(in_array( 'premium', (array) $user->roles )) : ?>
                                                 <div class="action-input">
-                                                    <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>"/>
+                                                    <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo checkIfChecked(get_the_title()); ?>/>
                                                     <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
                                                     <div class="action-image">
                                                         <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">

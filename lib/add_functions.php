@@ -238,3 +238,124 @@ function getCurrentPatronCount(){
 
 }
 
+
+function getPremiumUserCount(){
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.patreon.com/oauth2/v2/campaigns/11111306/members?include=currently_entitled_tiers&fields%5Btier%5D=patron_count&fields%5Bmember%5D=email',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer UPCTqrr5rA8cf2v4A5sZwbMpD2Ag550tqTtx-rKeAK8',
+            'Cookie: __cf_bm=sDwnGsk9sJuOYtVgVJpJvEsAG0EM9282bBdldlXWp0Q-1696062070-0-Ae7c/7dbF/ySK4VrX+g/Co/Xt+SjcOWeZLWsgEGGJ3nOXII0TGRhPgZ1Wwk3hsYtf42yjx7wWKjFEd+9Q5eP+oXAjYTtOIT1hFLNTHcuRy6R; a_csrf=e1ws07llb1ud7f4RRSa_9xlqSl8sZvl08dFnSDdkhus; patreon_device_id=4d3b3606-22bc-4745-a591-fbf75de1cc13; AWSALBTG=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF; AWSALBTGCORS=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    $responseData = json_decode($response, true);
+
+
+    $total = $responseData['meta']['pagination']['total'];
+    return $total;
+}
+
+
+function checkIfChecked($toCheck){
+    if($_GET) {
+        foreach ($_GET as $item) {
+            if ($item == $toCheck) {
+                echo "checked";
+            }
+        }
+    }
+}
+
+function checkAnswer($toCheck){
+    if($_GET) {
+        if ($_GET['prompt']) {
+            $tabs = get_field('tab', 'form');
+            $promptArray = explode(", ", $_GET['prompt']);
+            $allAnswers = array();
+            $removedValues = array(); // Array to store removed values
+            if ($tabs) {
+                foreach ($tabs as $tab) {
+                    foreach ($tab['question'] as $question) {
+                        foreach ($question['answers'] as $answer) {
+                            array_push($allAnswers, trim($answer['input_value']));
+                        }
+                    }
+                }
+            }
+
+            $promptArray = array_map('trim', $promptArray);
+
+
+            // Iterate over the elements and store removed values in $removedValues
+            foreach ($promptArray as $value) {
+                if (in_array($value, $allAnswers)) {
+                    $removedValues[] = $value;
+                }
+            }
+
+            $words = explode(', ', $toCheck);
+            foreach ($words as $word) {
+                if (in_array($word, $removedValues)) {
+                    echo "checked";
+                }
+            }
+            return $removedValues;
+        }
+    } else {
+        return '';
+    }
+}
+
+
+function fixPrompt(){
+    if($_GET) {
+        if ($_GET['prompt']) {
+            $tabs = get_field('tab', 'form');
+            $promptArray = explode(", ", $_GET['prompt']);
+            $allAnswers = array();
+            $removedValues = array(); // Array to store removed values
+            $leftPrompt = array(); // Array to store removed values
+            if ($tabs) {
+                foreach ($tabs as $tab) {
+                    foreach ($tab['question'] as $question) {
+                        foreach ($question['answers'] as $answer) {
+                            array_push($allAnswers, trim($answer['input_value']));
+                        }
+                    }
+                }
+            }
+
+            $promptArray = array_map('trim', $promptArray);
+
+            // Iterate over the elements and store removed values in $removedValues
+            foreach ($promptArray as $value) {
+                if (in_array($value, $allAnswers)) {
+                    $removedValues[] = $value;
+                }
+                if (!in_array($value, $allAnswers)) {
+                    $leftPrompt[] = $value;
+                }
+            }
+
+
+            $leftPrompt = array_filter($leftPrompt);
+            $leftPromptString = implode(', ', $leftPrompt);
+            return $leftPromptString;
+        }
+    } else {
+        return '';
+    }
+
+}

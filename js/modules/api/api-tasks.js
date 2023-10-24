@@ -258,16 +258,18 @@ const apiTasks = () => {
     });
 
 
-    document.querySelector('#seed').addEventListener('input', async (e)=> {
-        if(document.querySelector('#seed').checked){
-            seed = lastSeed;
-            console.log(seed);
-        } else {
-            seed = '';
-            console.log(seed);
-            console.log('tuscias');
+        if(document.querySelector('#seed')) {
+            document.querySelector('#seed').addEventListener('input', async (e) => {
+                if (document.querySelector('#seed').checked) {
+                    seed = lastSeed;
+                    console.log(seed);
+                } else {
+                    seed = '';
+                    console.log(seed);
+                    console.log('tuscias');
+                }
+            });
         }
-    });
 
 
 

@@ -16,6 +16,9 @@ const singleImageTwo = async () => {
         'char' : '',
         'prompt' : '',
         'seed' : '',
+        'size' : '',
+        'steps' : '',
+        'details' : '',
     }
 
     if(document.querySelector('.reuse-settings')){
@@ -189,6 +192,13 @@ const singleImageTwo = async () => {
                     infoLoader.classList.remove('show');
                     infoItems.forEach(info => {
                         const listItem = document.createElement("p");
+                        if(info.label == "MoreDetails"){
+                            styles.details = info.value;
+                        } else if(info.label == "Size"){
+                            styles.size = info.value;
+                        } else if(info.label == "Image Quality"){
+                            styles.steps = info.value;
+                        }
                         listItem.classList.add('info-title');
                         listItem.textContent = info.label + ": ";
 

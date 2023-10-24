@@ -175,7 +175,7 @@ const apiSendTask = (isPremium, oldSeed) => {
             "string"
         ],
         "steps": +stepSlider,
-        "seed": seed,
+        "seed": oldSeed,
         "restore_faces": true,
     });
 

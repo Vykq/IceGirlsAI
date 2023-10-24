@@ -269,49 +269,59 @@ function getPremiumUserCount(){
 
 
 function checkIfChecked($toCheck){
-    if($_GET) {
-        foreach ($_GET as $item) {
-            if ($item == $toCheck) {
-                echo "checked";
+    $user = wp_get_current_user();
+    if (in_array('premium', (array)$user->roles)) {
+        if ($_GET) {
+            foreach ($_GET as $item) {
+                if ($item == $toCheck) {
+                    echo "checked";
+                }
             }
         }
+    } else {
+        return '';
     }
 }
 
 function checkAnswer($toCheck){
-    if($_GET) {
-        if ($_GET['prompt']) {
-            $tabs = get_field('tab', 'form');
-            $promptArray = explode(", ", $_GET['prompt']);
-            $allAnswers = array();
-            $removedValues = array(); // Array to store removed values
-            if ($tabs) {
-                foreach ($tabs as $tab) {
-                    foreach ($tab['question'] as $question) {
-                        foreach ($question['answers'] as $answer) {
-                            array_push($allAnswers, trim($answer['input_value']));
+    $user = wp_get_current_user();
+    if (in_array('premium', (array)$user->roles)) {
+        if ($_GET) {
+            if ($_GET['prompt']) {
+                $tabs = get_field('tab', 'form');
+                $promptArray = explode(", ", $_GET['prompt']);
+                $allAnswers = array();
+                $removedValues = array(); // Array to store removed values
+                if ($tabs) {
+                    foreach ($tabs as $tab) {
+                        foreach ($tab['question'] as $question) {
+                            foreach ($question['answers'] as $answer) {
+                                array_push($allAnswers, trim($answer['input_value']));
+                            }
                         }
                     }
                 }
-            }
 
-            $promptArray = array_map('trim', $promptArray);
+                $promptArray = array_map('trim', $promptArray);
 
 
-            // Iterate over the elements and store removed values in $removedValues
-            foreach ($promptArray as $value) {
-                if (in_array($value, $allAnswers)) {
-                    $removedValues[] = $value;
+                // Iterate over the elements and store removed values in $removedValues
+                foreach ($promptArray as $value) {
+                    if (in_array($value, $allAnswers)) {
+                        $removedValues[] = $value;
+                    }
                 }
-            }
 
-            $words = explode(', ', $toCheck);
-            foreach ($words as $word) {
-                if (in_array($word, $removedValues)) {
-                    echo "checked";
+                $words = explode(', ', $toCheck);
+                foreach ($words as $word) {
+                    if (in_array($word, $removedValues)) {
+                        echo "checked";
+                    }
                 }
+                return $removedValues;
             }
-            return $removedValues;
+        } else {
+            return '';
         }
     } else {
         return '';
@@ -320,39 +330,44 @@ function checkAnswer($toCheck){
 
 
 function fixPrompt(){
-    if($_GET) {
-        if ($_GET['prompt']) {
-            $tabs = get_field('tab', 'form');
-            $promptArray = explode(", ", $_GET['prompt']);
-            $allAnswers = array();
-            $removedValues = array(); // Array to store removed values
-            $leftPrompt = array(); // Array to store removed values
-            if ($tabs) {
-                foreach ($tabs as $tab) {
-                    foreach ($tab['question'] as $question) {
-                        foreach ($question['answers'] as $answer) {
-                            array_push($allAnswers, trim($answer['input_value']));
+    $user = wp_get_current_user();
+    if (in_array('premium', (array)$user->roles)) {
+        if ($_GET) {
+            if ($_GET['prompt']) {
+                $tabs = get_field('tab', 'form');
+                $promptArray = explode(", ", $_GET['prompt']);
+                $allAnswers = array();
+                $removedValues = array(); // Array to store removed values
+                $leftPrompt = array(); // Array to store removed values
+                if ($tabs) {
+                    foreach ($tabs as $tab) {
+                        foreach ($tab['question'] as $question) {
+                            foreach ($question['answers'] as $answer) {
+                                array_push($allAnswers, trim($answer['input_value']));
+                            }
                         }
                     }
                 }
-            }
 
-            $promptArray = array_map('trim', $promptArray);
+                $promptArray = array_map('trim', $promptArray);
 
-            // Iterate over the elements and store removed values in $removedValues
-            foreach ($promptArray as $value) {
-                if (in_array($value, $allAnswers)) {
-                    $removedValues[] = $value;
+                // Iterate over the elements and store removed values in $removedValues
+                foreach ($promptArray as $value) {
+                    if (in_array($value, $allAnswers)) {
+                        $removedValues[] = $value;
+                    }
+                    if (!in_array($value, $allAnswers)) {
+                        $leftPrompt[] = $value;
+                    }
                 }
-                if (!in_array($value, $allAnswers)) {
-                    $leftPrompt[] = $value;
-                }
+
+
+                $leftPrompt = array_filter($leftPrompt);
+                $leftPromptString = implode(', ', $leftPrompt);
+                return $leftPromptString;
             }
-
-
-            $leftPrompt = array_filter($leftPrompt);
-            $leftPromptString = implode(', ', $leftPrompt);
-            return $leftPromptString;
+        } else {
+            return '';
         }
     } else {
         return '';

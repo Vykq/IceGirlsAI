@@ -25,6 +25,7 @@ const apiTasks = () => {
     let stopGenerateFlag = false;
     let seed = "";
     let lastSeed = '';
+    let generateAlreadyClicked = false;
 
     form.querySelector('.clear').addEventListener('click', (e) => {
         e.preventDefault();
@@ -71,16 +72,36 @@ const apiTasks = () => {
 
         const currentURL = window.location.href;
         const match = currentURL.match(/[?&]seed=([^&]+)/);
-        if(match) {
-            seed = match ? match[1] : null;
-        } else {
-        }
+
+
+
 
 
     document.querySelector('.generate').addEventListener('click', async (e) => {
 
         e.preventDefault();
-
+        if(generateAlreadyClicked){
+            if(match && document.querySelector('#seed').checked){
+                console.log('yes');
+                seed = match ? match[1] : null;
+            } else if (match && !document.querySelector('#seed').checked){
+                seed = "-1";
+                console.log('as cia jau ' + seed);
+            } else if (!match && document.querySelector('#seed').checked) {
+                seed = lastSeed;
+            } else if (!match && !document.querySelector('#seed').checked) {
+                seed = "-1";
+            }
+        } else {
+            if (match && !document.querySelector('#seed').checked){
+                seed = match ? match[1] : null;
+                console.log('defaultine');
+            } else {
+                seed = "-1";
+            }
+        }
+        generateAlreadyClicked = true;
+        console.log(generateAlreadyClicked);
         switchGenerateButton(e.target, 'start');
         console.log('naujas seed' + seed);
         const taskInfo = await apiSendTask(premiumBody, seed);

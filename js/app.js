@@ -22,12 +22,17 @@ import testinis from "./modules/testinis";
 import singleImageTwo from "./modules/single-image2";
 
 import Splide from "../assets/splide.min";
+import showTooltip from "./modules/show-tooltip";
 window.addEventListener('DOMContentLoaded', async () => {
   openModals();
   openModalOnLink();
 
   if(!document.querySelector('body').classList.contains('logged-in')){
     switchLoginRegister();
+  }
+
+  if(document.querySelector('.tooltip-icon')){
+    showTooltip();
   }
 
   if(document.querySelector('.create-page-template')){

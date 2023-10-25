@@ -27,7 +27,9 @@
 </head>
 <body <?php body_class(); ?>>
 <header>
-    <?php
+    <?php if(!is_front_page()){ ?>
+        <h1 style="opacity: 0; visibility: hidden; font-size: 1px;"><?php echo get_the_title(); ?></h1>
+    <?php }
     $user = wp_get_current_user();
     $current_url = site_url();
     ?>

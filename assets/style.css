@@ -2015,6 +2015,64 @@ textarea {
     overflow: auto;
   }
 }
+.creation .container .grid .left form .form-area {
+  position: relative;
+}
+.creation .container .grid .left form .form-area .tooltip-modal {
+  display: none;
+  z-index: 333;
+  position: absolute;
+  background: #181818;
+  width: 80%;
+  transform: translateY(-6rem);
+  border-radius: 0.25rem;
+  border: 1px solid #ff950d;
+  right: -1rem;
+}
+@media (max-width: 800px) {
+  .creation .container .grid .left form .form-area .tooltip-modal {
+    right: 0;
+  }
+}
+.creation .container .grid .left form .form-area .tooltip-modal.show {
+  display: flex;
+}
+.creation .container .grid .left form .form-area .tooltip-modal .wrapper {
+  border-radius: 0.25rem;
+  padding: 1rem;
+  position: relative;
+  background-color: #181818;
+}
+.creation .container .grid .left form .form-area .tooltip-modal .wrapper:before {
+  z-index: -1;
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  right: 1.5rem;
+  top: -0.5rem;
+  background-color: #181818;
+  border: 1px solid #ff950d;
+  transform: rotate(45deg);
+}
+@media (max-width: 800px) {
+  .creation .container .grid .left form .form-area .tooltip-modal .wrapper:before {
+    right: 0.5rem;
+  }
+}
+.creation .container .grid .left form .form-area .tooltip-modal .wrapper .text .content {
+  color: #dedede;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.creation .container .grid .left form .form-area .tooltip-modal .wrapper .text .content b {
+  font-weight: 700;
+  color: #ff950d;
+}
+.creation .container .grid .left form .form-area .tooltip-modal .wrapper .text .content strong {
+  font-weight: 500;
+  color: #ff950d;
+}
 .creation .container .grid .left form .form-area .grid {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
@@ -2031,6 +2089,19 @@ textarea {
   height: 50%;
 }
 .creation .container .grid .left form .form-area .single-input div {
+  height: 100%;
+}
+.creation .container .grid .left form .form-area .single-input .tooltip-icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  z-index: 3;
+  cursor: help;
+}
+.creation .container .grid .left form .form-area .single-input .tooltip-icon svg {
+  width: 100%;
   height: 100%;
 }
 .creation .container .grid .left form .form-area .single-input .whole-input {
@@ -2054,6 +2125,7 @@ textarea {
   border-radius: 0.25rem;
   border: 1px solid #ff950d;
   padding: 1rem;
+  height: 6.5rem;
 }
 .creation .container .grid .left form .form-area .single-input .whole-input.premium {
   margin: 1.5rem 0;
@@ -2128,6 +2200,19 @@ textarea {
 }
 .creation .container .grid .left form .form-area .prompt-preview-area.show {
   display: block;
+}
+.creation .container .grid .left form .form-area .prompt-preview-area .tooltip-icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  z-index: 3;
+  cursor: help;
+}
+.creation .container .grid .left form .form-area .prompt-preview-area .tooltip-icon svg {
+  width: 100%;
+  height: 100%;
 }
 .creation .container .grid .left form .form-area .form-inputs {
   margin: 1rem 0;

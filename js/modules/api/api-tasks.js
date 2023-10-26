@@ -18,6 +18,11 @@ import getPercent from "./get-percent";
 import upscaleImage from "./upscale-image";
 import addTaskToUser from "./add-task-to-user";
 import checkPrompt from "./check-prompt";
+import reuseStyles from "./reuse-styles";
+
+if(window.location.search) {
+    reuseStyles();
+}
 const apiTasks = () => {
     const form = document.querySelector('.creation-form');
     let isUpscaleInProgress = false;

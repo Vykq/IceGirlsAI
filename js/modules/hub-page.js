@@ -118,7 +118,7 @@ const hubPage = async () => {
             let imageClass = "normal";
             if(size == "512x512"){
                 imageClass = "square";
-            } else if (size == "960x512"){
+            } else if (size == "768x512"){
                 imageClass = 'horizontal';
             }
 

@@ -151,7 +151,7 @@ const singleImageTwo = async () => {
                     let imageClass = "normal";
                     if(imageSize == "512x512"){
                         imageClass = "square";
-                    } else if (imageSize == "960x512"){
+                    } else if (imageSize == "768x512"){
                         imageClass = 'horizontal';
                     }
 

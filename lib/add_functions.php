@@ -252,7 +252,7 @@ function getPremiumUserCount(){
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'GET',
         CURLOPT_HTTPHEADER => array(
-            'Authorization: Bearer UPCTqrr5rA8cf2v4A5sZwbMpD2Ag550tqTtx-rKeAK8',
+            'Authorization: Bearer On7_0wnAgypb04MaZgnatTOB9AeX2qCWOF29nRnkTJY',
             'Cookie: __cf_bm=sDwnGsk9sJuOYtVgVJpJvEsAG0EM9282bBdldlXWp0Q-1696062070-0-Ae7c/7dbF/ySK4VrX+g/Co/Xt+SjcOWeZLWsgEGGJ3nOXII0TGRhPgZ1Wwk3hsYtf42yjx7wWKjFEd+9Q5eP+oXAjYTtOIT1hFLNTHcuRy6R; a_csrf=e1ws07llb1ud7f4RRSa_9xlqSl8sZvl08dFnSDdkhus; patreon_device_id=4d3b3606-22bc-4745-a591-fbf75de1cc13; AWSALBTG=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF; AWSALBTGCORS=0fJC87UHerSHlWdcmSO95bEr4T9BP1SkpOUHi3CD4bVKg34J9Bnxhot0tacJeR4G4iI8gMeGwe8c7+dClIiKz+K79PxMx4bR27m68z/SFH05B4Xlwcl/t1lHWQLTEBok8bS5vghFDPWSYKnfYIakhIVtDHuST/wlaofyjPAFC6NF'
         ),
     ));

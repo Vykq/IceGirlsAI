@@ -18,7 +18,7 @@ const apiSendTask = (isPremium, oldSeed) => {
 
     let imageSize = {
         width: 512,
-        height: 960,
+        height: 768,
     }
 
 
@@ -29,7 +29,7 @@ const apiSendTask = (isPremium, oldSeed) => {
         if(aspectRatioInput.value === "9/16"){
             imageSize = {
                 width: 512,
-                height: 960,
+                height: 768,
             }
             imageArea.classList.add('normal');
         } else if(aspectRatioInput.value === "1/1"){
@@ -40,7 +40,7 @@ const apiSendTask = (isPremium, oldSeed) => {
             imageArea.classList.add('square');
         } else {
             imageSize = {
-                width: 960,
+                width: 768,
                 height: 512,
             }
             imageArea.classList.add('horizontal');

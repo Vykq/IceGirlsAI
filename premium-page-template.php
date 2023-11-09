@@ -114,29 +114,7 @@ get_header();
     </div>
 </div>
 
-<?php if(get_field('text_title') && get_field('text_image')) : ?>
-<div class="premium-text-image">
-    <div class="container">
-        <div class="wrapper">
-            <div class="left">
-                <?php if (get_field('text_title')) : ?>
-                    <p class="title"><?php echo get_field('text_title'); ?></p>
-                <?php endif; ?>
-                <?php if (get_field('text_content')) : ?>
-                    <div class="content">
-                        <?php echo get_field('text_content'); ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-            <div class="right">
-                <div class="image-area">
-                    <img src="<?php echo get_field('text_image'); ?>" alt="<?php echo get_field('text_title'); ?>">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
 
 <?php
+the_content();
 get_footer();

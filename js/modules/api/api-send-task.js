@@ -158,8 +158,8 @@ const apiSendTask = (isPremium, oldSeed) => {
 
     const raw = JSON.stringify({
         "enable_hr": true,
-        "denoising_strength": 0.35,
-        "hr_scale": 1.2,
+        "denoising_strength": 0.5,
+        "hr_scale": 1.5,
         "hr_upscaler": "4xUltrasharp_4xUltrasharpV10",
         "prompt": finalPrompt,
         "width": imageSize.width,
@@ -176,7 +176,6 @@ const apiSendTask = (isPremium, oldSeed) => {
         ],
         "steps": +stepSlider,
         "seed": oldSeed,
-        "restore_faces": true,
     });
 
     const requestOptions = {

@@ -86,16 +86,18 @@ const apiTasks = () => {
 
         e.preventDefault();
         if(generateAlreadyClicked){
-            if(match && document.querySelector('#seed').checked){
-                console.log('yes');
-                seed = match ? match[1] : null;
-            } else if (match && !document.querySelector('#seed').checked){
-                seed = "-1";
-                console.log('as cia jau ' + seed);
-            } else if (!match && document.querySelector('#seed').checked) {
-                seed = lastSeed;
-            } else if (!match && !document.querySelector('#seed').checked) {
-                seed = "-1";
+            if (premiumBody) {
+                if (match && document.querySelector('#seed').checked) {
+                    console.log('yes');
+                    seed = match ? match[1] : null;
+                } else if (match && !document.querySelector('#seed').checked) {
+                    seed = "-1";
+                    console.log('as cia jau ' + seed);
+                } else if (!match && document.querySelector('#seed').checked) {
+                    seed = lastSeed;
+                } else if (!match && !document.querySelector('#seed').checked) {
+                    seed = "-1";
+                }
             }
         } else {
             if (match && !document.querySelector('#seed').checked){

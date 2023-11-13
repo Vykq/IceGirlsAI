@@ -164,7 +164,7 @@ const apiSendTask = (isPremium, oldSeed) => {
         "prompt": finalPrompt,
         "width": imageSize.width,
         "height": imageSize.height,
-        "negative_prompt": "(child:2), (kid:2)," + checkpoint.negative,
+        "negative_prompt": "(AS-Adult-Neg:1.3), (child:2), (kid:2)," + checkpoint.negative,
         "override_settings": ({
             "sd_model_checkpoint" : checkpoint.name,
         }),

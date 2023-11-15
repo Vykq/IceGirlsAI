@@ -103,6 +103,39 @@
             font-weight: 500;
             margin-top: .75rem;
           }
+          .usp{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: .75rem;
+            .note{
+              font-size: 0.7rem;
+              color:#dedede;
+            }
+            .logos{
+              display: flex;
+              gap:.25rem;
+              align-items: center;
+              justify-content: center;
+              .logo{
+                width: 2rem;
+                height: 100%;
+                &.cc{
+                  width: 1.2rem;
+                }
+                svg{
+                  width: 100%;
+                  &.pp-logo{
+                    height: 2rem;
+                    *{
+                      fill:#fff;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
         ul{
           list-style-type: none;

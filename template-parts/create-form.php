@@ -272,6 +272,32 @@ if (isset($_GET['prompt'])) {
                             <?php while($models->have_posts()) : $models->the_post(); ?>
                                 <div class="single-checkpoint">
                                     <div class="wrapper">
+                                        <?php if(get_field('logged')) : ?>
+                                            <?php if(is_user_logged_in()) : ?>
+                                                <div class="model-input">
+                                                    <input type="radio" name="checkpoint" id="<?php echo createSlug(get_the_title()); ?>" data-id="<?php echo get_field('sampler'); ?>" data-neg="<?php echo get_field('negative_prompt'); ?>" data-cfg="<?php echo get_field('cfg'); ?>" value="<?php echo get_field('real_checkpoint_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?> <?php echo checkIfChecked(get_the_title()); ?>/>
+                                                    <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo get_the_title(); ?></label>
+                                                    <div class="model-image">
+                                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    </div>
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="model-input premium">
+                                                    <input disabled type="radio" name="checkpoint" id="premium-only<?php echo get_the_id(); ?>" data-id="premium-only" data-neg="premium-only" data-cfg="premium-only" value=""/>
+                                                    <label for="premium-only<?php echo get_the_id(); ?>"><?php echo get_the_title(); ?></label>
+                                                    <div class="model-image">
+                                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    </div>
+                                                    <div class="premium-notify">
+                                                        <div class="image">
+                                                            <svg fill="#FFA702FF" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>unlock</title> <path d="M4 30.016v-14.016q0-0.832 0.576-1.408t1.44-0.576v-4q0-2.72 1.344-5.024t3.616-3.648 5.024-1.344q3.616 0 6.368 2.272t3.424 5.728h-4.16q-0.608-1.76-2.144-2.88t-3.488-1.12q-2.496 0-4.256 1.76t-1.728 4.256v4h16q0.8 0 1.408 0.576t0.576 1.408v14.016q0 0.832-0.576 1.408t-1.408 0.576h-20q-0.832 0-1.44-0.576t-0.576-1.408zM8 28h16v-9.984h-16v9.984z"></path> </g></svg>
+                                                        </div>
+                                                        <p class="gold">Log in</p>
+                                                        <p class="notify">Is required to use this option</p>
+                                                    </div>
+                                                </div>
+                                            <?php endif;?>
+                                        <?php else : ?>
                                         <?php if(get_field('premium')) : ?>
                                             <?php if(in_array( 'premium', (array) $user->roles )) : ?>
                                                 <div class="model-input">
@@ -305,6 +331,7 @@ if (isset($_GET['prompt'])) {
                                                 <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                             </div>
                                         </div>
+                                        <?php endif;?>
                                         <?php endif;?>
 
                                     </div>
@@ -347,7 +374,32 @@ $actions = new WP_Query($args2);
                             <?php while($actions->have_posts()) : $actions->the_post(); ?>
                                 <div class="single-action">
                                     <div class="wrapper">
-
+                                        <?php if(get_field('logged')) : ?>
+                                            <?php if(is_user_logged_in()) : ?>
+                                                <div class="action-input">
+                                                    <input type="radio" name="action" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo ($firstLoop) ? 'checked' : ''; ?> <?php echo checkIfChecked(get_the_title()); ?>/>
+                                                    <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
+                                                    <div class="action-image">
+                                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    </div>
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="action-input premium">
+                                                    <input disabled type="radio" name="action" id="premium-only<?php echo get_the_id(); ?>" value="" data-id="premium-only"/>
+                                                    <label for="premium-only<?php echo get_the_id(); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
+                                                    <div class="action-image">
+                                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    </div>
+                                                    <div class="premium-notify">
+                                                        <div class="image">
+                                                            <svg fill="#FFA702FF" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>unlock</title> <path d="M4 30.016v-14.016q0-0.832 0.576-1.408t1.44-0.576v-4q0-2.72 1.344-5.024t3.616-3.648 5.024-1.344q3.616 0 6.368 2.272t3.424 5.728h-4.16q-0.608-1.76-2.144-2.88t-3.488-1.12q-2.496 0-4.256 1.76t-1.728 4.256v4h16q0.8 0 1.408 0.576t0.576 1.408v14.016q0 0.832-0.576 1.408t-1.408 0.576h-20q-0.832 0-1.44-0.576t-0.576-1.408zM8 28h16v-9.984h-16v9.984z"></path> </g></svg>
+                                                        </div>
+                                                        <p class="gold">Log in</p>
+                                                        <p class="notify">Is required to use this option</p>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                        <?php else: ?>
                                         <?php if(get_field('premium')) : ?>
                                             <?php if(in_array( 'premium', (array) $user->roles )) : ?>
                                                 <div class="action-input">
@@ -381,6 +433,7 @@ $actions = new WP_Query($args2);
                                                 <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
                                             </div>
                                         </div>
+                                        <?php endif; ?>
                                         <?php endif; ?>
 
                                     </div>
@@ -435,9 +488,8 @@ $actions = new WP_Query($args2);
                             <?php while($chars->have_posts()) : $chars->the_post(); ?>
                                 <div class="single-action">
                                     <div class="wrapper">
-
-                                        <?php if(get_field('premium')) : ?>
-                                            <?php if(in_array( 'premium', (array) $user->roles )) : ?>
+                                        <?php if(get_field('logged')) : ?>
+                                            <?php if(is_user_logged_in()) : ?>
                                                 <div class="action-input">
                                                     <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo checkIfChecked(get_the_title()); ?>/>
                                                     <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
@@ -456,19 +508,46 @@ $actions = new WP_Query($args2);
                                                         <div class="image">
                                                             <svg fill="#FFA702FF" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>unlock</title> <path d="M4 30.016v-14.016q0-0.832 0.576-1.408t1.44-0.576v-4q0-2.72 1.344-5.024t3.616-3.648 5.024-1.344q3.616 0 6.368 2.272t3.424 5.728h-4.16q-0.608-1.76-2.144-2.88t-3.488-1.12q-2.496 0-4.256 1.76t-1.728 4.256v4h16q0.8 0 1.408 0.576t0.576 1.408v14.016q0 0.832-0.576 1.408t-1.408 0.576h-20q-0.832 0-1.44-0.576t-0.576-1.408zM8 28h16v-9.984h-16v9.984z"></path> </g></svg>
                                                         </div>
-                                                        <p class="gold">Premium</p>
+                                                        <p class="gold">Log in</p>
                                                         <p class="notify">Is required to use this option</p>
                                                     </div>
                                                 </div>
-                                            <?php endif;?>
+                                            <?php endif; ?>
                                         <?php else : ?>
-                                            <div class="action-input">
-                                                <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>"/>
-                                                <label for="<?php echo createSlug(get_the_title()); ?>"><<?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
-                                                <div class="action-image">
-                                                    <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                            <?php if(get_field('premium')) : ?>
+                                                <?php if(in_array( 'premium', (array) $user->roles )) : ?>
+                                                    <div class="action-input">
+                                                        <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>" <?php echo checkIfChecked(get_the_title()); ?>/>
+                                                        <label for="<?php echo createSlug(get_the_title()); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
+                                                        <div class="action-image">
+                                                            <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                        </div>
+                                                    </div>
+                                                <?php else : ?>
+                                                    <div class="action-input premium">
+                                                        <input disabled type="radio" name="char" id="premium-only<?php echo get_the_id(); ?>" value="" data-id="premium-only"/>
+                                                        <label for="premium-only<?php echo get_the_id(); ?>"><?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
+                                                        <div class="action-image">
+                                                            <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                        </div>
+                                                        <div class="premium-notify">
+                                                            <div class="image">
+                                                                <svg fill="#FFA702FF" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>unlock</title> <path d="M4 30.016v-14.016q0-0.832 0.576-1.408t1.44-0.576v-4q0-2.72 1.344-5.024t3.616-3.648 5.024-1.344q3.616 0 6.368 2.272t3.424 5.728h-4.16q-0.608-1.76-2.144-2.88t-3.488-1.12q-2.496 0-4.256 1.76t-1.728 4.256v4h16q0.8 0 1.408 0.576t0.576 1.408v14.016q0 0.832-0.576 1.408t-1.408 0.576h-20q-0.832 0-1.44-0.576t-0.576-1.408zM8 28h16v-9.984h-16v9.984z"></path> </g></svg>
+                                                            </div>
+                                                            <p class="gold">Premium</p>
+                                                            <p class="notify">Is required to use this option</p>
+                                                        </div>
+                                                    </div>
+                                                <?php endif;?>
+                                            <?php else : ?>
+                                                <div class="action-input">
+                                                    <input type="radio" name="char" id="<?php echo createSlug(get_the_title()); ?>" value="<?php echo get_field('trigger_word'); ?>" data-id="<?php echo get_field('lora_name'); ?>"/>
+                                                    <label for="<?php echo createSlug(get_the_title()); ?>"> <?php echo substr(get_the_title(), 0, 13) .((strlen(get_the_title()) > 13) ? '...' : ''); ?></label>
+                                                    <div class="action-image">
+                                                        <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo get_the_title(); ?>">
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            <?php endif; ?>
                                         <?php endif; ?>
 
                                     </div>

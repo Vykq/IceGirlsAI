@@ -97,12 +97,18 @@ const apiTasks = () => {
                     seed = lastSeed;
                 } else if (!match && !document.querySelector('#seed').checked) {
                     seed = "-1";
+                } else if(!match && !document.querySelector('#seed')){
+                    seed = "-1";
                 }
+            } else {
+                seed = "-1";
             }
         } else {
             if (match && !document.querySelector('#seed').checked){
                 seed = match ? match[1] : null;
                 console.log('defaultine');
+            } else if (match === null){
+                seed = "-1";
             } else {
                 seed = "-1";
             }
@@ -140,17 +146,18 @@ const apiTasks = () => {
             let apiGetQueueInfo = await apiGetQueue(userStatus);
             let currentTaskID = apiGetQueueInfo.currentTaskId;
             let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-            console.log('total tasks:' + totalPendingTasksObj)
+            //console.log('total tasks:' + totalPendingTasksObj)
             let queueTasks = apiGetQueueInfo.taskObjects;
 
             if (currentTaskID !== taskID) {
                 setPercent('16');
                 if (userStatus) {
                     if(!stopGenerateFlag) {
-                        const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
-                        const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                        const moveOverID = pendingTaskIds[positionToInsert];
-                        await moveQueue(taskID, moveOverID, userStatus);
+                        //const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
+                        //const positionToInsert = await checkTasks(pendingTaskIds, taskID);
+                        console.log('new111');
+                        //const moveOverID = pendingTaskIds[positionToInsert];
+                        //await moveQueue(taskID, moveOverID, userStatus);
                         setPercent('33');
                         let status = await showQueueInfo(taskID, userStatus);
                         while (status !== "done") {
@@ -178,10 +185,10 @@ const apiTasks = () => {
                         const randomizer = Math.floor(Math.random() * 2);
                         if(randomizer === 1){
                             console.log('s');
-                            const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
-                            const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                            const moveOverID = pendingTaskIds[positionToInsert];
-                            await moveQueue(taskID, moveOverID, userStatus);
+                            // const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
+                            // const positionToInsert = await checkTasks(pendingTaskIds, taskID);
+                            // const moveOverID = pendingTaskIds[positionToInsert];
+                            // await moveQueue(taskID, moveOverID, userStatus);
                         }
                         let currentTaskID = apiGetQueueInfo.currentTaskId;
                         while (currentTaskID !== taskID) {
@@ -268,7 +275,7 @@ const apiTasks = () => {
                     if (seedMatch) {
                         seed = seedMatch[1];
                         lastSeed = seed;
-                        console.log('padarytas: ' + seed); // The extracted seed value as a string
+                        console.log('Done seed: ' + seed); // The extracted seed value as a string
                     }
                     switchGenerateButton(e.target, 'end');
                     loadImage(imgdata.image, userStatus, aspectRatio);

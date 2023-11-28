@@ -58,11 +58,11 @@ get_header();
                 <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
                 <div class="single-checkbox">
                     <input type="checkbox" id="seed" name="imageseed" value="">
-                    <label for="seed">Use the same seed for next image</label><br>
+                    <label for="seed">Get similar results</label><br>
                 </div>
                 <?php } else { ?>
                     <div class="single-button">
-                        <a href="/premium/" target="_blank" class="main-button">Use the same seed for next image</a>
+                        <a href="/premium/" target="_blank" class="main-button">Get similar results</a>
                     </div>
                <?php } ?>
             </div>

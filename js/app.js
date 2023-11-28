@@ -94,12 +94,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     accordion();
   }
 
-  if(document.querySelector('.add-to-favorites')){
-    likeImageAjax();
-  }
-  if(document.querySelector('.remove-from-favorites')){
-    unlikeImageAjax();
-  }
+  // if(document.querySelector('.add-to-favorites')){
+  //   likeImageAjax();
+  // }
+  // if(document.querySelector('.remove-from-favorites')){
+  //   unlikeImageAjax();
+  // }
 
   if(document.querySelector('.upscale-single-image')){
     upscaleSingleImage();

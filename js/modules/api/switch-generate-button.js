@@ -1,6 +1,6 @@
 const switchGenerateButton = (button, status) =>{
     const stopBtn = document.querySelector('.stop-generate');
-    const generateBtn = document.querySelector('.generate');
+    const generateBtn = document.querySelectorAll('.generate');
     const spinner = document.querySelector('.spinner');
     const loader = spinner.querySelector('.loader');
     const notifier = document.querySelector('.notifier');
@@ -9,7 +9,9 @@ const switchGenerateButton = (button, status) =>{
     const currentStep = document.querySelector('#current-step');
     const sameSeedBtn = document.querySelector('.seed-button');
     if(status === "start"){
-        button.classList.add('hidden');
+        generateBtn.forEach(btn => {
+            btn.classList.add('hidden');
+        })
         stopBtn.classList.remove('hidden');
         spinner.classList.add('show');
         notifier.classList.add('hide');
@@ -28,7 +30,9 @@ const switchGenerateButton = (button, status) =>{
             document.querySelector('.upscale-text').classList.add('hidden');
         }
     } else if(status === "stopped") {
-        button.classList.remove('hidden');
+        generateBtn.forEach(btn => {
+            btn.classList.remove('hidden');
+        })
         stopBtn.classList.add('hidden');
         spinner.classList.remove('show');
         notifier.classList.remove('hide');
@@ -58,7 +62,9 @@ const switchGenerateButton = (button, status) =>{
         button.disabled = true;
         sameSeedBtn.classList.add('hidden');
         currentStep.textContent = "Upscalling...";
-        generateBtn.disabled = true;
+        generateBtn.forEach(btn => {
+            btn.disabled = true;
+        })
     } else if (status === "end-upscale") {
         button.textContent = "Upscaled";
         spinner.classList.remove('show');
@@ -68,7 +74,9 @@ const switchGenerateButton = (button, status) =>{
         sameSeedBtn.classList.remove('hidden');
         currentStep.classList.add('hide');
         button.disabled = true;
-        generateBtn.disabled = false;
+        generateBtn.forEach(btn => {
+            btn.disabled = false;
+        })
     } else if (status === "error"){
         loader.classList.add('hide');
         notifier.classList.add('show');

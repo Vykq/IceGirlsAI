@@ -75,7 +75,7 @@ $user_info = get_user_meta($user_id);
                             <div class="image-area">
                                 <img src="<?php the_sub_field('image'); ?>" alt="<?php the_sub_field('title'); ?>">
                             </div>
-                            <p class="title"><?php the_sub_field('title'); ?></p>
+                            <h2 class="title"><?php the_sub_field('title'); ?></h2>
                             <div class="content">
                                 <?php the_sub_field('content'); ?>
                             </div>

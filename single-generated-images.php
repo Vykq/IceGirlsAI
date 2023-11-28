@@ -27,15 +27,7 @@ get_header(); ?>
 
                     <button class="upscale-single-image single-button" data-id="<?php echo get_field('task_id'); ?>">Upscale & download</button>
 
-                    <?php if(in_array(get_the_id(), favorite_id_array())){ ?>
-                        <div class="single-button fv_<?php echo get_the_id(); ?> remove-from-favorites" data-id="<?php echo get_the_id(); ?>" title="Unlike" ><img src="<?php echo get_theme_file_uri() . '/assets/images/liked.svg';?>" > <?php the_field('like_count'); ?></div>
-                    <?php } else { ?>
-                        <div class="single-button fv_<?php echo get_the_id(); ?> add-to-favorites" data-id="<?php echo get_the_id(); ?>">
-                            <div class="like" title="Like Image">
-                                <img src="<?php echo get_theme_file_uri() . '/assets/images/like.svg';?>"> <?php the_field('like_count'); ?>
-                            </div>
-                        </div>
-                    <?php } ?>
+
                     <?php
                     $user = wp_get_current_user();
                     if ( in_array( 'premium', (array) $user->roles ) ) { ?>

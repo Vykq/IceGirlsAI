@@ -112,66 +112,6 @@ function getNiceCpName() {
     die();
 }
 
-//favorite posts array
-function favorite_id_array() {
-    if (!empty( $_COOKIE['liked_post_ids'])) {
-        return explode(',', $_COOKIE['liked_post_ids']);
-    }
-    else {
-        return array();
-    }
-}
-
-
-
-add_action('wp_ajax_nopriv_like_image', 'web_like_image');
-add_action('wp_ajax_like_image', 'web_like_image');
-function web_like_image() {
-    $response = array(); // Create an array to hold the response data
-    if (isset($_POST['action']) && $_POST['action'] === 'like_image') {
-        $post_id = $_POST['postID'];
-        if (!empty($post_id)) {
-            $new_post_id = array(
-                $post_id
-            );
-            $post_ids = array_merge($new_post_id, favorite_id_array());
-            $post_ids = array_diff($post_ids, array(
-                ''
-            ));
-            $post_ids = array_unique($post_ids);
-            setcookie('liked_post_ids', implode(',', $post_ids) , time() + 3600 * 24 * 365, '/');
-            $currentCount = get_field('like_count', $post_id);
-            update_field('like_count', $currentCount+1,$post_id);
-            $response['status'] = 'success';
-            $response['count'] = $currentCount+1;
-        }
-    } else {
-        $response['error'] = 'Error';
-    }
-
-    wp_send_json($response);
-    die();
-}
-
-add_action('wp_ajax_unlike_image', 'unlike_image');
-add_action('wp_ajax_nopriv_unlike_image', 'unlike_image');
-function unlike_image() {
-    $post_id = (int)$_POST['postID'];
-    if (!empty($post_id)) {
-        $favorite_id_array = favorite_id_array();
-        if (($delete_post_id = array_search($post_id, $favorite_id_array)) !== false) {
-            unset($favorite_id_array[$delete_post_id]);
-            $currentCount = get_field('like_count', $post_id);
-            update_field('like_count', $currentCount-1,$post_id);
-        }
-        setcookie('liked_post_ids', implode(',', $favorite_id_array) , time() + 3600 * 24 * 30, '/');
-    }
-    $response['status'] = 'success';
-    $response['count'] = $currentCount-1;
-    wp_send_json($response);
-    die();
-}
-
 
 function redirect_to_profile() {
     $redirect_to = get_option('home') . '/account/';

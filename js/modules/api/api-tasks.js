@@ -79,67 +79,70 @@ const apiTasks = () => {
         const match = currentURL.match(/[?&]seed=([^&]+)/);
 
 
+    document.querySelector('.gen-bottom').addEventListener('click', (e) => {
+        document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
+    });
 
 
+    document.querySelectorAll('.generate').forEach(btn =>{
+       btn.addEventListener('click', async (e) => {
 
-    document.querySelector('.generate').addEventListener('click', async (e) => {
-
-        e.preventDefault();
-        if(generateAlreadyClicked){
-            if (premiumBody) {
-                if (match && document.querySelector('#seed').checked) {
-                    console.log('yes');
-                    seed = match ? match[1] : null;
-                } else if (match && !document.querySelector('#seed').checked) {
-                    seed = "-1";
-                    console.log('as cia jau ' + seed);
-                } else if (!match && document.querySelector('#seed').checked) {
-                    seed = lastSeed;
-                } else if (!match && !document.querySelector('#seed').checked) {
-                    seed = "-1";
-                } else if(!match && !document.querySelector('#seed')){
+            e.preventDefault();
+            if(generateAlreadyClicked){
+                if (premiumBody) {
+                    if (match && document.querySelector('#seed').checked) {
+                        console.log('yes');
+                        seed = match ? match[1] : null;
+                    } else if (match && !document.querySelector('#seed').checked) {
+                        seed = "-1";
+                        console.log('as cia jau ' + seed);
+                    } else if (!match && document.querySelector('#seed').checked) {
+                        seed = lastSeed;
+                    } else if (!match && !document.querySelector('#seed').checked) {
+                        seed = "-1";
+                    } else if(!match && !document.querySelector('#seed')){
+                        seed = "-1";
+                    }
+                } else {
                     seed = "-1";
                 }
             } else {
-                seed = "-1";
+                if (match && !document.querySelector('#seed').checked){
+                    seed = match ? match[1] : null;
+                    console.log('defaultine');
+                } else if (match === null){
+                    seed = "-1";
+                } else {
+                    seed = "-1";
+                }
             }
-        } else {
-            if (match && !document.querySelector('#seed').checked){
-                seed = match ? match[1] : null;
-                console.log('defaultine');
-            } else if (match === null){
-                seed = "-1";
-            } else {
-                seed = "-1";
+            generateAlreadyClicked = true;
+            console.log(generateAlreadyClicked);
+            switchGenerateButton(e.target, 'start');
+            console.log('naujas seed' + seed);
+            const taskInfo = await apiSendTask(premiumBody, seed);
+            taskID = taskInfo.task_id;
+            console.log(taskID);
+
+            if(taskID === undefined){
+                switchGenerateButton(e.target, 'error');
+                setPercent('Error');
+                const fullQueue = document.querySelector('#premium-queue');
+                fullQueue.textContent = "Please try again.";
+                return;
             }
-        }
-        generateAlreadyClicked = true;
-        console.log(generateAlreadyClicked);
-        switchGenerateButton(e.target, 'start');
-        console.log('naujas seed' + seed);
-        const taskInfo = await apiSendTask(premiumBody, seed);
-        taskID = taskInfo.task_id;
-        console.log(taskID);
-
-        if(taskID === undefined){
-         switchGenerateButton(e.target, 'error');
-            setPercent('Error');
-            const fullQueue = document.querySelector('#premium-queue');
-            fullQueue.textContent = "Please try again.";
-         return;
-        }
 
 
-        setPercent('0');
-        const postID = await addTaskToUser(taskID, taskInfo.raw);
+            setPercent('0');
+            const postID = await addTaskToUser(taskID, taskInfo.raw);
 
-        const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
-        let aspectRatio = "9/16"
-        if(document.querySelector('input[name="aspect-ratio"]')){
-            aspectRatio = document.querySelector('input[name="aspect-ratio"]:checked').value;
-        }
+            const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
+            let aspectRatio = "9/16"
+            if(document.querySelector('input[name="aspect-ratio"]')){
+                aspectRatio = document.querySelector('input[name="aspect-ratio"]:checked').value;
+            }
 
-        setPercent('5');
+            setPercent('5');
 
 
 
@@ -290,6 +293,7 @@ const apiTasks = () => {
                 switchGenerateButton(e.target, 'stopped');
                 stopGenerateFlag = false;
             }
+        });
     });
 
 

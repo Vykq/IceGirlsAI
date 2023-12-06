@@ -1,6 +1,10 @@
+import setCookie from "../createCookie";
+
 const switchGenerateButton = (button, status) =>{
+    console.log(status);
     const stopBtn = document.querySelector('.stop-generate');
-    const generateBtn = document.querySelectorAll('.generate');
+    const generateBtn = document.querySelector('.generate');
+    const generateBtn2 = document.querySelector('.gen-bottom');
     const spinner = document.querySelector('.spinner');
     const loader = spinner.querySelector('.loader');
     const notifier = document.querySelector('.notifier');
@@ -9,9 +13,9 @@ const switchGenerateButton = (button, status) =>{
     const currentStep = document.querySelector('#current-step');
     const sameSeedBtn = document.querySelector('.seed-button');
     if(status === "start"){
-        generateBtn.forEach(btn => {
-            btn.classList.add('hidden');
-        })
+        console.log('start11');
+        generateBtn.classList.add('hidden');
+        generateBtn2.classList.add('hidden');
         stopBtn.classList.remove('hidden');
         spinner.classList.add('show');
         notifier.classList.add('hide');
@@ -30,21 +34,21 @@ const switchGenerateButton = (button, status) =>{
             document.querySelector('.upscale-text').classList.add('hidden');
         }
     } else if(status === "stopped") {
-        generateBtn.forEach(btn => {
-            btn.classList.remove('hidden');
-        })
+        generateBtn.classList.remove('hidden');
+        generateBtn2.classList.remove('hidden');
         stopBtn.classList.add('hidden');
         spinner.classList.remove('show');
         notifier.classList.remove('hide');
         sameSeedBtn.classList.add('hidden');
         queue.textContent = "";
+        //setCookie('lastGeneratedId', '',1);
     } else if (status === "end") {
         spinner.classList.remove('show');
         notifier.classList.add('hide');
         button.classList.remove('hidden');
         stopBtn.classList.add('hidden');
         sameSeedBtn.classList.remove('hidden');
-
+        setCookie('lastGeneratedId', '',1);
         if(document.querySelector('.upscale')){
             const upscaleButton = document.querySelector('.upscale');
             upscaleButton.classList.remove('hidden');
@@ -62,9 +66,8 @@ const switchGenerateButton = (button, status) =>{
         button.disabled = true;
         sameSeedBtn.classList.add('hidden');
         currentStep.textContent = "Upscalling...";
-        generateBtn.forEach(btn => {
-            btn.disabled = true;
-        })
+        generateBtn.disabled = true;
+        generateBtn2.disabled = true;
     } else if (status === "end-upscale") {
         button.textContent = "Upscaled";
         spinner.classList.remove('show');
@@ -74,9 +77,8 @@ const switchGenerateButton = (button, status) =>{
         sameSeedBtn.classList.remove('hidden');
         currentStep.classList.add('hide');
         button.disabled = true;
-        generateBtn.forEach(btn => {
-            btn.disabled = false;
-        })
+        generateBtn.disabled = false;
+        generateBtn2.disabled = false;
     } else if (status === "error"){
         loader.classList.add('hide');
         notifier.classList.add('show');

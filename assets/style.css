@@ -180,6 +180,41 @@ textarea {
   opacity: 1;
 }
 
+.site-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: #181818;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.site-loader.hide {
+  display: none;
+}
+.site-loader .logo-image {
+  width: 60%;
+  margin: 0 auto;
+  animation: logoBlink 2s infinite ease-in-out;
+}
+.site-loader .logo-image img {
+  width: 100%;
+}
+
+@keyframes logoBlink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 .main-header {
   border-bottom: 3px solid #ff950d;
   padding: 1rem 0;
@@ -2431,6 +2466,24 @@ textarea {
   border: 2px solid #181818;
   cursor: pointer;
   border-radius: 0.5rem;
+}
+.creation .container .grid .left .gen-bottom {
+  display: none;
+}
+@media (max-width: 900px) {
+  .creation .container .grid .left .gen-bottom {
+    display: block;
+    margin-bottom: 1rem;
+  }
+}
+.creation .container .grid .left .gen-bottom.hidden {
+  display: none;
+}
+.creation .container .grid .left .gen-bottom:disabled {
+  opacity: 0.5;
+}
+.creation .container .grid .left .gen-bottom:disabled:hover {
+  opacity: 0.25;
 }
 @media (max-width: 800px) {
   .creation .container .grid .right {

@@ -24,6 +24,7 @@ import singleImageTwo from "./modules/single-image2";
 import Splide from "../assets/splide.min";
 import showTooltip from "./modules/show-tooltip";
 window.addEventListener('DOMContentLoaded', async () => {
+  document.querySelector('.site-loader').classList.add('hide');
   openModals();
   openModalOnLink();
 

@@ -1,3 +1,4 @@
+import switchGenerateButton from "./switch-generate-button";
 
 const showQueueInfo = (Id, isPremium) => {
 
@@ -20,7 +21,11 @@ const showQueueInfo = (Id, isPremium) => {
     return fetch(apiUrl + "agent-scheduler/v1/task/" + Id, requestOptions)
         .then(response => response.json())
         .then(data => {
-            return data.data.status;
+            if(!data){
+            } else {
+                return data.data.status;
+            }
+
         })
         .catch(error => console.error('error', error));
 

@@ -19,11 +19,23 @@ import upscaleImage from "./upscale-image";
 import addTaskToUser from "./add-task-to-user";
 import checkPrompt from "./check-prompt";
 import reuseStyles from "./reuse-styles";
+import setCookie from "../createCookie";
+import checkIfCookieSet from "../checkIfCookieSet";
+import getCookie from "../getCookie";
+import getCookieValue from "../getCookieValue";
+import stopGenerating from "./stop-generating";
 
 if(window.location.search) {
     reuseStyles();
 }
-const apiTasks = () => {
+const apiTasks = async () => {
+    let premiumBody = false;
+    if(document.querySelector('body').classList.contains('premium')){
+        premiumBody = true;
+    } else {
+        premiumBody = false;
+    }
+    checkIfCookieSet(premiumBody);
     const form = document.querySelector('.creation-form');
     let isUpscaleInProgress = false;
     let taskID = "";
@@ -31,6 +43,11 @@ const apiTasks = () => {
     let seed = "";
     let lastSeed = '';
     let generateAlreadyClicked = false;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+    })
+
 
     form.querySelector('.clear').addEventListener('click', (e) => {
         e.preventDefault();
@@ -41,12 +58,7 @@ const apiTasks = () => {
     });
 
 
-    let premiumBody = false;
-    if(document.querySelector('body').classList.contains('premium')){
-        premiumBody = true;
-    } else {
-        premiumBody = false;
-    }
+
 
     if (premiumBody) {
         const promptInput = document.querySelector('textarea[name="prompt"]');
@@ -86,16 +98,15 @@ const apiTasks = () => {
 
     document.querySelectorAll('.generate').forEach(btn =>{
        btn.addEventListener('click', async (e) => {
-
             e.preventDefault();
+
+
             if(generateAlreadyClicked){
                 if (premiumBody) {
                     if (match && document.querySelector('#seed').checked) {
-                        console.log('yes');
                         seed = match ? match[1] : null;
                     } else if (match && !document.querySelector('#seed').checked) {
                         seed = "-1";
-                        console.log('as cia jau ' + seed);
                     } else if (!match && document.querySelector('#seed').checked) {
                         seed = lastSeed;
                     } else if (!match && !document.querySelector('#seed').checked) {
@@ -109,7 +120,6 @@ const apiTasks = () => {
             } else {
                 if (match && !document.querySelector('#seed').checked){
                     seed = match ? match[1] : null;
-                    console.log('defaultine');
                 } else if (match === null){
                     seed = "-1";
                 } else {
@@ -123,8 +133,9 @@ const apiTasks = () => {
             const taskInfo = await apiSendTask(premiumBody, seed);
             taskID = taskInfo.task_id;
             console.log(taskID);
-
+            setCookie('lastGeneratedId', taskID,1);
             if(taskID === undefined){
+                setCookie('lastGeneratedId', '',1);
                 switchGenerateButton(e.target, 'error');
                 setPercent('Error');
                 const fullQueue = document.querySelector('#premium-queue');
@@ -172,6 +183,7 @@ const apiTasks = () => {
                                 const totalPendingTasksCount = totalPendingTasksObj.length;
                                 await updateQueueInfo(currentPos.pos, '');
                                 status = await showQueueInfo(taskID, userStatus);
+                                if(status)
                                 if (stopGenerateFlag) {
                                     break;
                                 }
@@ -280,8 +292,8 @@ const apiTasks = () => {
                         lastSeed = seed;
                         console.log('Done seed: ' + seed); // The extracted seed value as a string
                     }
-                    switchGenerateButton(e.target, 'end');
-                    loadImage(imgdata.image, userStatus, aspectRatio);
+                    switchGenerateButton(document.querySelector('.generate'), 'end');
+                    await loadImage(imgdata.image, userStatus, aspectRatio);
                     await createPost(postID, imgdata.image, imgdata.infotext, taskID, aspectRatio);
                     setPercent('100');
                     document.querySelector('.upscale').classList.remove('hidden');
@@ -291,6 +303,7 @@ const apiTasks = () => {
                 }
             } else {
                 switchGenerateButton(e.target, 'stopped');
+                setCookie('lastGeneratedId', '',1);
                 stopGenerateFlag = false;
             }
         });
@@ -301,11 +314,8 @@ const apiTasks = () => {
             document.querySelector('#seed').addEventListener('input', async (e) => {
                 if (document.querySelector('#seed').checked) {
                     seed = lastSeed;
-                    console.log(seed);
                 } else {
                     seed = '';
-                    console.log(seed);
-                    console.log('tuscias');
                 }
             });
         }
@@ -316,11 +326,7 @@ const apiTasks = () => {
         ev.preventDefault();
         ev.disabled = true;
         stopGenerateFlag = true;
-        if (taskID !== "") { // Check if taskID is not empty before attempting to delete
-            let stopped = await deleteIdFromQueue(taskID, premiumBody);
-            setPercent('');
-            taskID = ""; // Reset taskID after stopping
-        }
+        stopGenerating(taskID, premiumBody);
     })
 
     document.querySelector('.stop-generate').addEventListener('dblclick', async(ev) =>{

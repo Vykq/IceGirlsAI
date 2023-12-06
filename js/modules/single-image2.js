@@ -1,3 +1,5 @@
+import watermark from "watermarkjs/lib";
+import checkIfPremium from "./check-if-premium";
 const singleImageTwo = async () => {
 
     const mainInfoBlock = document.querySelector('#taskid');
@@ -9,6 +11,7 @@ const singleImageTwo = async () => {
     const actionsChars = document.createElement('div');
     actionsChars.classList.add('actions-chars');
     mainInfoBlock.append(actionsChars);
+    const isPremium = checkIfPremium();
     let seed = "";
     let styles = {
         'style' : '',
@@ -51,18 +54,18 @@ const singleImageTwo = async () => {
 
         return fetch(apiUrl + "agent-scheduler/v1/task/" + taskID + "/results?zip=false")
             .then(response => response.json())
-            .then(data => {
-                if(data.success !== false){
+            .then(async data => {
+                if (data.success !== false) {
                     let APIimage = data.data[0].image;
                     let infoText = data.data[0].infotext;
-                    const imageElement = loadImage(APIimage);
-                    const getInfoData = imageInfoData(apiUrl, taskID);
-                    seed = getSeed(infoText);
+                    const getInfoData = await imageInfoData(apiUrl, taskID);
+                    const imageElement = await loadImage(APIimage, getInfoData);
+                    const seed = getSeed(infoText);
                     const spinner = singleImage.querySelector('.spinner');
                     spinner.classList.remove('show');
                     imageElement.classList.add('hub-single-image');
                     imageElement.classList.add('show');
-                    if(document.querySelector('.reuse-settings')){
+                    if (document.querySelector('.reuse-settings')) {
                         document.querySelector('.reuse-settings').disabled = false;
                     }
                 } else {
@@ -70,22 +73,20 @@ const singleImageTwo = async () => {
 
                     return fetch(apiUrl + "agent-scheduler/v1/task/" + taskID + "/results?zip=false")
                         .then(response => response.json())
-                        .then(data => {
-                            if(data.success !== false){
+                        .then(async data => {
+                            if (data.success !== false) {
                                 let APIimage = data.data[0].image;
                                 let infoText = data.data[0].infotext;
-                                const imageElement = loadImage(APIimage);
-                                const getInfoData = imageInfoData(apiUrl, taskID);
+                                const getInfoData = await imageInfoData(apiUrl, taskID);
+                                const imageElement = await loadImage(APIimage, getInfoData);
                                 const seed = getSeed(infoText);
                                 const spinner = singleImage.querySelector('.spinner');
                                 spinner.classList.remove('show');
-                                imageElement.classList.add('hub-single-image');
-                                imageElement.classList.add('show');
-                                if(document.querySelector('.reuse-settings')){
+                                if (document.querySelector('.reuse-settings')) {
                                     document.querySelector('.reuse-settings').disabled = false;
                                 }
-                            }else {
-                               //TODO: Error
+                            } else {
+                                //TODO: Error
                             }
                         })
                         .catch(retryError => {
@@ -104,32 +105,79 @@ const singleImageTwo = async () => {
 
 
 
-    function loadImage(APIimage){
+    async function loadImage(APIimage, size) {
+        const singleWrapper = document.createElement('div');
+        singleWrapper.classList.add('single-wrapper');
+        singleImage.prepend(singleWrapper);
 
-            const singleWrapper = document.createElement('div');
-            singleWrapper.classList.add('single-wrapper');
-            singleImage.prepend(singleWrapper);
+        const postImage = document.createElement('div');
+        postImage.classList.add('post-image');
+        singleWrapper.append(postImage);
 
-            const postImage = document.createElement('div');
-            postImage.classList.add('post-image');
-            singleWrapper.append(postImage);
+        const imgEl = document.createElement('img');
 
-            const imgEl = document.createElement('img');
-            imgEl.classList.add('hub-single-image');
-            imgEl.alt = "IceGirls.ai generated image"; //ADD prompt?
+        if (!isPremium) {
+            const watermarkedImage = await watermark([APIimage, themeUrl.themeUrl + '/assets/images/watermark.jpg'])
+                .image((uploadImage, logo) => {
+                    const context = uploadImage.getContext('2d');
+
+                    // Get the width and height of the original image
+                    const imageWidth = uploadImage.width;
+                    const imageHeight = uploadImage.height;
+
+                    // Set the logo width to be 80% of the image width
+                    const logoResizedWidth = imageWidth * 0.4;
+
+                    // Calculate the corresponding height to maintain the aspect ratio of the logo
+                    const logoResizedHeight = (logoResizedWidth / logo.width) * logo.height;
+
+                    let posX;
+                    let posY;
+
+                    if (size === "512x512") {
+                        posX = (imageWidth / 10) * 0.5;
+                        posY = (imageHeight / 10) * 9;
+                    } else if (size === "512x768") {
+                        posX = (imageWidth / 9) * 1;
+                        posY = (imageHeight / 16) * 15;
+                    } else {
+                        posX = (imageWidth / 16) * 0.5;
+                        posY = (imageHeight / 9) * 5.75;
+                    }
+
+                    // Draw the logo on the image
+                    context.save();
+                    context.globalAlpha = 0.5;
+                    context.drawImage(logo, posX, posY, logoResizedWidth, logoResizedHeight);
+                    context.restore();
+
+                    // Return the watermarked image
+                    return uploadImage;
+                })
+                .then((watermarkedImg) => {
+                    postImage.appendChild(watermarkedImg)
+                    watermarkedImg.classList.add('hub-single-image');
+                    watermarkedImg.classList.add('show');
+                    watermarkedImg.alt = "IceGirls.ai generated image";
+                });
+        } else {
             imgEl.src = APIimage;
             postImage.append(imgEl);
+            imgEl.classList.add('hub-single-image');
+            imgEl.classList.add('show');
+            imgEl.alt = "IceGirls.ai generated image";
             return imgEl;
-
         }
+    }
 
     function getSeed(infotext) {
         const seed = infotext.match(/Seed: (\d+)/);
         styles['seed'] = seed[1];
         return seed;
     }
-    function imageInfoData(apiUrl, taskID){
+    async function imageInfoData(apiUrl, taskID){
         const myHeaders = new Headers();
+        let imageSize;
         myHeaders.append("accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
 
@@ -138,11 +186,10 @@ const singleImageTwo = async () => {
             .then(response => response.json())
             .then(async (data) => {
                 if(data.success === true){
-                    console.log(data);
                     const checkPoint = data.data.params.checkpoint;
                     const height = data.data.params.height;
                     const width = data.data.params.width;
-                    const imageSize = width + "x" + height;
+                    imageSize = width + "x" + height;
                     const prompt = data.data.params.prompt;
                     const steps = data.data.params.steps;
                     const cleanPrompt = prompt.replace(/<lora:[^>]+>/g, '');
@@ -213,6 +260,7 @@ const singleImageTwo = async () => {
                     });
 
                     createLoraOutputs(loraInfoWp, checkPointNice);
+                    return imageSize;
                 }
 
             })
@@ -224,8 +272,6 @@ const singleImageTwo = async () => {
 
 
     function cleanPrompTriggers(cleanPrompt, loraInfoWp){
-        console.log('here');
-        console.log(loraInfoWp);
         let finalPrompt = cleanPrompt;
 
         // Iterate through the "Actions" and "Chars" objects
@@ -237,7 +283,6 @@ const singleImageTwo = async () => {
         }
 
         finalPrompt = finalPrompt.replace(/^[, ]+/, '');
-        console.log('final ' + finalPrompt)
 
         return finalPrompt;
     }
@@ -256,7 +301,6 @@ const singleImageTwo = async () => {
             const styleWrapper = document.createElement('div');
             styleWrapper.classList.add('style-wrapper');
             actionsChars.append(styleWrapper);
-            console.log(style);
 
             const title = document.createElement('p');
             title.classList.add('top');
@@ -298,7 +342,6 @@ const singleImageTwo = async () => {
                 const charsWrapper = document.createElement('div');
                 charsWrapper.classList.add('chars-wrapper');
                 actionsChars.append(charsWrapper);
-                console.log(chars);
 
                 const title = document.createElement('p');
                 title.classList.add('top');
@@ -342,7 +385,6 @@ const singleImageTwo = async () => {
             const actionsWrapper = document.createElement('div');
             actionsWrapper.classList.add('actions-wrapper');
             actionsChars.append(actionsWrapper);
-            console.log(actions);
 
             const title = document.createElement('p');
             title.classList.add('top');
@@ -433,7 +475,6 @@ const singleImageTwo = async () => {
             postData(themeUrl.ajax_url, requestData)
                 .then((res) => {
                     if (res) {
-                        console.log(res);
                         resolve(res);
                     } else {
                         reject("Failed to get nice CP title");

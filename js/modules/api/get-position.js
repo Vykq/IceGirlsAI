@@ -1,3 +1,5 @@
+import switchGenerateButton from "./switch-generate-button";
+
 const getPosition = (ID, isPremium) => {
 
 
@@ -26,6 +28,8 @@ const getPosition = (ID, isPremium) => {
             return { pos, status };
         })
         .catch(error => {
+                switchGenerateButton(document.querySelector('.generate'),'stopped');
+
                 return error;
             }
         );

@@ -448,8 +448,25 @@
             }
           }
         }
+        .gen-bottom{
+          display: none;
+          @media (max-width: 900px){
+            display: block;
+            margin-bottom:1rem;
+          }
+          &.hidden{
+            display: none;
+          }
+          &:disabled{
+            opacity: 0.5;
+            &:hover{
+              opacity: 0.25;
+            }
+          }
+        }
       }
       .right{
+
         @media (max-width: 800px){
           order:1;
           width: 100%;

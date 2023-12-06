@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "minimasonry": "^1.3.2",
-    "purejswatermark": "0.0.7"
+    "purejswatermark": "0.0.7",
+    "watermarkjs": "^2.1.1"
   }
 }

@@ -40,7 +40,7 @@ $user = wp_get_current_user();
                                 <a href="https://icegirls.goaffpro.com/" target="_blank">Become an affiliate</a>
                             </li>
                             <li>
-                                <a href="mail:<?php the_field('email','api'); ?>"><?php the_field('email','api'); ?></a>
+                                <a href="mailto:<?php the_field('email','api'); ?>"><?php the_field('email','api'); ?></a>
                             </li>
                         </ul>
                     </nav>

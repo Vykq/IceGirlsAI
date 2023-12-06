@@ -1,59 +1,74 @@
-const loadImage = (image, isPremium, aspectRatio) => {
+import watermark from "watermarkjs/lib";
+
+const loadImage = async (image, isPremium, aspectRatio) => {
     const notify = document.querySelector('.notifier');
     const loader = document.querySelector('.spinner');
     const imageElement = document.querySelector('.generated-image');
     const generateButton = document.querySelector('.generate');
-
+    const imageDiv = document.querySelector('.col-wrapper .image');
+    let size;
+    let imageToShow;
     if(isPremium){
         imageElement.src = image;
         imageElement.classList.add('show');
         generateButton.disabled = false;
         loader.classList.remove('show');
-        return image;
     } else {
+        const watermarkedImage = await watermark([image, themeUrl.themeUrl + '/assets/images/watermark.jpg'])
+            .image((uploadImage, logo) => {
+                const context = uploadImage.getContext('2d');
 
-        //watermark
-        const watermarkText = 'IceGirls.ai';
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
+                // Get the width and height of the original image
+                const imageWidth = uploadImage.width;
+                const imageHeight = uploadImage.height;
 
-        const tempImage = new Image();
-        tempImage.onload = () => {
-            canvas.width = tempImage.width;
-            canvas.height = tempImage.height;
+                // Set the logo width to be 80% of the image width
+                const logoResizedWidth = imageWidth * 0.4;
 
-            context.drawImage(tempImage, 0, 0); // Draw the original image onto the canvas
+                // Calculate the corresponding height to maintain the aspect ratio of the logo
+                const logoResizedHeight = (logoResizedWidth / logo.width) * logo.height;
 
-            context.fillStyle = 'rgba(29, 29, 29, 1)'; // Black color with transparency
-            if(aspectRatio === "9/16"){
-                context.fillRect((canvas.width / 9) * 6.5, (canvas.height / 16) * 14.75, 140, 40); // Draw black rectangle
-            } else if(aspectRatio === "1/1"){
-                context.fillRect((canvas.width / 10) * 7, (canvas.height / 10) * 9, 140, 40); // Draw black rectangle
-            } else {
-                context.fillRect((canvas.width / 16) * 12, (canvas.height / 9) * 8, 140, 40); // Draw black rectangle
-            }
+                let posX;
+                let posY;
 
+                if(aspectRatio == "9/16"){
+                    size = "512x768"
+                } else if(aspectRatio == "1/1"){
+                    size = "512x512";
+                } else {
+                    size = "768x512";
+                }
 
-            context.font = '20px Arial';
-            context.fillStyle = 'rgba(255, 255, 255, 1)'; // Text color with transparency
-            if(aspectRatio === "9/16"){
-                context.fillText(watermarkText, (canvas.width / 9) * 7, (canvas.height / 16) * 15.17); // Draw text
-            } else if (aspectRatio === "1/1"){
-                context.fillText(watermarkText, (canvas.width / 10) * 7.5, (canvas.height / 10) * 9.5); // Draw text
-            } else {
-                context.fillText(watermarkText, (canvas.width / 16) * 12.5, (canvas.height / 9) * 8.5); // Draw text
-            }
+                if (size === "512x512") {
+                    posX = (imageWidth / 10) * 0.5;
+                    posY = (imageHeight / 10) * 9;
+                } else if (size === "512x768") {
+                    posX = (imageWidth / 9) * 1;
+                    posY = (imageHeight / 16) * 15;
+                } else {
+                    posX = (imageWidth / 16) * 0.5;
+                    posY = (imageHeight / 9) * 5.75;
+                }
 
+                // Draw the logo on the image
+                context.save();
+                context.globalAlpha = 0.5;
+                context.drawImage(logo, posX, posY, logoResizedWidth, logoResizedHeight);
+                context.restore();
 
-            imageElement.src = canvas.toDataURL('image/jpg'); // Update imageElement with combined content
+                // Return the watermarked image
+                return uploadImage;
+            })
+            .then(watermarkedImg => {
+                console.log(watermarkedImg);
+                imageElement.remove();
+                imageDiv.append(watermarkedImg);
+                watermarkedImg.classList.add('show');
+                watermarkedImg.classList.add('generated-image');
+                generateButton.disabled = false;
+                loader.classList.remove('show');
+            });
 
-            imageElement.classList.add('show');
-            generateButton.disabled = false;
-            loader.classList.remove('show');
-        };
-
-        tempImage.src = image; // Set the source of the temporary image to the original image base64
-        return image;
     }
 
 };

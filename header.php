@@ -26,6 +26,11 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+<div class="site-loader">
+    <div class="logo-image">
+        <img src="<?php echo get_template_directory_uri() . '/assets/images/icegirls.png'; ?>" alt="IceGirls.Ai">
+    </div>
+</div>
 <header>
     <?php if(!is_front_page()){ ?>
         <h1 style="opacity: 0; visibility: hidden; font-size: 1px;"><?php echo get_the_title(); ?></h1>

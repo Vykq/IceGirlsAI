@@ -1,7 +1,6 @@
 import setCookie from "../createCookie";
 
 const switchGenerateButton = (button, status) =>{
-    console.log(status);
     const stopBtn = document.querySelector('.stop-generate');
     const generateBtn = document.querySelector('.generate');
     const generateBtn2 = document.querySelector('.gen-bottom');
@@ -13,7 +12,6 @@ const switchGenerateButton = (button, status) =>{
     const currentStep = document.querySelector('#current-step');
     const sameSeedBtn = document.querySelector('.seed-button');
     if(status === "start"){
-        console.log('start11');
         generateBtn.classList.add('hidden');
         generateBtn2.classList.add('hidden');
         stopBtn.classList.remove('hidden');

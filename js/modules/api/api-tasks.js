@@ -35,11 +35,13 @@ const apiTasks = async () => {
     } else {
         premiumBody = false;
     }
-    checkIfCookieSet(premiumBody);
+
+    let stopGenerateFlag = false;
+
     const form = document.querySelector('.creation-form');
     let isUpscaleInProgress = false;
     let taskID = "";
-    let stopGenerateFlag = false;
+
     let seed = "";
     let lastSeed = '';
     let generateAlreadyClicked = false;
@@ -99,7 +101,7 @@ const apiTasks = async () => {
     document.querySelectorAll('.generate').forEach(btn =>{
        btn.addEventListener('click', async (e) => {
             e.preventDefault();
-
+           stopGenerateFlag = false;
 
             if(generateAlreadyClicked){
                 if (premiumBody) {
@@ -127,9 +129,7 @@ const apiTasks = async () => {
                 }
             }
             generateAlreadyClicked = true;
-            console.log(generateAlreadyClicked);
             switchGenerateButton(e.target, 'start');
-            console.log('naujas seed' + seed);
             const taskInfo = await apiSendTask(premiumBody, seed);
             taskID = taskInfo.task_id;
             console.log(taskID);
@@ -169,7 +169,6 @@ const apiTasks = async () => {
                     if(!stopGenerateFlag) {
                         //const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
                         //const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                        console.log('new111');
                         //const moveOverID = pendingTaskIds[positionToInsert];
                         //await moveQueue(taskID, moveOverID, userStatus);
                         setPercent('33');
@@ -263,17 +262,23 @@ const apiTasks = async () => {
                         if(!stopGenerateFlag) {
                             setPercent('66');
                             apiGetQueueInfo = await apiGetQueue(userStatus);
-                            const currentPos = await getPosition(taskID, userStatus);
+                            if(apiGetQueueInfo) {
+                                const currentPos = await getPosition(taskID, userStatus);
 
-                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                            const totalPendingTasksCount = totalPendingTasksObj.length;
-                            await updateQueueInfo(currentPos.pos, '');
-                            status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
-                            seed = await getSeed(taskID, userStatus);
-                            if (stopGenerateFlag) {
+                                let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                const totalPendingTasksCount = totalPendingTasksObj.length;
+                                await updateQueueInfo(currentPos.pos, '');
+                                status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
+                                seed = await getSeed(taskID, userStatus);
+                                if (stopGenerateFlag) {
+                                    break;
+                                }
+                                await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                            } else {
+                                console.log('mm')
+                                stopGenerateFlag = true;
                                 break;
                             }
-                            await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                         } else {
                             break;
                         }
@@ -326,7 +331,8 @@ const apiTasks = async () => {
         ev.preventDefault();
         ev.disabled = true;
         stopGenerateFlag = true;
-        stopGenerating(taskID, premiumBody);
+        await stopGenerating(taskID, premiumBody);
+
     })
 
     document.querySelector('.stop-generate').addEventListener('dblclick', async(ev) =>{
@@ -349,6 +355,11 @@ const apiTasks = async () => {
             modal.classList.add('show');
         }
     });
+
+
+//await checkIfCookieSet(stopGenerateFlag);
+
+
 };
 
 export default apiTasks;

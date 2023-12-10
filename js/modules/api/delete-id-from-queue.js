@@ -1,3 +1,5 @@
+import setCookie from "../createCookie";
+
 const deleteIdFromQueue = (Id, isPremium) => {
 
     const myHeaders = new Headers();
@@ -19,6 +21,7 @@ const deleteIdFromQueue = (Id, isPremium) => {
         .then(response => response.json())
         .then(data => {
             if(data.success){
+                console.log('kill task');
                 return true;
             } else {
                 return false;

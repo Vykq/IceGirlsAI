@@ -35,6 +35,9 @@ const apiGetQueue = (isPremium) => {
                 };
                 taskObjects.push(taskObject);
             }
+            // if(!currentTaskId){
+            //     return;
+            // }
             return { currentTaskId, totalPendingTasks, pendingTasks, taskObjects };
         })
         .catch(error => console.error('error', error));

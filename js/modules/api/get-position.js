@@ -19,6 +19,10 @@ const getPosition = (ID, isPremium) => {
         apiUrl = themeUrl.apiUrlFree;
     }
 
+    if(ID === ""){
+        return;
+    }
+
     return fetch(apiUrl + "agent-scheduler/v1/task/"+ ID +"/position", requestOptions)
         .then(response => response.json())
         .then(data => {

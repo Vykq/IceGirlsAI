@@ -18,6 +18,10 @@ const showQueueInfo = (Id, isPremium) => {
         apiUrl = themeUrl.apiUrlFree;
     }
 
+    if(Id === ""){
+        return;
+    }
+
     return fetch(apiUrl + "agent-scheduler/v1/task/" + Id, requestOptions)
         .then(response => response.json())
         .then(data => {

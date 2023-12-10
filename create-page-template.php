@@ -49,23 +49,26 @@ get_header();
                     <a href="/premium/" target="_blank" class="main-button">Get premium</a>
                 <?php } ?>
             </div>
-            <div class="button-area">
-                <button class="upscale main-button hidden">Upscale & download!</button>
-                <p class="hidden text upscale-text">Enhance image's quality to 4k</p>
+            <div class="buttons-wrapper">
+                <div class="button-area">
+                    <button class="upscale main-button hidden">Upscale & download!</button>
+                    <p class="hidden text upscale-text">Enhance image's quality to 4k</p>
+                </div>
+
+                <div class="seed-button hidden">
+                    <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
+                        <div class="single-checkbox">
+                            <input type="checkbox" id="seed" name="imageseed" value="">
+                            <label for="seed">Get similar results</label><br>
+                        </div>
+                    <?php } else { ?>
+                        <div class="single-button">
+                            <a href="/premium/" target="_blank" class="main-button">Get similar results</a>
+                        </div>
+                    <?php } ?>
+                </div>
             </div>
 
-            <div class="seed-button hidden">
-                <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
-                <div class="single-checkbox">
-                    <input type="checkbox" id="seed" name="imageseed" value="">
-                    <label for="seed">Get similar results</label><br>
-                </div>
-                <?php } else { ?>
-                    <div class="single-button">
-                        <a href="/premium/" target="_blank" class="main-button">Get similar results</a>
-                    </div>
-               <?php } ?>
-            </div>
         </div>
     </div>
     </div>

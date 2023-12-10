@@ -157,7 +157,7 @@ const apiSendTask = (isPremium, oldSeed) => {
     finalPrompt = addActionsToPrompt(finalPrompt, action, char);
 
     const raw = JSON.stringify({
-        // "enable_hr": true,
+        "enable_hr": true,
         "denoising_strength": 0.5,
         "hr_scale": 1.5,
         "hr_upscaler": "4xUltrasharp_4xUltrasharpV10",
@@ -174,8 +174,8 @@ const apiSendTask = (isPremium, oldSeed) => {
         "styles": [
             "string"
         ],
-        //"steps": +stepSlider,
-        "steps": 11,
+        "steps": +stepSlider,
+        // "steps": 5,
         "seed": oldSeed,
     });
 

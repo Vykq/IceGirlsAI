@@ -4,6 +4,7 @@
  */
 
 get_header();
+$user = wp_get_current_user();
 ?>
 
 <div class="premium-page-template">
@@ -64,29 +65,15 @@ get_header();
                             </div>
                             <p class="note">Debit or Credit card & Paypal</p>
                         </div>
-                     
-                    <a class="main-button" target="_blank" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
-                        <?php
-                        $currentPatrons = getPremiumUserCount();
-                        if($currentPatrons < 20){
-                            $currentPatrons = $currentPatrons + 70;
-                        } else if ($currentPatrons < 30) {
-                            $currentPatrons = $currentPatrons + 60;
-                        } else if ($currentPatrons < 40) {
-                            $currentPatrons = $currentPatrons + 50;
-                        } else if ($currentPatrons < 50) {
-                            $currentPatrons = $currentPatrons + 40;
-                        } else if ($currentPatrons < 60) {
-                            $currentPatrons = $currentPatrons + 30;
-                        } else if ($currentPatrons < 70) {
-                            $currentPatrons = $currentPatrons + 20;
-                        } else if ($currentPatrons < 80) {
-                            $currentPatrons = $currentPatrons + 10;
-                        } else if ($currentPatrons > 80 && $currentPatrons < 100) {
-
-                        }
-                        ?>
-                        <p class="spots-left"><?php echo $currentPatrons; ?> users took the deal.</p>
+                     <?php if(is_user_logged_in()){ ?>
+                             <?php if (in_array( 'expremium', (array) $user->roles )) { ?>
+                             <a class="main-button" target="_blank" href="https://buy.stripe.com/14k04538Kfnr3ficMN">Purchase with 30d free</a>
+                            <?php } else { ?>
+                             <a class="main-button" target="_blank" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
+                            <?php } ?>
+                      <?php } else { ?>
+                        <span class="main-button open-login-modal open-modal " data-id="login-modal">Log in and purchase</span>
+                    <?php } ?>
                     </div>
                     <?php if(have_rows('premium_freatures')) : ?>
                         <ul class="benefits">

@@ -20,9 +20,12 @@ import accountPage from "./modules/account-page";
 import singleImage from "./modules/single-image";
 import testinis from "./modules/testinis";
 import singleImageTwo from "./modules/single-image2";
-
 import Splide from "../assets/splide.min";
 import showTooltip from "./modules/show-tooltip";
+import charsFilter from "./modules/chars-filter";
+import setVideoObserver from "./modules/video-observer";
+import cancelSubscription from "./modules/stripe/cancel-subscription";
+
 window.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('.site-loader').classList.add('hide');
   openModals();
@@ -36,10 +39,16 @@ window.addEventListener('DOMContentLoaded', async () => {
     showTooltip();
   }
 
+  if (document.querySelector('video')) {
+    setVideoObserver();
+  }
+
+
   if(document.querySelector('.create-page-template')){
     apiTasks();
     showTabs();
     updateRangeValue();
+    charsFilter('.single-filter', '.single-char')
   }
 
   if (document.querySelector('.main-modal-blur')) {
@@ -105,7 +114,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   if(document.querySelector('.upscale-single-image')){
     upscaleSingleImage();
   }
-
+  if(document.querySelector('.cancel-sub')) {
+    cancelSubscription();
+  }
 
 
   if (document.querySelector('.age-verification')) {

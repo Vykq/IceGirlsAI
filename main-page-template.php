@@ -15,56 +15,29 @@ $user_info = get_user_meta($user_id);
                 <img src="<?php echo get_field('homepage_hero_image'); ?>" class="desktop" alt="<?php echo get_field('title'); ?>">
                 <img src="<?php echo get_field('homepage_hero_image_mobile'); ?>" class="mobile" alt="<?php echo get_field('title'); ?>">
             </div>
-            <div class="content-area">
-                <div class="content-wrapper">
-                    <h1 class="title"><?php echo get_field('title'); ?></h1>
-                    <p class="subtitle"><?php echo get_field('subtitle'); ?></p>
-                    <div class="button-wrapper">
-                        <a href="<?php echo get_field('button_url'); ?>"><?php echo get_field('button_text'); ?></a>
-                        <a class="button-black" href="<?php echo get_field('button_url_2'); ?>"><?php echo get_field('button_text_2'); ?></a>
+            <div class="inside-wrapper">
+                <div class="content-area">
+                    <div class="content-wrapper">
+                        <h1 class="title"><?php echo get_field('title'); ?></h1>
+                        <p class="subtitle"><?php echo get_field('subtitle'); ?></p>
+                        <div class="button-wrapper">
+                            <a class="yellow-black" href="<?php echo get_field('button_url'); ?>"><?php echo get_field('button_text'); ?></a>
+                            <a class="button-black" href="<?php echo get_field('button_url_2'); ?>"><?php echo get_field('button_text_2'); ?></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-video">
+                    <div class="video-area">
+                        <video class="video-observer" autoplay playsinline muted loop>
+                            <source src="<?php echo get_field('video'); ?>" type="video/webm">
+                            <source src="<?php echo get_field('video_mp4'); ?>" type="video/mp4">
+                        </video>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
-
-    <div class="featured-block">
-        <div class="container">
-            <div class="wrapper">
-                <div class="left">
-                    <p class="title"><?php the_field('featured_title'); ?></p>
-                </div>
-                <div class="right">
-                    <?php if(have_rows('logotypes')) : ?>
-                        <section class="splide logo-slider" aria-label="IceGirls.Ai featured on">
-                            <div class="splide__arrows">
-                                <button class="splide__arrow splide__arrow--prev">
-                                    <svg fill="#FF950D" height="200px" width="200px" version="1.1" id="XMLID_287_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="next"> <g> <polygon points="6.8,23.7 5.4,22.3 15.7,12 5.4,1.7 6.8,0.3 18.5,12 "></polygon> </g> </g> </g></svg>
-                                </button>
-                                <button class="splide__arrow splide__arrow--next">
-                                    <svg fill="#FF950D" height="200px" width="200px" version="1.1" id="XMLID_287_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="next"> <g> <polygon points="6.8,23.7 5.4,22.3 15.7,12 5.4,1.7 6.8,0.3 18.5,12 "></polygon> </g> </g> </g></svg>
-                                </button>
-                            </div>
-                            <div class="splide__track">
-                                <ul class="splide__list">
-                                    <?php while(have_rows('logotypes')) : the_row(); ?>
-                                            <li class="splide__slide">
-                                                <a target="_blank" href="<?php echo get_sub_field('url'); ?>" class="slide">
-                                                    <div class="image-wrapper">
-                                                        <?php echo wp_get_attachment_image(get_sub_field('logo'),'full'); ?>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                    <?php endwhile; ?>
-                                </ul>
-                            </div>
-                        </section>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <?php if(have_rows('column')) : ?>
         <div class="grid-info-block">
             <div class="container">

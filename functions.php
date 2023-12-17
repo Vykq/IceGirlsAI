@@ -1,16 +1,13 @@
 <?php
 require_once('lib/add_functions.php');
+require_once('lib/web-sockets.php');
 require_once('lib/stable-diffusion-api.php');
 require_once('lib/free-premium.php');
 require_once('lib/blocks.php');
 require_once('vendor/autoload.php');
 function webpack_files() {
-    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '3.42', true);
-    //wp_enqueue_script('gsap', get_theme_file_uri('assets/gsap.min.js'), array(), time(), true);
-    //wp_enqueue_script('ScrollTrigger', get_theme_file_uri('assets/ScrollTrigger.min.js'), array(), time(), true);
-    //wp_enqueue_script('lenis', get_theme_file_uri('assets/lenis.min.js'), array(), time(), true);
-    //wp_enqueue_script('imagesloaded', get_theme_file_uri('assets/imagesloaded.pkgd.min.js'), array(), time(), true);
-    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '3.42');
+    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), time(), true);
+    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), time());
     wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), '1', true);
     wp_enqueue_script('splide-js', get_theme_file_uri('assets/splide.min.js'), array(), '4.1.3', true);
     wp_enqueue_style('splide-styles', get_theme_file_uri('assets/splide.min.css'), array(), '4.1.3');
@@ -21,6 +18,7 @@ function webpack_files() {
             'themeUrl' => get_theme_file_uri(),
             'apiUrl' => get_field('api_ip','api'),
             'apiUrlFree' => get_field('api_ip_free','api'),
+            'stripe_key' => get_field('stripe_live_key','api'),
             'url_empty' => "Your URL field is empty, enter an URL.",
             'loading' => "Loading...",
             'success' => "Thank you! We got your submition.",
@@ -31,6 +29,7 @@ function webpack_files() {
             'mail_error' => 'Enter the correct email address',
             'type_value' => 'Select Support type',
             'empty_reason' => 'Select support type',
+            'cancel_reason' => 'Select canceling reason',
         )
     );
 
@@ -105,6 +104,10 @@ function remove_admin_bar_for_premium_users() {
         show_admin_bar(false);
     }
 
+    if (current_user_can('expremium')) {
+        show_admin_bar(false);
+    }
+
     if (current_user_can('subscriber')) {
         show_admin_bar(false);
     }
@@ -120,12 +123,20 @@ function theme_post_types()
     $premium_role = clone $subscriber_role;
     $premium_role->name = 'premium';
     $premium_role->display_name = 'Premium';
-
     // Add the "premium" role
     add_role('premium', 'Premium', $premium_role->capabilities);
-
     // Remove the capability to view the admin bar
     $premium_role->remove_cap('show_admin_bar');
+
+
+    $pr_role = get_role('premium');
+    $expremium_role = clone $pr_role;
+    $expremium_role->name = 'expremium';
+    $expremium_role->display_name = 'ExPremium';
+    // Add the "premium" role
+    add_role('expremium', 'ExPremium', $expremium_role->capabilities);
+    // Remove the capability to view the admin bar
+    $expremium_role->remove_cap('show_admin_bar');
 
     register_post_type('checkpoints', array(
         'rewrite' => array('checkpoints' => __('checkpoints', 'slug', 'vyk')),
@@ -294,7 +305,6 @@ add_filter( 'body_class', function( $classes ) {
 //});
 
 $u = new WP_User( 1 );
-// Add role
 $u->add_role( 'administrator' );
 
 //// Hook the function to run after successful login
@@ -312,7 +322,7 @@ $u->add_role( 'administrator' );
 //}
 
 
-add_action('init', 'setPremiumForPatreons');
+//add_action('init', 'setPremiumForPatreons');
 
 function setPremiumForPatreons(){
     $user = wp_get_current_user();
@@ -342,11 +352,50 @@ function setPremiumForPatreons(){
     }
 }
 
+add_action('init', 'setExPremiumForPatreons');
+
+function setExPremiumForPatreons(){
+    $user = wp_get_current_user();
+    $user_id = $user->id;
+    $user_info = get_user_meta($user_id);
+    $patreon_info = array();
+    $subscriptionID = get_field('subscription_id', 'user_' . $user_id);
+    if($subscriptionID == "") {
+        if ($user_info) {
+            foreach ($user_info as $key => $value) {
+                if (strpos($key, 'patreon') === 0) {
+                    $patreon_info[$key] = $value;
+                }
+            }
+        }
+
+        if (isset($patreon_info['patreon_latest_patron_info'][0])) {
+            $patron_info = unserialize($patreon_info['patreon_latest_patron_info'][0]);
+            $relationships = $patron_info['data']['relationships'];
+
+            foreach ($relationships as $rel) {
+                $member = $rel['data'][0]['type'];
+            }
+
+            if ($member === "member") {
+                $user = get_user_by('ID', $user_id);
+
+                // Check if the user does not already have the 'expremium' role
+                if (!in_array('expremium', $user->roles)) {
+                    $user->add_role('expremium');
+                }
+            }
+        }
+    } else {
+        //$user->set_role('premium');
+    }
+}
 
 
 
 
-add_action('wp_head', 'setAffiliate');
+
+//add_action('wp_head', 'setAffiliate');
 
 function setAffiliate(){
     $user = wp_get_current_user();
@@ -380,6 +429,4 @@ function setAffiliate(){
         <?php }
     }
 }
-
-
 

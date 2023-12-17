@@ -572,6 +572,11 @@
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap:1rem;
+          .button-area{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
         }
         .upscale-text{
           color:#dedede;
@@ -672,6 +677,13 @@
   &.show{
     display: flex;
   }
+  &.login-modal{
+    .wrapper{
+      .left, .right{
+        overflow: auto!important;
+      }
+    }
+  }
   .main-modal{
     width: 60%;
     aspect-ratio: 4/3;
@@ -680,6 +692,7 @@
     border:1px solid #919191;
     &.unique{
       aspect-ratio: 16/9;
+      padding-bottom: 1rem;
     }
     @media (max-width: 1000px){
       width: 80%;
@@ -719,22 +732,48 @@
           }
         }
       }
+      .filter-blocks{
+        padding-top: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        overflow: auto;
+        button{
+          width: unset;
+          font-weight: 500;
+          font-size: 0.8rem;
+          opacity: 1;
+          border-radius: 0.5rem 0.5rem 0 0;
+          padding: 0.25rem 0.5rem;
+          border-bottom: 1px solid $go;
+          &.active{
+            color:$black;
+            background-color: $go;
+          }
+        }
+      }
       .content{
         border-radius: .25rem;
+        margin-top: 1rem;
         border:1px solid #919191;
         padding:.5rem;
-        margin-top:1rem;
         height: 100%;
         overflow: hidden;
+        &.chars{
+          margin-top: 0;
+        }
         .left, .right{
           overflow: unset;
         }
         .checkpoints, .actions{
-          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
           display: grid;
           gap:1rem;
           height: 100%;
           overflow: auto;
+          padding-right: 10px;
+          @media (max-width: 1500px){
+            grid-template-columns: 1fr 1fr 1fr;
+          }
           @media (max-width: 600px){
             grid-template-columns: 1fr 1fr;
           }
@@ -750,6 +789,9 @@
             }
             @media (max-width: 350px){
               aspect-ratio: 1/0.8;
+            }
+            &.hidden{
+              display: none;
             }
             .wrapper{
               position: relative;
@@ -825,30 +867,27 @@
                   align-items: center;
                   justify-content: center;
                   flex-direction: column;
-                  padding:1rem;
+
                   .image{
-                    width: 4rem;
-                    height: 4rem;
-                    @media (max-width: 1000px){
-                      width: 2rem;
-                      height: 2rem;
-                    }
+                    width: 2rem;
+                    height: 2rem;
                     svg{
                       width: 100%;
                       height: 100%;
                     }
                   }
                   .gold{
-                    font-size: 1.5rem;
-                    line-height: 2rem;
+                    margin-top: .25rem;
+                    font-size: 0.8rem;
+                    line-height: 1rem;
                     color:$go;
                     font-weight: 600;
                   }
                   .notify{
                     color:#dedede;
                     text-align: center;
-                    font-size: 0.8rem;
-                    line-height: 1.1rem;
+                    font-size: 0.6rem;
+                    line-height: 1rem;
                   }
                 }
               }
@@ -868,8 +907,8 @@
               border-radius: .25rem;
               border:1px solid $go;
               .icon{
-                width: 4rem;
-                height: 4rem;
+                width: 2rem;
+                height: 2rem;
                 svg{
                   width: 100%;
                   path{
@@ -879,8 +918,8 @@
               }
               .title{
                 color:#dedede;
-                font-size: 1.2rem;
-                line-height: 1.5rem;
+                font-size: 0.6rem;
+                line-height: 1rem;
                 font-weight: 500;
                 @media (max-width: 500px){
                   font-size: 0.8rem;
@@ -889,8 +928,8 @@
               .cta{
                 color:$go;
                 font-weight: 700;
-                font-size: 1rem;
-                line-height: 1.2rem;
+                font-size: 0.8rem;
+                line-height: 1rem;
                 position: relative;
                 @media (max-width: 500px){
                   font-size: 0.7rem;

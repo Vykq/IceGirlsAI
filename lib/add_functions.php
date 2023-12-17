@@ -314,3 +314,230 @@ function fixPrompt(){
     }
 
 }
+
+
+
+
+add_action('wp_ajax_nopriv_cancelSubscription', 'cancelSubscription');
+add_action('wp_ajax_cancelSubscription', 'cancelSubscription');
+
+function cancelSubscription(){
+    $user_id = $_POST['userID'];
+    $user = wp_get_current_user($user_id);
+    $subscriptionID = get_field('subscription_id', 'user_' . $user_id);
+    $response = array();
+    $sk_live = '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';
+
+    if (!empty($subscriptionID)) {
+        $url = "https://api.stripe.com/v1/subscriptions/{$subscriptionID}";
+
+        $headers = array(
+            'Authorization: Bearer ' . $sk_live,
+            'Content-Type: application/x-www-form-urlencoded',
+        );
+
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        if ($httpCode == 200) {
+            $response['success'] = true;
+            $response['message'] = 'Subscription canceled successfully';
+            update_field('subscription_id', '', 'user_' . $user_id);
+            $user->set_role('subscriber');
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Error canceling subscription. HTTP Code: ' . $httpCode;
+            //update_field('subscription_id', '', 'user_' . $user_id);
+        }
+    } else {
+        $response['success'] = false;
+        $response['message'] = 'Subscription ID is missing';
+    }
+
+    // Output the response as JSON
+    header('Content-Type: application/json');
+    echo wp_send_json($response);
+    wp_die();
+}
+
+
+add_action('wp_ajax_nopriv_cancelSubscription2', 'cancelSubscription2');
+add_action('wp_ajax_cancelSubscription2', 'cancelSubscription2');
+
+function cancelSubscription2(){
+    $user_id = $_POST['userID'];
+    $user = wp_get_current_user($user_id);
+    $subscriptionID = get_field('subscription_id', 'user_' . $user_id);
+    $response = array();
+    $sk_live = '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';
+
+    if (!empty($subscriptionID)) {
+        $url = "https://api.stripe.com/v1/subscriptions/{$subscriptionID}";
+
+        $headers = array(
+            'Authorization: Bearer ' . $sk_live,
+            'Content-Type: application/x-www-form-urlencoded',
+        );
+
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        if ($httpCode == 200) {
+            $response['success'] = true;
+            $response['message'] = 'Subscription canceled successfully';
+            update_field('subscription_id', '', 'user_' . $user_id);
+            $user->set_role('subscriber');
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Error canceling subscription. HTTP Code: ' . $httpCode;
+            //update_field('subscription_id', '', 'user_' . $user_id);
+        }
+    } else {
+        $response['success'] = false;
+        $response['message'] = 'Subscription ID is missing';
+    }
+
+    // Output the response as JSON
+    header('Content-Type: application/json');
+    echo wp_send_json($response);
+    wp_die();
+}
+
+
+
+
+
+
+add_action('wp_ajax_nopriv_updateSubscription', 'updateSubscription');
+add_action('wp_ajax_updateSubscription', 'updateSubscription');
+
+function updateSubscription(){
+    $user_id = $_POST['userID'];
+    $subscriptionItemID = get_field('subscription_item_id', 'user_' . $user_id);
+    $response = array();
+    $sk_live = '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';
+
+//    $sk_live = 'sk_test_2LR5IRUyN4Hy5zX8Hh8Cld4Q00y10Iev2H';
+    $new_price_id = 'price_1OO6H7I7TOk6FZawbshkObay'; //Zymn
+//    $new_price_id = 'price_1ONElTBLwWwcKcmiIWlpCmZB'; //my
+
+    $url = "https://api.stripe.com/v1/subscription_items/" . $subscriptionItemID . "?price=" . $new_price_id;
+
+    $headers = array(
+        'Authorization: Basic ' . base64_encode($sk_live . ":"),
+        'Content-Type: application/x-www-form-urlencoded',
+    );
+
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $chResponse = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+// Handle the response as needed
+   // var_dump(json_decode($chResponse, true));
+
+    curl_close($ch);
+
+    if($httpCode == 200){
+        $response['success'] = true;
+    }
+
+    wp_send_json($response);
+    wp_die();
+}
+
+
+function setPremiumForStripePurchase($checkoutID){
+    $sk_live = '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';
+//    $sk_live = 'sk_test_2LR5IRUyN4Hy5zX8Hh8Cld4Q00y10Iev2H';
+
+    $url = "https://api.stripe.com/v1/checkout/sessions/" . $checkoutID;
+
+        $headers = array(
+            'Authorization: Bearer ' . $sk_live,
+            'Content-Type: application/x-www-form-urlencoded',
+        );
+
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $result = curl_exec($ch);
+        $responseData = json_decode($result, true);
+        $email = $responseData['customer_details']['email'];
+        $status = $responseData['status'];
+        $subscription_id = $responseData['subscription'];
+
+        if($status === "complete"){
+            setUserPremiumByEmail($subscription_id);
+            return true;
+        } else {
+            return false;
+        }
+
+
+}
+
+function setUserPremiumByEmail($subscription_id){
+    $user = wp_get_current_user();
+    $userID = get_current_user_id();
+    if($userID){
+        update_field('subscription_id', $subscription_id, 'user_' . $userID);
+        $user->set_role('premium');
+        $subItemID = getSubscriptionItemID($subscription_id);
+        update_field('subscription_item_id', $subItemID, 'user_' . $userID);
+    }
+
+}
+
+
+
+function getSubscriptionItemID($subscription_id){
+    $sk_live = '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';
+//    $sk_live = 'sk_test_2LR5IRUyN4Hy5zX8Hh8Cld4Q00y10Iev2H';
+
+    $url = "https://api.stripe.com/v1/subscriptions/" . $subscription_id;
+
+    $headers = array(
+        'Authorization: Bearer ' . $sk_live,
+        'Content-Type: application/x-www-form-urlencoded',
+    );
+
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $result = curl_exec($ch);
+    $responseData = json_decode($result, true);
+
+    if (isset($responseData['items']['data']) && !empty($responseData['items']['data'])) {
+        // Get the first item's "id" value
+        $firstItemId = $responseData['items']['data'][0]['id'];
+        return $firstItemId;
+    } else {
+        return '';
+    }
+}

@@ -5,7 +5,7 @@
     @include contentStructure();
     .grid{
       display: grid;
-      grid-template-columns: 1fr 5fr;
+      grid-template-columns: 1.5fr 5fr;
       gap:2rem;
       @media (max-width: 700px){
         grid-template-columns: 1fr;
@@ -20,6 +20,22 @@
           flex-direction: column;
           justify-content: center;
           gap:1.5rem;
+          .cancel-sub{
+            border:none;
+            outline:none;
+            font-size: 0.8rem;
+            text-decoration: underline;
+            background-color: transparent;
+            text-align: center;
+            padding:0.5rem;
+            color:$go;
+            opacity: .8;
+            cursor: pointer;
+            &:hover{
+              box-shadow: none;
+              opacity: 1;
+            }
+          }
           .avatar-area{
             width: 5rem;
             height: 5rem;
@@ -236,6 +252,148 @@
           }
           }
         }
+      }
+    }
+  }
+}
+
+
+.spinner-area{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.49);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  &.hidden{
+    display: none;
+  }
+
+}
+
+.backdrop{
+  &.cancel-sub{
+    .wrapper{
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+      .step{
+        height:100%;
+        &.hidden{
+          display: none;
+        }
+      }
+    }
+    .cancel-info-area{
+      width: 80%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin:auto auto;
+      .title{
+        font-size: 1.5rem;
+        color:$go;
+        font-weight: 600;
+        margin-bottom: .5rem;
+      }
+      .sub{
+        margin-bottom: 1rem;
+        color:#dedede;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        text-align: center;
+      }
+
+      .top{
+        width: 100%;
+        p{
+          text-align: left;
+          color:#dedede;
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: .75rem;
+        }
+        margin-bottom: 2rem;
+      }
+      .bottom{
+        width: 100%;
+      }
+      .buttons-area{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        .secondary-button{
+          width: fit-content!important;
+          outline:none;
+          border:none;
+          &:hover{
+            box-shadow:none;
+          }
+        }
+      }
+      .cancel-reason{
+        width: 100%;
+        .inputs{
+          padding-left: 1rem;
+        }
+        .error-msg{
+          font-size: 0.7rem;
+          margin:.5rem 0;
+          font-weight: 500;
+        }
+        textarea{
+          width: 100%;
+          height: 100%;
+          resize: none;
+          background-color: $black;
+          color: #dedede;
+          border-radius: 0.25rem;
+          border: 1px solid $go;
+          padding: 1rem;
+          height: 6.5rem;
+          margin-top: 1.5rem;
+          outline:none;
+        }
+        .single-radio{
+          margin:0.5rem 0;
+          label{
+            color:#dedede;
+            font-weight: 500;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            input{
+              appearance: none;
+              position: relative;
+              width: 1rem;
+              height: 1rem;
+              overflow: hidden;
+              border-radius: 5px;
+              border:1px solid $go;
+              margin-right: .5rem;
+              &:checked{
+                &:after{
+                  content:'';
+                  position: absolute;
+                  top:50%;
+                  left: 50%;
+                  width: 0.5rem;
+                  height: 0.5rem;
+                  transform: translate(-50%, -50%);
+                  background-color: $go;
+                  border-radius: 2.5px;
+                }
+              }
+            }
+          }
+        }
+
       }
     }
   }

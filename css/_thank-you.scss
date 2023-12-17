@@ -1,0 +1,26 @@
+.thank-you-page{
+  padding:3rem 0;
+  .container{
+    @include contentStructure();
+    .content{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap:0.5rem;
+    }
+    h1{
+      color:$go;
+      font-weight: 600;
+    }
+    p{
+      color:#dedede;
+    }
+    a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+    }
+  }
+}

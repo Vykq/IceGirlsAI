@@ -93,6 +93,7 @@ select {
 button {
   font-family: "Hellix", sans-serif;
   cursor: pointer;
+  user-select: none;
 }
 
 textarea {
@@ -111,6 +112,7 @@ textarea {
   border: none;
   border-radius: 0.5rem;
   transition: 0.2s all ease-in-out;
+  cursor: pointer;
 }
 .main-button.smaller {
   background-color: transparent;
@@ -218,6 +220,37 @@ textarea {
     opacity: 0;
   }
 }
+.topbar {
+  background-color: #ff950d;
+  padding: 0.25rem 1rem;
+}
+.topbar .container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1920px;
+}
+@media (max-width: 1200px) {
+  .topbar .container {
+    width: 85%;
+  }
+}
+@media (max-width: 1024px) {
+  .topbar .container {
+    width: 83%;
+  }
+}
+@media (max-width: 768px) {
+  .topbar .container {
+    width: 90%;
+  }
+}
+.topbar .container p {
+  color: #181818;
+  font-size: 0.8rem;
+  text-align: center;
+  width: 100%;
+}
+
 .main-header {
   border-bottom: 3px solid #ff950d;
   padding: 1rem 0;
@@ -1279,6 +1312,29 @@ textarea {
   padding: 1.5rem;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+::-webkit-scrollbar-track:hover {
+  background: #0f0f0f;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ff950d;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #e7870c;
+}
+
 .tml {
   width: 60%;
   margin: 0 auto;
@@ -1397,21 +1453,38 @@ textarea {
   border-radius: 3px;
 }
 
-.homepage-hero {
-  height: 88vh;
-}
-@media (max-width: 800px) {
-  .homepage-hero {
-    height: 75vh;
-  }
-}
 .homepage-hero .hero-wrapper {
   position: relative;
   height: 100%;
 }
+@media (max-width: 900px) {
+  .homepage-hero .hero-wrapper {
+    overflow: hidden;
+  }
+}
 .homepage-hero .hero-wrapper .image {
   width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  max-height: 80vh;
   height: 100%;
+}
+@media (max-width: 900px) {
+  .homepage-hero .hero-wrapper .image {
+    aspect-ratio: unset;
+    max-height: unset;
+    position: absolute;
+    height: 100%;
+  }
+}
+.homepage-hero .hero-wrapper .image:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
 }
 .homepage-hero .hero-wrapper .image img {
   width: 100%;
@@ -1433,51 +1506,74 @@ textarea {
     display: none;
   }
 }
-.homepage-hero .hero-wrapper .content-area {
+.homepage-hero .hero-wrapper .inside-wrapper {
+  display: grid;
+  grid-template-columns: 1.25fr 1.5fr;
+  gap: 4rem;
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
+  width: 80%;
+  height: 100%;
+  align-items: center;
+  max-width: 1920px;
 }
 @media (max-width: 900px) {
-  .homepage-hero .hero-wrapper .content-area {
-    width: 80%;
+  .homepage-hero .hero-wrapper .inside-wrapper {
+    grid-template-columns: 1fr;
+    gap: 5rem;
+    position: relative;
+    padding: 7rem 0px;
   }
 }
-.homepage-hero .hero-wrapper .content-area .content-wrapper {
-  background-color: #181818;
-  border-radius: 0.5rem;
-  border: 3px solid #ff950d;
-  padding: 2rem;
-}
-.homepage-hero .hero-wrapper .content-area .content-wrapper .title {
+.homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .title {
   font-size: 3rem;
   line-height: 3.5rem;
   color: #dedede;
-  text-align: center;
+  margin-bottom: 1rem;
 }
-@media (max-width: 900px) {
-  .homepage-hero .hero-wrapper .content-area .content-wrapper .title {
-    text-align: center;
+@media (max-width: 1520px) {
+  .homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .title {
+    font-size: 2.5rem;
+    line-height: 3rem;
   }
 }
-.homepage-hero .hero-wrapper .content-area .content-wrapper .subtitle {
+@media (max-width: 1020px) {
+  .homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .title {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+}
+@media (max-width: 900px) {
+  .homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .title {
+    text-align: center;
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
+}
+.homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .subtitle {
   font-size: 1rem;
   line-height: 1.5rem;
   color: #dedede;
-  text-align: center;
 }
-.homepage-hero .hero-wrapper .content-area .content-wrapper .button-wrapper {
-  margin: 1rem 0 0;
-  display: flex;
-  gap: 0.5rem;
-}
-@media (max-width: 880px) {
-  .homepage-hero .hero-wrapper .content-area .content-wrapper .button-wrapper {
-    flex-direction: column;
+@media (max-width: 900px) {
+  .homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .subtitle {
+    text-align: center;
   }
 }
-.homepage-hero .hero-wrapper .content-area .content-wrapper .button-wrapper a {
+.homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .button-wrapper {
+  margin: 1rem 0 0;
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+}
+.homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .button-wrapper a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .button-wrapper a.yellow-black {
   width: 50%;
   border-radius: 0.5rem;
   color: #181818;
@@ -1487,12 +1583,46 @@ textarea {
   font-weight: 700;
   text-align: center;
   padding: 1rem 2rem;
-  display: block;
 }
 @media (max-width: 880px) {
-  .homepage-hero .hero-wrapper .content-area .content-wrapper .button-wrapper a {
+  .homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .button-wrapper a.yellow-black {
     width: 100%;
   }
+}
+.homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .button-wrapper a.button-black {
+  width: 50%;
+  border-radius: 0.5rem;
+  color: #ff950d;
+  background-color: transparent;
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 1rem 2rem;
+  border: 3px solid #ff950d;
+}
+@media (max-width: 880px) {
+  .homepage-hero .hero-wrapper .inside-wrapper .content-area .content-wrapper .button-wrapper a.button-black {
+    width: 100%;
+  }
+}
+.homepage-hero .hero-wrapper .inside-wrapper .right-video {
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+.homepage-hero .hero-wrapper .inside-wrapper .right-video .video-area {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  border: 3px solid #ff950d;
+  overflow: hidden;
+}
+.homepage-hero .hero-wrapper .inside-wrapper .right-video .video-area video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: none;
 }
 
 .featured-block {
@@ -2588,6 +2718,11 @@ textarea {
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
+.creation .container .grid .right .buttons-wrapper .button-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .creation .container .grid .right .upscale-text {
   color: #dedede;
   font-size: 0.8rem;
@@ -2677,6 +2812,9 @@ textarea {
 .backdrop.show {
   display: flex;
 }
+.backdrop.login-modal .wrapper .left, .backdrop.login-modal .wrapper .right {
+  overflow: auto !important;
+}
 .backdrop .main-modal {
   width: 60%;
   aspect-ratio: 4/3;
@@ -2686,6 +2824,7 @@ textarea {
 }
 .backdrop .main-modal.unique {
   aspect-ratio: 16/9;
+  padding-bottom: 1rem;
 }
 @media (max-width: 1000px) {
   .backdrop .main-modal {
@@ -2730,23 +2869,51 @@ textarea {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.backdrop .main-modal .modal-wrapper .filter-blocks {
+  padding-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  overflow: auto;
+}
+.backdrop .main-modal .modal-wrapper .filter-blocks button {
+  width: unset;
+  font-weight: 500;
+  font-size: 0.8rem;
+  opacity: 1;
+  border-radius: 0.5rem 0.5rem 0 0;
+  padding: 0.25rem 0.5rem;
+  border-bottom: 1px solid #ff950d;
+}
+.backdrop .main-modal .modal-wrapper .filter-blocks button.active {
+  color: #181818;
+  background-color: #ff950d;
+}
 .backdrop .main-modal .modal-wrapper .content {
   border-radius: 0.25rem;
+  margin-top: 1rem;
   border: 1px solid #919191;
   padding: 0.5rem;
-  margin-top: 1rem;
   height: 100%;
   overflow: hidden;
+}
+.backdrop .main-modal .modal-wrapper .content.chars {
+  margin-top: 0;
 }
 .backdrop .main-modal .modal-wrapper .content .left, .backdrop .main-modal .modal-wrapper .content .right {
   overflow: unset;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints, .backdrop .main-modal .modal-wrapper .content .actions {
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   display: grid;
   gap: 1rem;
   height: 100%;
   overflow: auto;
+  padding-right: 10px;
+}
+@media (max-width: 1500px) {
+  .backdrop .main-modal .modal-wrapper .content .checkpoints, .backdrop .main-modal .modal-wrapper .content .actions {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 @media (max-width: 600px) {
   .backdrop .main-modal .modal-wrapper .content .checkpoints, .backdrop .main-modal .modal-wrapper .content .actions {
@@ -2772,6 +2939,9 @@ textarea {
   .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint, .backdrop .main-modal .modal-wrapper .content .actions .single-action {
     aspect-ratio: 1/0.8;
   }
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.hidden, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.hidden, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.hidden, .backdrop .main-modal .modal-wrapper .content .actions .single-action.hidden {
+  display: none;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper {
   position: relative;
@@ -2849,33 +3019,27 @@ textarea {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 1rem;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .premium-notify .image {
-  width: 4rem;
-  height: 4rem;
-}
-@media (max-width: 1000px) {
-  .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .premium-notify .image, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .premium-notify .image {
-    width: 2rem;
-    height: 2rem;
-  }
+  width: 2rem;
+  height: 2rem;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .premium-notify .image svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .premium-notify .image svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .premium-notify .image svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .premium-notify .image svg, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .premium-notify .image svg, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .premium-notify .image svg, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .premium-notify .image svg, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .premium-notify .image svg {
   width: 100%;
   height: 100%;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .premium-notify .gold, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .premium-notify .gold, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .premium-notify .gold, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .premium-notify .gold, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .premium-notify .gold, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .premium-notify .gold, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .premium-notify .gold, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .premium-notify .gold {
-  font-size: 1.5rem;
-  line-height: 2rem;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  line-height: 1rem;
   color: #ff950d;
   font-weight: 600;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .premium-notify .notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .premium-notify .notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .premium-notify .notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .premium-notify .notify, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .premium-notify .notify, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .premium-notify .notify, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .premium-notify .notify, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .premium-notify .notify {
   color: #dedede;
   text-align: center;
-  font-size: 0.8rem;
-  line-height: 1.1rem;
+  font-size: 0.6rem;
+  line-height: 1rem;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint:hover .action-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-action:hover .model-image img, .backdrop .main-modal .modal-wrapper .content .actions .single-action:hover .action-image img {
   transform: scale(1.2) !important;
@@ -2889,8 +3053,8 @@ textarea {
   border: 1px solid #ff950d;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .icon, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .icon, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .icon, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .icon {
-  width: 4rem;
-  height: 4rem;
+  width: 2rem;
+  height: 2rem;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .icon svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .icon svg, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .icon svg, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .icon svg {
   width: 100%;
@@ -2900,8 +3064,8 @@ textarea {
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .title, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .title {
   color: #dedede;
-  font-size: 1.2rem;
-  line-height: 1.5rem;
+  font-size: 0.6rem;
+  line-height: 1rem;
   font-weight: 500;
 }
 @media (max-width: 500px) {
@@ -2912,8 +3076,8 @@ textarea {
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint.discord-btn .cta, .backdrop .main-modal .modal-wrapper .content .actions .single-action.discord-btn .cta {
   color: #ff950d;
   font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.2rem;
+  font-size: 0.8rem;
+  line-height: 1rem;
   position: relative;
 }
 @media (max-width: 500px) {
@@ -3707,7 +3871,7 @@ textarea {
 }
 .account-page-template .container .grid {
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1.5fr 5fr;
   gap: 2rem;
 }
 @media (max-width: 700px) {
@@ -3724,6 +3888,22 @@ textarea {
   flex-direction: column;
   justify-content: center;
   gap: 1.5rem;
+}
+.account-page-template .container .grid .left .account-info-area .cancel-sub {
+  border: none;
+  outline: none;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  background-color: transparent;
+  text-align: center;
+  padding: 0.5rem;
+  color: #ff950d;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.account-page-template .container .grid .left .account-info-area .cancel-sub:hover {
+  box-shadow: none;
+  opacity: 1;
 }
 .account-page-template .container .grid .left .account-info-area .avatar-area {
   width: 5rem;
@@ -3931,6 +4111,138 @@ textarea {
 }
 .account-page-template .container .grid .right .last-creations-wrapper .last-creations-grid .grid-wrapper .single-image:hover .post-image img {
   transform: scale(1.1);
+}
+
+.spinner-area {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.49);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+.spinner-area.hidden {
+  display: none;
+}
+
+.backdrop.cancel-sub .wrapper {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.backdrop.cancel-sub .wrapper .step {
+  height: 100%;
+}
+.backdrop.cancel-sub .wrapper .step.hidden {
+  display: none;
+}
+.backdrop.cancel-sub .cancel-info-area {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto auto;
+}
+.backdrop.cancel-sub .cancel-info-area .title {
+  font-size: 1.5rem;
+  color: #ff950d;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.backdrop.cancel-sub .cancel-info-area .sub {
+  margin-bottom: 1rem;
+  color: #dedede;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-align: center;
+}
+.backdrop.cancel-sub .cancel-info-area .top {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.backdrop.cancel-sub .cancel-info-area .top p {
+  text-align: left;
+  color: #dedede;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.backdrop.cancel-sub .cancel-info-area .bottom {
+  width: 100%;
+}
+.backdrop.cancel-sub .cancel-info-area .buttons-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+.backdrop.cancel-sub .cancel-info-area .buttons-area .secondary-button {
+  width: fit-content !important;
+  outline: none;
+  border: none;
+}
+.backdrop.cancel-sub .cancel-info-area .buttons-area .secondary-button:hover {
+  box-shadow: none;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason {
+  width: 100%;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason .inputs {
+  padding-left: 1rem;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason .error-msg {
+  font-size: 0.7rem;
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason textarea {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background-color: #181818;
+  color: #dedede;
+  border-radius: 0.25rem;
+  border: 1px solid #ff950d;
+  padding: 1rem;
+  height: 6.5rem;
+  margin-top: 1.5rem;
+  outline: none;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason .single-radio {
+  margin: 0.5rem 0;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason .single-radio label {
+  color: #dedede;
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason .single-radio label input {
+  appearance: none;
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid #ff950d;
+  margin-right: 0.5rem;
+}
+.backdrop.cancel-sub .cancel-info-area .cancel-reason .single-radio label input:checked:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  transform: translate(-50%, -50%);
+  background-color: #ff950d;
+  border-radius: 2.5px;
 }
 
 .main-width-template {
@@ -4809,4 +5121,48 @@ textarea {
 }
 .premium-text-image .container .wrapper .right .image-area:hover img {
   transform: scale(1.1);
+}
+
+.thank-you-page {
+  padding: 3rem 0;
+}
+.thank-you-page .container {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1920px;
+}
+@media (max-width: 1200px) {
+  .thank-you-page .container {
+    width: 85%;
+  }
+}
+@media (max-width: 1024px) {
+  .thank-you-page .container {
+    width: 83%;
+  }
+}
+@media (max-width: 768px) {
+  .thank-you-page .container {
+    width: 90%;
+  }
+}
+.thank-you-page .container .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.thank-you-page .container h1 {
+  color: #ff950d;
+  font-weight: 600;
+}
+.thank-you-page .container p {
+  color: #dedede;
+}
+.thank-you-page .container a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
 }

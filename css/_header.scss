@@ -34,6 +34,20 @@
   }
 
 }
+
+.topbar{
+  background-color: $go;
+  padding:0.25rem 1rem;
+  .container{
+    @include contentStructure();
+    p{
+      color:$black;
+      font-size: 0.8rem;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
 .main-header{
   border-bottom: 3px solid $go;
   padding:1rem 0;

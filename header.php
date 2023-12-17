@@ -11,14 +11,6 @@
         gtag('config', 'G-DR6P4VB37J');
     </script>
     <script type="text/javascript" src="https://api.goaffpro.com/loader.js?shop=vu7ivg8d7m"></script>
-    <!-- Twitter conversion tracking base code -->
-    <script>
-        !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
-        },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
-            a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-        twq('config','ogv8u');
-    </script>
-    <!-- End Twitter conversion tracking base code -->
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +30,15 @@
     $user = wp_get_current_user();
     $current_url = site_url();
     ?>
+    <?php
+    if (in_array( 'expremium', (array) $user->roles )) { ?>
+        <div class="topbar">
+            <div class="container">
+                <p class="info">Please resubscribe to our premium plan to regain your premium role, you won't be charged for the next 30d</p>
+            </div>
+        </div>
+
+    <?php } ?>
     <div class="main-header">
         <div class="container">
             <div class="wrapper">
@@ -75,7 +76,7 @@
                                 </li>
                             <?php } else {?>
                                 <li>
-                                    <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( $current_url ) . '/account/'; ?>">Log In</a>
+                                    <span class="open-login-modal open-modal" data-id="login-modal">Log in</span>
                                 </li>
                             <?php } ?>
                         </ul>

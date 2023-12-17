@@ -3,11 +3,16 @@ get_header();
 if(!is_user_logged_in()){ ?>
 <div class="wp-form"><?php echo do_shortcode('[theme-my-login]'); ?></div>
 <?php } else {
-    $user = get_current_user_id();
-    $current_user = get_user_by( 'id', $user );
-    $userName = $current_user->user_login;
+    $user = wp_get_current_user();
+    $user_id = $user->ID;
+    $userName = $user->user_login;
     $user_info = get_user_meta($user);
     $userPatreon = false;
+    $subscriptionID = get_field('subscription_id', 'user_' . $user_id);
+    $subItemID = get_field('subscription_item_id', 'user_' . $user_id);
+
+
+
     if ($user_info) {
         foreach ($user_info as $key => $value) {
             if (strpos($key, 'patreon') === 0) {
@@ -22,8 +27,7 @@ if(!is_user_logged_in()){ ?>
         }
     }
 
-    $user = wp_get_current_user();
-    $user_id = $user->ID;
+
     $isPremiumClass = "";
     if ( in_array( 'premium', (array) $user->roles ) ) {
         $isPremiumClass = "no-watermark-image";
@@ -52,6 +56,7 @@ if(!is_user_logged_in()){ ?>
                                 <img src="<?php echo get_template_directory_uri() . '/assets/images/logo.png'; ?>" alt="IceGirls.Ai member <?php echo $userName; ?>">
                             </div>
                         <?php } ?>
+
                             <p class="name">
                                 <?php if($userPatreon){
                                     echo $patreon_username;
@@ -59,13 +64,25 @@ if(!is_user_logged_in()){ ?>
                                     echo $userName;
                                 }?>
                             </p>
-
-                            <?php if($userPatreon){ ?>
-                                <a class="main-button smaller" href="https://www.patreon.com/IceGirls_Ai/membership" target="_blank">Manage subscription</a>
-                            <?php } else { ?>
-
-                            <?php } ?>
-                            <a href="<?php echo wp_logout_url( home_url()); ?>" class="log-out"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path class="door" d="M8.51465 20H4.51465C3.41008 20 2.51465 19.1046 2.51465 18V6C2.51465 4.89543 3.41008 4 4.51465 4H8.51465V6H4.51465V18H8.51465V20Z" fill="#FFA702FF"></path> <path class="arrow" d="M13.8422 17.385L15.2624 15.9768L11.3432 12.0242L20.4861 12.0242C21.0384 12.0242 21.4861 11.5765 21.4861 11.0242C21.4861 10.4719 21.0384 10.0242 20.4861 10.0242L11.3239 10.0242L15.3044 6.0774L13.8962 4.6572L7.50527 10.9941L13.8422 17.385Z" fill="#FFA702FF"></path> </g></svg> Log out</a>
+                        <a href="<?php echo wp_logout_url( home_url()); ?>" class="log-out"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path class="door" d="M8.51465 20H4.51465C3.41008 20 2.51465 19.1046 2.51465 18V6C2.51465 4.89543 3.41008 4 4.51465 4H8.51465V6H4.51465V18H8.51465V20Z" fill="#FFA702FF"></path> <path class="arrow" d="M13.8422 17.385L15.2624 15.9768L11.3432 12.0242L20.4861 12.0242C21.0384 12.0242 21.4861 11.5765 21.4861 11.0242C21.4861 10.4719 21.0384 10.0242 20.4861 10.0242L11.3239 10.0242L15.3044 6.0774L13.8962 4.6572L7.50527 10.9941L13.8422 17.385Z" fill="#FFA702FF"></path> </g></svg> Log out</a>
+                            <?php
+                                if ( in_array( 'premium', (array) $user->roles ) && !$subscriptionID ) {
+                                    //Upgrade free trial ?>
+                                    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+                                    <stripe-buy-button buy-button-id="buy_btn_1OOOi2I7TOk6FZaw3ZxCaaUp" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
+                                    </stripe-buy-button>
+                                    <?php
+                                } else if (in_array( 'premium', (array) $user->roles ) && $subscriptionID !== "") { ?>
+                                            <span class="secondary-button cancel-sub open-modal" data-id="cancel-sub">Cancel Subscription</span>
+                                <?php } else if (in_array( 'expremium', (array) $user->roles )) { ?>
+                                    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+                                <stripe-buy-button buy-button-id="buy_btn_1ONJ8NImYhxsDvR3MqLOxhmo" publishable-key="pk_live_51NnN2gImYhxsDvR3wFI2xlea6ucXKoccpD5PDtuTJJ3RrXwFXkpOKecdiGPJiP4hmAtgoM80bIAssQv0qNKq3C3t00kkIWWGz2"
+                                    </stripe-buy-button>
+                                <?php } else { ?>
+                                    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+                                    <stripe-buy-button buy-button-id="buy_btn_1OOOjPI7TOk6FZawKUjXkuXn" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
+                                    </stripe-buy-button>
+                                <?php } ?>
 
                     </div>
                 </div>
@@ -149,7 +166,109 @@ if(!is_user_logged_in()){ ?>
 
 
 
+<?php
+    if (in_array( 'premium', (array) $user->roles ) && $subscriptionID !== "") { ?>
+        <div class="backdrop models-modal-wrapper modals cancel-sub">
 
+        <div class="main-modal">
+        <div class="modal-wrapper">
+        <div class="top">
+            <p class="title" id="current-scene">Cancel your subscription</p>
+            <div class="close-modal">
+                <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffa702"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            </div>
+        </div>
+        <div class="content">
+        <div class="wrapper">
+            <div class="spinner-area hidden">
+                <span class="loader"></span>
+            </div>
+            <div id="cancel-step1" class="step">
+                <div class="cancel-info-area">
+                    <div class="top">
+
+                        <form class="cancel-reason">
+                            <p class="white">Please answer these questions:</p>
+                            <div class="inputs">
+
+
+                                <div class="radio-buttons">
+                                    <div class="single-radio">
+                                        <label for="slow"><input type="checkbox" id="slow" value="Too slow generation" name="reasonInput">Too slow generation
+                                        </label>
+                                    </div>
+                                    <div class="single-radio">
+                                        <label for="expensive">
+                                            <input type="checkbox" id="expensive" name="reasonInput" value="Too expensive" >Too expensive
+                                        </label>
+                                    </div>
+                                    <div class="single-radio">
+                                        <label for="interface">
+                                            <input type="checkbox" id="interface" name="reasonInput" value="I don't like website's interface" >I don't like website's interface
+                                        </label>
+                                    </div>
+                                    <div class="single-radio">
+                                        <label for="low-quality">
+                                            <input type="checkbox" id="low-quality" name="reasonInput" value="Generations are low quality">Generations are low quality
+                                        </label>
+                                    </div>
+                                    <div class="single-radio">
+                                        <label for="try">
+                                            <input type="checkbox" id="try" name="reasonInput" value="I just wanted to try this website">I just wanted to try this website
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="prompt">
+                                    <textarea name="reason" class="textarea" placeholder="Additional message..."></textarea>
+                                    <p class="error-msg"></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="bottom">
+                        <div class="buttons-area">
+                            <div class="left">
+                                <button name="cancel-subscription" value="<?php echo $subscriptionID; ?>" class="secondary-button close-modal">Close</button>
+                            </div>
+                            <div class="right">
+                                <button name="submit-and-cancel" class="main-button submit-cancel-form">Submit and cancel</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="cancel-step2" class="step hidden">
+                <div class="cancel-info-area">
+                    <div class="title">Are you sure?</div>
+                    <p class="sub">We really want you to stay, here is a special offer for you, change your subscription to $10/month and get the same features as before.</p>
+                    <div class="buttons-area">
+                        <div class="left">
+                            <button name="cheaper-subscription" data-userid="<?php echo $user_id; ?>" value="<?php echo $subItemID; ?>" class="skip-cancel-form main-button update-sub">Deal</button>
+                        </div>
+                        <div class="right">
+                            <button name="cancel-subscription" data-userid="<?php echo $user_id; ?>" value="<?php echo $subscriptionID; ?>" class="skip-cancel-form secondary-button insta-cancel">Cancel anyways</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="cancel-step3" class="step hidden">
+                <div class="cancel-info-area">
+                    <p class="title">Error</p>
+                    <p class="sub">Sorry, please try again later or contact support.</p>
+                </div>
+            </div>
+
+
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+
+    <?php } ?>
 
 <?php }
 get_footer();

@@ -1,15 +1,31 @@
 .homepage-hero{
-  height: 88vh;
-  @media (max-width: 800px){
-    height: 75vh;
-  }
-
   .hero-wrapper{
     position: relative;
     height: 100%;
+    @media (max-width: 900px){
+      overflow: hidden;
+    }
     .image{
       width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      max-height: 80vh;
       height: 100%;
+      @media (max-width: 900px){
+        aspect-ratio: unset;
+        max-height:unset;
+        position: absolute;
+        height: 100%;
+      }
+      &:before{
+        content:'';
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+      }
       img{
         @include imageCover(50%, 50%);
         &.mobile{
@@ -25,55 +41,110 @@
         }
       }
     }
-    .content-area{
+    .inside-wrapper {
+      display: grid;
+      grid-template-columns: 1.25fr 1.5fr;
+      gap:4rem;
       position: absolute;
-      top:50%;
+      top:0;
       left: 50%;
-      transform:translate(-50%, -50%);
+      transform:translate(-50%, 0);
+      width: 80%;
+      height: 100%;
+      align-items: center;
+      max-width: 1920px;
       @media (max-width: 900px){
-        width: 80%;
+        grid-template-columns: 1fr;
+        gap:5rem;
+        position: relative;
+        padding: 7rem 0px;
       }
-      .content-wrapper{
-        background-color: $black;
-        border-radius: 0.5rem;
-        border:3px solid $go;
-        padding:2rem;
-        .title{
-          font-size: 3rem;
-          line-height: 3.5rem;
-          color:#dedede;
-          text-align: center;
-          @media (max-width: 900px){
-            text-align: center;
-          }
-        }
-        .subtitle{
-          font-size: 1rem;
-          line-height: 1.5rem;
-          color:#dedede;
-          text-align: center;
-        }
-        .button-wrapper{
-          margin:1rem 0 0;
-          display: flex;
-          gap:.5rem;
-          @media (max-width: 880px){
-            flex-direction: column;
-          }
-          a{
-            width: 50%;
-            border-radius: 0.5rem;
-            color:$black;
-            background-color: $go;
-            font-size: 1rem;
-            line-height: 1rem;
-            font-weight: 700;
-            text-align: center;
-            padding:1rem 2rem;
-            display: block;
-            @media (max-width: 880px){
-              width: 100%;
+      .content-area {
+        .content-wrapper {
+          .title {
+            font-size: 3rem;
+            line-height: 3.5rem;
+            color: #dedede;
+            margin-bottom: 1rem;
+            @media (max-width: 1520px){
+              font-size: 2.5rem;
+              line-height: 3rem;
             }
+            @media (max-width: 1020px){
+              font-size: 2rem;
+              line-height: 2.5rem;
+            }
+            @media (max-width: 900px){
+              text-align: center;
+              font-size: 3rem;
+              line-height: 3.5rem;
+            }
+          }
+
+          .subtitle {
+            font-size: 1rem;
+            line-height: 1.5rem;
+            color: #dedede;
+            @media (max-width: 900px){
+              text-align: center;
+            }
+          }
+
+          .button-wrapper {
+            margin: 1rem 0 0;
+            display: flex;
+            gap: 1rem;
+            flex-direction: row;
+            a {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              &.yellow-black {
+                width: 50%;
+                border-radius: 0.5rem;
+                color: $black;
+                background-color: $go;
+                font-size: 1rem;
+                line-height: 1rem;
+                font-weight: 700;
+                text-align: center;
+                padding: 1rem 2rem;
+                @media (max-width: 880px) {
+                  width: 100%;
+                }
+              }
+              &.button-black{
+                width: 50%;
+                border-radius: 0.5rem;
+                color: $go;
+                background-color: transparent;
+                font-size: 1rem;
+                line-height: 1rem;
+                font-weight: 700;
+                text-align: center;
+                padding: 1rem 2rem;
+                border:3px solid $go;
+                @media (max-width: 880px) {
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+
+      }
+      .right-video{
+        width: 100%;
+        aspect-ratio: 16/9;
+        .video-area{
+          width: 100%;
+          height: 100%;
+          border-radius: 1rem;
+          border:3px solid $go;
+          overflow: hidden;
+          //min-height: 20rem;
+          video{
+            @include imageCover(50%, 50%);
           }
         }
       }

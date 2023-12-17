@@ -20,13 +20,6 @@ $args2 = array(
 );
 
 
-$args3 = array(
-    'post_type' => 'chars',
-    'posts_per_page' => -1,
-    'post_status' => 'publish',
-    'orderby' => 'DATE',
-    'order' => 'ASC'
-);
 
 $models = new WP_Query($args);
 
@@ -461,6 +454,23 @@ $actions = new WP_Query($args2);
 
     <?php
     wp_reset_postdata();
+    $terms = get_terms(
+        array(
+            'orderby' => 'none',
+            'order' => 'ASC',
+            'taxonomy' => 'types',
+            'parent'   => 0
+        )
+    );
+
+    $args3 = array(
+        'post_type' => 'chars',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'orderby' => 'DATE',
+        'order' => 'ASC'
+    );
+
     $chars = new WP_Query($args3);
     ?>
     <div class="backdrop models-modal-wrapper modals choose-char">
@@ -472,7 +482,15 @@ $actions = new WP_Query($args2);
                         <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffa702"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                     </div>
                 </div>
-                <div class="content">
+                <?php if(!empty($terms)) : ?>
+                <div class="filter-blocks">
+                    <button class="single-filter secondary-button all" data-id="all">All</button>
+                    <?php foreach($terms as $term) : ?>
+                        <button class="single-filter secondary-button <?php echo $term -> slug; ?>" data-id="<?php echo $term -> slug; ?>"><?php echo $term->name; ?></button>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+                <div class="content chars">
                     <?php if($chars->have_posts()) :
                         $firstLoop = true;
                         ?>
@@ -483,13 +501,15 @@ $actions = new WP_Query($args2);
                                                 <input type="radio" name="char" id="<?php echo createSlug('none'); ?>" value="" data-id="" checked/>
                                                 <label for="<?php echo createSlug('none'); ?>">None</label>
                                                 <div class="action-image">
-                                                    <img src="<?php echo get_template_directory_uri() . '/assets/images/char-none.png'; ?>" alt="None">
+                                                    <img src="<?php echo get_template_directory_uri() . '/assets/images/char-none.webp'; ?>" alt="None">
                                                 </div>
                                             </div>
                                 </div>
                             </div>
-                            <?php while($chars->have_posts()) : $chars->the_post(); ?>
-                                <div class="single-action">
+                            <?php while($chars->have_posts()) : $chars->the_post();
+                                $term = get_the_terms(get_the_id(), 'types');
+                                ?>
+                                <div class="single-char single-action <?php echo ($term) ? $term[0]->slug : ''; ?>">
                                     <div class="wrapper">
                                         <?php if(get_field('logged')) : ?>
                                             <?php if(is_user_logged_in()) : ?>
@@ -575,7 +595,7 @@ $actions = new WP_Query($args2);
                                     <input type="radio" name="char" id="<?php echo createSlug('none'); ?>" value="" data-id="" checked/>
                                     <label for="<?php echo createSlug('none'); ?>">None</label>
                                     <div class="action-image">
-                                        <img src="<?php echo get_template_directory_uri() . '/assets/images/char-none.png'; ?>" alt="None">
+                                        <img src="<?php echo get_template_directory_uri() . '/assets/images/char-none.webp'; ?>" alt="None">
                                     </div>
                                 </div>
                             </div>

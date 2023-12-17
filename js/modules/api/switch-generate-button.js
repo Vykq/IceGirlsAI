@@ -62,7 +62,7 @@ const switchGenerateButton = (button, status) =>{
         percents.classList.add('hide');
         queue.classList.add('hide');
         button.disabled = true;
-        sameSeedBtn.classList.add('hidden');
+        //sameSeedBtn.classList.add('hidden');
         currentStep.textContent = "Upscalling...";
         generateBtn.disabled = true;
         generateBtn2.disabled = true;

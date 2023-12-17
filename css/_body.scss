@@ -58,6 +58,7 @@ select {
 button {
   font-family: 'Hellix', sans-serif;
   cursor: pointer;
+  user-select: none;
 }
 
 textarea{
@@ -77,6 +78,7 @@ textarea{
   border:none;
   border-radius: 0.5rem;
   transition: .2s all ease-in-out;
+  cursor: pointer;
   &.smaller{
     background-color:transparent;
     color:$go;

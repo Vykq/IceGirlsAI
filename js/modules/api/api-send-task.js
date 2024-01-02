@@ -10,12 +10,6 @@ const apiSendTask = (isPremium, oldSeed) => {
 
     let seed;
 
-
-
-
-
-
-
     let imageSize = {
         width: 512,
         height: 768,
@@ -86,6 +80,11 @@ const apiSendTask = (isPremium, oldSeed) => {
         midPrompt = promptInput.value;
         stepSlider = stepInputElement.value;
     }else {
+        if(document.querySelector('body').classList.contains('logged-in')){
+            const promptInput = document.querySelector('textarea[name="prompt"]');
+            midPrompt = promptInput.value;
+        }
+
         stepSlider = 20;
         details = 0;
     }

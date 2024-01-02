@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     closeMainModal();
     const popup = document.querySelector('.main-modal-blur');
     const html = document.querySelector('html');
-    if(localStorage.getItem('premium-modal') === 'Off'){
+    if(localStorage.getItem('prompt-modal') === 'Off'){
       popup.classList.add('disabled');
     }
     else{
@@ -65,7 +65,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         console.log('1');
       }, parseFloat(modal_timer*1000));
     }
-      timer('.timer', deadline);
+      //timer('.timer', deadline);
   }
 
 

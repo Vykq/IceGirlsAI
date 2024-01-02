@@ -388,7 +388,7 @@ textarea {
 .login-modal .main-modal {
   width: 40% !important;
   aspect-ratio: unset !important;
-  height: 90vh;
+  height: auto !important;
 }
 @media (max-width: 800px) {
   .login-modal .main-modal {
@@ -440,22 +440,98 @@ textarea {
   margin: 0.25rem 0;
   cursor: pointer;
 }
+.login-modal .content .wrapper .col-wrap #switch-to-register {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
 .login-modal .content .wrapper .col-wrap .login-form .tml {
   width: 100%;
   margin: 0 0;
 }
 .login-modal .content .wrapper .col-wrap .login-form form {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-top: 1rem;
+}
+.login-modal .content .wrapper .col-wrap .login-form form div:nth-child(3) {
+  order: 5;
+}
+@media (max-width: 960px) {
+  .login-modal .content .wrapper .col-wrap .login-form form div:nth-child(3) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
+.login-modal .content .wrapper .col-wrap .login-form form .wp_google_login {
+  order: 5;
+  width: 100%;
+  margin: 0 auto;
+}
+@media (max-width: 960px) {
+  .login-modal .content .wrapper .col-wrap .login-form form .wp_google_login {
+    order: 6;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    max-width: 75%;
+  }
+}
+.login-modal .content .wrapper .col-wrap .login-form form .wp_google_login .wp_google_login__button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+.login-modal .content .wrapper .col-wrap .login-form form .wp_google_login .wp_google_login__button-container a {
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0 !important;
+  padding: 0.4rem;
+  color: #181818;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1rem;
+}
+.login-modal .content .wrapper .col-wrap .login-form form .wp_google_login .wp_google_login__button-container a .wp_google_login__google-icon {
+  height: 1rem;
 }
 .login-modal .content .wrapper .col-wrap .login-form form .tml-indicator-wrap, .login-modal .content .wrapper .col-wrap .login-form form .tml-indicator_hint-wrap {
   display: none;
 }
+.login-modal .content .wrapper .col-wrap .login-form form .ptrn-button {
+  width: 100%;
+  margin: 0 !important;
+  max-height: 36px;
+  min-height: 36px;
+}
+.login-modal .content .wrapper .col-wrap .login-form form .ptrn-button img {
+  max-height: 36px;
+  object-fit: contain;
+  width: auto;
+  max-width: unset !important;
+}
 .login-modal .content .wrapper .col-wrap .login-form form .tml-field-wrap {
   position: relative;
   width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.login-modal .content .wrapper .col-wrap .login-form form .tml-field-wrap.tml-log-wrap {
+  order: 1;
+}
+.login-modal .content .wrapper .col-wrap .login-form form .tml-field-wrap.tml-pwd-wrap {
+  order: 2;
+  margin-bottom: 0;
+}
+.login-modal .content .wrapper .col-wrap .login-form form .tml-field-wrap.tml-rememberme-wrap {
+  order: 3;
+}
+.login-modal .content .wrapper .col-wrap .login-form form .tml-field-wrap.tml-submit-wrap {
+  order: 4;
+  margin-bottom: 0;
 }
 .login-modal .content .wrapper .col-wrap .login-form form .tml-field-wrap label {
   position: absolute;
@@ -549,6 +625,7 @@ textarea {
   padding: 0;
 }
 .login-modal .content .wrapper .col-wrap .login-form .tml-links {
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -573,6 +650,89 @@ textarea {
 }
 .login-modal .content .wrapper .col-wrap .login-form .acf-user-register-fields {
   display: none;
+}
+.login-modal .content .wrapper .col-wrap .register-form form > div {
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .tml-user_login-wrap {
+  order: 1;
+  margin-bottom: 0;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .tml-user_email-wrap {
+  order: 2;
+  margin-bottom: 0;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .tml-user_pass1-wrap {
+  order: 3 !important;
+  margin-bottom: 0;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .tml-user_pass2-wrap {
+  order: 4;
+  margin-bottom: 0;
+}
+.login-modal .content .wrapper .col-wrap .register-form form div:nth-child(10) {
+  order: 5;
+  grid-column-end: 1;
+  grid-column-start: 1;
+}
+@media (max-width: 960px) {
+  .login-modal .content .wrapper .col-wrap .register-form form div:nth-child(10) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
+.login-modal .content .wrapper .col-wrap .register-form form .wp_google_login {
+  order: 5;
+  width: 100%;
+  margin: 0 auto;
+  grid-column-end: 2;
+  grid-column-start: 2;
+  margin-bottom: 1rem;
+}
+@media (max-width: 960px) {
+  .login-modal .content .wrapper .col-wrap .register-form form .wp_google_login {
+    order: 6;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    max-width: 75%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+.login-modal .content .wrapper .col-wrap .register-form form .wp_google_login .wp_google_login__button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .wp_google_login .wp_google_login__button-container a {
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0 !important;
+  padding: 0.4rem;
+  color: #181818;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1rem;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .wp_google_login .wp_google_login__button-container a .wp_google_login__google-icon {
+  height: 1rem;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .ptrn-button {
+  width: 100%;
+  margin: 0 !important;
+  max-height: 36px;
+  min-height: 36px;
+}
+.login-modal .content .wrapper .col-wrap .register-form form .ptrn-button img {
+  max-height: 36px;
+  object-fit: contain;
+  width: auto;
+  max-width: unset !important;
 }
 
 .mobile-menu-wrapper {
@@ -1030,13 +1190,23 @@ textarea {
   display: none !important;
 }
 .backdrop.main-modal-blur .main-modal {
-  width: 33%;
+  width: 40%;
   margin: auto;
   aspect-ratio: unset;
 }
 @media (max-width: 1280px) {
   .backdrop.main-modal-blur .main-modal {
-    width: 75%;
+    width: 50%;
+  }
+}
+@media (max-width: 400px) {
+  .backdrop.main-modal-blur .main-modal {
+    width: 80%;
+  }
+}
+@media (max-width: 600px) {
+  .backdrop.main-modal-blur .main-modal.custom-modal {
+    height: unset !important;
   }
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper {
@@ -1073,6 +1243,31 @@ textarea {
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid {
   display: grid;
   grid-template-columns: 1fr;
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid.two-col {
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+@media (max-width: 700px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid.two-col {
+    grid-template-columns: 1fr;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid.two-col .img-area {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+@media (max-width: 700px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid.two-col .img-area {
+    display: none;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid.two-col .img-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .inner-col-wrapper {
   border: 1px solid #ff950d;
@@ -1122,6 +1317,12 @@ textarea {
   font-weight: 700;
   line-height: 2rem;
   text-transform: uppercase;
+}
+@media (max-width: 450px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .col-title {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .whole-price {
   display: flex;
@@ -1236,6 +1437,7 @@ textarea {
   font-size: 0.8rem;
   line-height: 1.2rem;
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .spots-area {
   display: grid;
@@ -1272,14 +1474,29 @@ textarea {
   font-weight: 600;
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area {
-  display: flex;
+  display: grid;
   align-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
   justify-content: center;
   margin: 1rem 0;
 }
-.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area .main-button {
+@media (max-width: 450px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area {
+    grid-template-columns: 1fr;
+  }
+}
+.backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area .main-button, .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area .secondary-button {
   text-align: center;
   width: fit-content;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  padding: 1rem 0.5rem;
+}
+@media (max-width: 450px) {
+  .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area .main-button, .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid .button-area .secondary-button {
+    width: 100%;
+  }
 }
 .backdrop.main-modal-blur .main-modal .modal-wrapper .content .modal-grid ul {
   list-style-type: none;
@@ -1359,6 +1576,170 @@ textarea {
 .tml .tml-message, .tml .tml-error {
   color: #dedede;
   border-left-color: #ff950d;
+}
+.tml .tml-indicator-wrap, .tml .tml-indicator_hint-wrap, .tml .acf-user-register-fields, .tml h2 {
+  display: none;
+}
+.tml.tml-register .tml-user_login-wrap {
+  order: 1;
+}
+.tml.tml-register .tml-user_email-wrap {
+  order: 2;
+  margin-bottom: 1rem;
+}
+.tml.tml-register .tml-user_pass1-wrap {
+  order: 3;
+  grid-column-end: 1;
+  grid-column-start: 3;
+}
+.tml.tml-register .tml-user_pass2-wrap {
+  order: 4;
+  margin-bottom: 1rem;
+}
+.tml.tml-register div:nth-child(10) {
+  order: 5;
+  grid-column-end: 1;
+  grid-column-start: 1;
+}
+@media (max-width: 960px) {
+  .tml.tml-register div:nth-child(10) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
+.tml.tml-register .wp_google_login {
+  order: 5;
+  width: 100%;
+  margin: 0 auto;
+  grid-column-end: 2;
+  grid-column-start: 2;
+}
+@media (max-width: 960px) {
+  .tml.tml-register .wp_google_login {
+    order: 6;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    max-width: 75%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+.tml.tml-register .wp_google_login .wp_google_login__button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+.tml.tml-register .wp_google_login .wp_google_login__button-container a {
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0 !important;
+  padding: 0.4rem;
+  color: #181818;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1rem;
+}
+.tml.tml-register .wp_google_login .wp_google_login__button-container a .wp_google_login__google-icon {
+  height: 1rem;
+}
+.tml.tml-register .ptrn-button {
+  width: 100%;
+  margin: 0 !important;
+  max-height: 36px;
+  min-height: 36px;
+}
+.tml.tml-register .ptrn-button img {
+  max-height: 36px;
+  object-fit: contain;
+  width: auto;
+  max-width: unset !important;
+}
+.tml form > div {
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.tml form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.tml form .tml-log-wrap {
+  order: 1;
+}
+.tml form .tml-pwd-wrap {
+  order: 2;
+  margin-bottom: 0;
+}
+.tml form .tml-rememberme-wrap {
+  order: 3;
+}
+.tml form .tml-submit-wrap {
+  order: 4;
+  margin-bottom: 1rem;
+}
+.tml form div:nth-child(3) {
+  order: 5;
+  grid-column-end: 1;
+  grid-column-start: 1;
+}
+@media (max-width: 960px) {
+  .tml form div:nth-child(3) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
+.tml form .wp_google_login {
+  order: 5;
+  width: 100%;
+  margin: 0 auto;
+  grid-column-end: 2;
+  grid-column-start: 2;
+}
+@media (max-width: 960px) {
+  .tml form .wp_google_login {
+    order: 6;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    max-width: 75%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+.tml form .wp_google_login .wp_google_login__button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+.tml form .wp_google_login .wp_google_login__button-container a {
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0 !important;
+  padding: 0.4rem;
+  color: #181818;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1rem;
+}
+.tml form .wp_google_login .wp_google_login__button-container a .wp_google_login__google-icon {
+  height: 1rem;
+}
+.tml form .ptrn-button {
+  width: 100%;
+  margin: 0 !important;
+  max-height: 36px;
+  min-height: 36px;
+}
+.tml form .ptrn-button img {
+  max-height: 36px;
+  object-fit: contain;
+  width: auto;
+  max-width: unset !important;
 }
 .tml .tml-field-wrap {
   position: relative;

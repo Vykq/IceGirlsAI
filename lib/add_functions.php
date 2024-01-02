@@ -113,11 +113,11 @@ function getNiceCpName() {
 }
 
 
-function redirect_to_profile() {
-    $redirect_to = get_option('home') . '/account/';
-    return $redirect_to;
-}
-add_filter('login_redirect', 'redirect_to_profile');
+//function redirect_to_profile() {
+//    $redirect_to = get_option('home') . '/account/';
+//    return $redirect_to;
+//}
+//add_filter('login_redirect', 'redirect_to_profile');
 
 
 function getCurrentPatronCount(){
@@ -420,9 +420,14 @@ function cancelSubscription2(){
 }
 
 
+add_action('wp_ajax_nopriv_isLoggedIn', 'isLoggedIn');
+add_action('wp_ajax_isLoggedIn', 'isLoggedIn');
 
-
-
+function isLoggedIn(){
+    $user = wp_get_current_user();
+    wp_send_json($user->exists());
+    wp_die();
+}
 
 add_action('wp_ajax_nopriv_updateSubscription', 'updateSubscription');
 add_action('wp_ajax_updateSubscription', 'updateSubscription');
@@ -539,5 +544,44 @@ function getSubscriptionItemID($subscription_id){
         return $firstItemId;
     } else {
         return '';
+    }
+}
+
+add_action('user_register', 'update_klaviyo_list', 10, 1);
+
+function update_klaviyo_list($user_id) {
+    $user_info = get_userdata($user_id);
+    $user_role = $user_info->roles;
+
+    if (in_array('subscriber', $user_role)) {
+        $email = $user_info->user_email;
+        $first_name = $user_info->first_name;
+        $last_name = $user_info->last_name;
+
+        // Replace with your Klaviyo Private API Key
+        $klaviyo_api_key = 'pk_c0fdc261faf90a5ca3f8c9885727df5711';
+
+        $data = array(
+            'api_key' => $klaviyo_api_key,
+            'profiles' => array(
+                array(
+                    'email' => $email,
+                    '$first_name' => $first_name,
+                    '$last_name' => $last_name
+                )
+            )
+        );
+
+        $response = wp_remote_post('https://a.klaviyo.com/api/v2/list/RyQCFK/members', array(
+            'body' => json_encode($data),
+            'headers' => array('Content-Type' => 'application/json')
+        ));
+
+        // Handle response or error
+        if (is_wp_error($response)) {
+            // Error handling
+        } else {
+            // Success handling
+        }
     }
 }

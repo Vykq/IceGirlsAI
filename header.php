@@ -31,7 +31,7 @@
     $current_url = site_url();
     ?>
     <?php
-    if (in_array( 'expremium', (array) $user->roles )) { ?>
+    if (in_array( 'expremium', (array) $user->roles ) && !get_field('subscription_id', 'user_' . $user->ID)) { ?>
         <div class="topbar">
             <div class="container">
                 <p class="info">Please resubscribe to our premium plan to regain your premium role, you won't be charged for the next 30d</p>

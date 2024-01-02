@@ -9,7 +9,7 @@ const closeMainModal = () => {
     })
 
     const closeModal = () => {
-        localStorage.setItem('premium-modal','Off');
+        localStorage.setItem('prompt-modal','Off');
         html.classList.remove('modal-is-open');
         modal.classList.remove('open');
 

@@ -430,3 +430,8 @@ function setAffiliate(){
     }
 }
 
+function custom_login_redirect() {
+    return home_url('/account');
+}
+
+add_filter('rtcamp.google_default_redirect', 'custom_login_redirect');

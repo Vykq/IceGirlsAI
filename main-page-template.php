@@ -172,27 +172,6 @@ $user_info = get_user_meta($user_id);
                         </div>
                         <div class="button-area">
                             <a class="main-button" target="_blank" href="<?php the_field('premium_button_url','701'); ?>"><?php the_field('premium_button_text','701'); ?></a>
-                            <?php
-                            $currentPatrons = getPremiumUserCount();
-                            if($currentPatrons < 20){
-                                $currentPatrons = $currentPatrons + 70;
-                            } else if ($currentPatrons < 30) {
-                                $currentPatrons = $currentPatrons + 60;
-                            } else if ($currentPatrons < 40) {
-                                $currentPatrons = $currentPatrons + 50;
-                            } else if ($currentPatrons < 50) {
-                                $currentPatrons = $currentPatrons + 40;
-                            } else if ($currentPatrons < 60) {
-                                $currentPatrons = $currentPatrons + 30;
-                            } else if ($currentPatrons < 70) {
-                                $currentPatrons = $currentPatrons + 20;
-                            } else if ($currentPatrons < 80) {
-                                $currentPatrons = $currentPatrons + 10;
-                            } else if ($currentPatrons > 80 && $currentPatrons < 100) {
-
-                            }
-                            ?>
-                            <p class="spots-left"><?php echo $currentPatrons; ?> users took the deal.</p>
                         </div>
                         <?php if(have_rows('premium_freatures','701')) : ?>
                             <ul class="benefits">

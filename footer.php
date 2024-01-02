@@ -157,7 +157,7 @@ $user = wp_get_current_user();
                         </li>
                     <?php } else {?>
                         <li>
-                            <a href="<?php echo site_url() . '/patreon-flow/?patreon-login=yes&patreon-final-redirect=' . urlencode( site_url() . '/account/' ); ?>">Log In</a>
+                            <span class="open-login-modal open-modal" data-id="login-modal">Log in</span>
                         </li>
                     <?php } ?>
                 </ul>

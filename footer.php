@@ -173,7 +173,7 @@ $user = wp_get_current_user();
     <div class="main-modal">
         <div class="modal-wrapper">
             <div class="top">
-                <p class="title" id="current-scene">Upscale</p>
+                <p class="title" id="current-scene">Premium feature</p>
                 <div class="close-modal">
                     <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffa702"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </div>

@@ -19,7 +19,6 @@ const getImage = (Id, isPremium) => {
         .then(data => {
             console.log(data);
             if(!data.success === false){
-                console.log('a');
                 let image = data.data[0].image;
                 let infotext = data.data[0].infotext;
                 if(image) {
@@ -28,7 +27,6 @@ const getImage = (Id, isPremium) => {
                     return 'error, no image';
                 }
             } else {
-                console.log('b');
             }
         })
         .catch(error => console.error('error', error));

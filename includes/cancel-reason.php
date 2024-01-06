@@ -2,13 +2,11 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/wp-load.php");
 
-
 $current_user = wp_get_current_user();
-
-
-$email = $current_user->user_email;;
-$reason = $_POST['reasonInput'];
-$msg = $_POST['textarea'];
+$email = $current_user->user_email;
+$reasons = $_POST['reasonInput'];
+$msg = $_POST['reason'];
+$reason = implode(', ', $reasons);
 
 $to = 'vykintas.venckus@gmail.com';
 $subject = 'IceGirlsAI: Cancel form';

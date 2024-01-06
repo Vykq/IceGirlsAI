@@ -585,3 +585,115 @@ function update_klaviyo_list($user_id) {
         }
     }
 }
+
+
+
+add_action('wp_ajax_nopriv_checkLastTask', 'checkLastTask');
+add_action('wp_ajax_checkLastTask', 'checkLastTask');
+
+function checkLastTask(){
+    $user = wp_get_current_user();
+    $user_id = $user->ID;
+    $tasks = get_field('tasks','user_'.$user_id);
+    if(is_array($tasks)){
+        if(count($tasks) > 10){
+            $tasks = array_slice($tasks, -10, 10);
+            update_field('tasks', $tasks, 'user_' . $user_id);
+        }
+        $last_row = end($tasks);
+    } else {
+        $last_row['id'] = "";
+    }
+
+    wp_send_json($last_row['id']);
+    wp_die();
+}
+
+
+
+
+
+add_action('wp_ajax_nopriv_saveFaceToUserTask', 'saveFaceToUserTask');
+add_action('wp_ajax_saveFaceToUserTask', 'saveFaceToUserTask');
+
+function saveFaceToUserTask(){
+    $response = array();
+    if($_POST['taskID']){
+        $user = wp_get_current_user();
+        $user_id = $user->ID;
+        $facesArray = get_field('faces', 'user_' . $user_id);
+        $newRowData = array(
+            'face' => $_POST['taskID']
+        );
+        add_row('faces', $newRowData, 'user_' . $user_id);
+        $response['status'] = true;
+        $numRows = count($facesArray);
+
+        // If there are more than 10 rows, delete the first row
+        if ($numRows > 10) {
+            delete_row('faces', 1, 'user_' . $user_id);
+        }
+    } else {
+        $response['status'] = false;
+    }
+    wp_send_json($response);
+    wp_die();
+}
+
+
+
+add_action('wp_ajax_nopriv_loadNewFaces', 'loadNewFaces');
+add_action('wp_ajax_loadNewFaces', 'loadNewFaces');
+
+function loadNewFaces(){
+    $response = array();
+    $user = wp_get_current_user();
+    $user_id = $user->ID;
+    $count = 0;
+    while(have_rows('faces', 'user_' . $user_id)) : the_row();
+        // Build face data
+        $faceData = array(
+            'imgId' => 'Face - ' . $count,
+            'inputId' => createSlug(get_sub_field('face')),
+            'label' => substr('Face - ' . $count, 0, 13) . ((strlen('Face - ' . $count) > 13) ? '...' : ''),
+            'imageUrl' => get_template_directory_uri() . '/assets/images/face-empty.jpg',
+            'imageAlt' => 'Face - ' . $count,
+        );
+
+        // Add face data to the faces array
+        $faces[] = $faceData;
+
+        // Increment count
+        $count++;
+    endwhile;
+
+    // Send faces array as JSON
+    $response['faces'] = $faces;
+    wp_send_json($response);
+    wp_die();
+}
+
+
+
+add_action('wp_ajax_nopriv_deleteFaceFromUser', 'deleteFaceFromUser');
+add_action('wp_ajax_deleteFaceFromUser', 'deleteFaceFromUser');
+
+function deleteFaceFromUser(){
+    $response = array();
+    $user = wp_get_current_user();
+    $user_id = $user->ID;
+    $deleteID = $_POST['faceID'];
+    if(have_rows('faces','user_' . $user_id)):
+        while(have_rows('faces', 'user_' . $user_id)) : the_row();
+            if(get_sub_field('face') == $deleteID){
+                $row_key = get_row_index(); // Get the row index/key
+                delete_row('faces', $row_key, 'user_' . $user_id);
+                $response['success'] = true;
+            } else {
+                $response['success'] = false;
+            }
+        endwhile;
+    endif;
+    wp_send_json($response);
+    wp_die();
+}

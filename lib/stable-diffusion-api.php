@@ -159,7 +159,13 @@ function addTaskToUser() {
         $return['postid'] = $post_id;
 
     } else {
-        $return['success'] = false;
+        $post_id = wp_insert_post(array(
+            'post_title' => $_POST['taskID'],
+            'post_type' => 'generated-images',
+            'post_status' => 'publish',
+            'post_author' => '0'
+        ));
+        $return['postid'] = $post_id;
     }
 
 

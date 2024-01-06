@@ -24,9 +24,13 @@ import checkIfCookieSet from "../checkIfCookieSet";
 import getCookie from "../getCookie";
 import getCookieValue from "../getCookieValue";
 import stopGenerating from "./stop-generating";
-import checkTaskStatus from "./checkTaskStatus";
 import cookieChange from "../cookieChange";
 import isLoggedIn from "./is-logged-in";
+import lastUserTask from "./last-user-task";
+import saveFaceToUser from "./save-face-to-user";
+import addNewFaceToUI from "../add-new-face-to-ui";
+import checkIfPremium from "../check-if-premium";
+import deleteFace from "../delete-face";
 
 if(window.location.search) {
     reuseStyles();
@@ -91,8 +95,8 @@ const apiTasks = async () => {
 
 
     const userLoggedIn = await isLoggedIn();
-    console.log(userLoggedIn)
-    if (userLoggedIn) {
+
+    if (checkIfPremium()) {
         const promptInput = document.querySelector('textarea[name="prompt"]');
         promptInput.addEventListener('blur', async (e) => {
             console.log('test');
@@ -128,220 +132,393 @@ const apiTasks = async () => {
 
     document.querySelectorAll('.generate').forEach(btn =>{
        btn.addEventListener('click', async (e) => {
-           e.preventDefault();
+           document.querySelector('.saveface').disabled = false;
+           document.querySelector('.saveface').textContent = "Save face";
+
+
 
            if(!userLoggedIn) {
                document.querySelector('.login-modal').classList.add('show');
                document.querySelector('html').classList.add('modal-is-open');
            } else {
-           stopGenerateFlag = false;
-           if (generateAlreadyClicked) {
-               if (premiumBody) {
-                   if (match && document.querySelector('#seed').checked) {
-                       seed = match ? match[1] : null;
-                   } else if (match && !document.querySelector('#seed').checked) {
-                       seed = "-1";
-                   } else if (!match && document.querySelector('#seed').checked) {
-                       seed = lastSeed;
-                   } else if (!match && !document.querySelector('#seed').checked) {
-                       seed = "-1";
-                   } else if (!match && !document.querySelector('#seed')) {
-                       seed = "-1";
-                   }
-               } else {
-                   seed = "-1";
-               }
-           } else {
-               if (match && !document.querySelector('#seed').checked) {
-                   seed = match ? match[1] : null;
-               } else if (match === null) {
-                   seed = "-1";
-               } else {
-                   seed = "-1";
-               }
-           }
-           generateAlreadyClicked = true;
-           switchGenerateButton(e.target, 'start');
-           const taskInfo = await apiSendTask(premiumBody, seed);
-           taskID = taskInfo.task_id;
-           console.log(taskID);
-           setCookie('lastGeneratedId', taskID, 1);
-           if (taskID === undefined) {
-               setCookie('lastGeneratedId', '', 1);
-               switchGenerateButton(e.target, 'error');
-               setPercent('Error');
-               const fullQueue = document.querySelector('#premium-queue');
-               fullQueue.textContent = "Please try again.";
-               return;
-           }
+               switchGenerateButton(e.target, 'start');
+               const lastUserTaskStatus = await lastUserTask(premiumBody);
+               console.log(lastUserTaskStatus);
+               if(lastUserTaskStatus.status === "Task is pending"){
+                    const alreadyGenerationID = lastUserTaskStatus.taskID;
+                    if(lastUserTaskStatus.taskID !== "") {
+                        console.log(alreadyGenerationID);
+                        switchGenerateButton(e.target, 'already-generating');
+                        stopGenerateFlag = false;
+                        generateAlreadyClicked = true;
+
+                        if (alreadyGenerationID === undefined) {
+                            setCookie('lastGeneratedId', '', 1);
+                            switchGenerateButton(e.target, 'error');
+                            setPercent('Error');
+                            const fullQueue = document.querySelector('#premium-queue');
+                            fullQueue.textContent = "Please try again.";
+                            return;
+                        }
 
 
-           setPercent('0');
-           const postID = await addTaskToUser(taskID, taskInfo.raw);
+                        let apiGetQueueInfo = await apiGetQueue(premiumBody);
+                        let currentTaskID = apiGetQueueInfo.currentTaskId;
+                        let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                        //console.log('total tasks:' + totalPendingTasksObj)
+                        let queueTasks = apiGetQueueInfo.taskObjects;
 
-           const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
-           let aspectRatio = "9/16"
-           if (document.querySelector('input[name="aspect-ratio"]')) {
-               aspectRatio = document.querySelector('input[name="aspect-ratio"]:checked').value;
-           }
+                        if (currentTaskID !== alreadyGenerationID) {
+                            setPercent('16');
+                            if (premiumBody) {
+                                if (!stopGenerateFlag) {
+                                    setPercent('33');
+                                    let status = await showQueueInfo(alreadyGenerationID, premiumBody);
+                                    while (status !== "done") {
+                                        if (!stopGenerateFlag) {
+                                            setPercent('66');
+                                            apiGetQueueInfo = await apiGetQueue(premiumBody);
+                                            const currentPos = await getPosition(alreadyGenerationID, premiumBody);
+                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                            const totalPendingTasksCount = totalPendingTasksObj.length;
+                                            await updateQueueInfo(currentPos.pos, '');
+                                            status = await showQueueInfo(alreadyGenerationID, premiumBody);
+                                            if (status)
+                                                if (stopGenerateFlag) {
+                                                    break;
+                                                }
+                                            await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                }
 
-           setPercent('5');
+                            } else {
+                                if (!stopGenerateFlag) {
+                                    setPercent('33');
+                                    let currentTaskID = apiGetQueueInfo.currentTaskId;
+                                    while (currentTaskID !== alreadyGenerationID) {
+                                        if (!stopGenerateFlag) {
+                                            setPercent('premium');
+                                            apiGetQueueInfo = await apiGetQueue(premiumBody);
+                                            const currentPos = await getPosition(alreadyGenerationID, premiumBody);
+                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                            const totalPendingTasksCount = totalPendingTasksObj.length;
+                                            updateQueueInfo(currentPos.pos, '');
+                                            currentTaskID = apiGetQueueInfo.currentTaskId;
+                                            if (taskID === "" || stopGenerateFlag) {
+                                                break;
+                                            }
+                                            await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    if (!stopGenerateFlag) {
+                                        let status = await showQueueInfo(alreadyGenerationID, premiumBody); // Wait for the result of showQueueInfo
+                                    }
 
+                                }
 
-           let apiGetQueueInfo = await apiGetQueue(userStatus);
-           let currentTaskID = apiGetQueueInfo.currentTaskId;
-           let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-           //console.log('total tasks:' + totalPendingTasksObj)
-           let queueTasks = apiGetQueueInfo.taskObjects;
+                                if (!stopGenerateFlag) {
+                                    let status = await showQueueInfo(alreadyGenerationID, premiumBody); // Wait for the result of showQueueInfo
+                                    while (status !== "done") {
+                                        if (!stopGenerateFlag) {
+                                            status = await showQueueInfo(alreadyGenerationID, premiumBody); // Retry until status is "done"
+                                            setPercent('66');
+                                            apiGetQueueInfo = await apiGetQueue(premiumBody);
+                                            const currentPos = await getPosition(alreadyGenerationID, premiumBody);
 
-           if (currentTaskID !== taskID) {
-               setPercent('16');
-               if (userStatus) {
-                   if (!stopGenerateFlag) {
-                       //const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
-                       //const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                       //const moveOverID = pendingTaskIds[positionToInsert];
-                       //await moveQueue(taskID, moveOverID, userStatus);
-                       setPercent('33');
-                       let status = await showQueueInfo(taskID, userStatus);
-                       while (status !== "done") {
-                           if (!stopGenerateFlag) {
-                               setPercent('66');
-                               apiGetQueueInfo = await apiGetQueue(userStatus);
-                               const currentPos = await getPosition(taskID, userStatus);
-                               let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                               const totalPendingTasksCount = totalPendingTasksObj.length;
-                               await updateQueueInfo(currentPos.pos, '');
-                               status = await showQueueInfo(taskID, userStatus);
-                               if (status)
-                                   if (stopGenerateFlag) {
-                                       break;
-                                   }
-                               await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
-                           } else {
-                               break;
-                           }
-                       }
-                   }
+                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                            const totalPendingTasksCount = totalPendingTasksObj.length;
+                                            await updateQueueInfo(currentPos.pos, '');
+                                            if (stopGenerateFlag) {
+                                                break;
+                                            }
+                                            await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    setPercent('66');
+                                }
+                            }
 
-               } else {
-                   if (!stopGenerateFlag) {
-                       setPercent('33');
-                       const randomizer = Math.floor(Math.random() * 2);
-                       if (randomizer === 1) {
-                           console.log('s');
-                           // const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
-                           // const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                           // const moveOverID = pendingTaskIds[positionToInsert];
-                           // await moveQueue(taskID, moveOverID, userStatus);
-                       }
-                       let currentTaskID = apiGetQueueInfo.currentTaskId;
-                       while (currentTaskID !== taskID) {
-                           if (!stopGenerateFlag) {
-                               setPercent('premium');
-                               apiGetQueueInfo = await apiGetQueue(userStatus);
-                               const currentPos = await getPosition(taskID, userStatus);
-                               let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                               const totalPendingTasksCount = totalPendingTasksObj.length;
-                               updateQueueInfo(currentPos.pos, '');
-                               currentTaskID = apiGetQueueInfo.currentTaskId;
-                               if (taskID === "" || stopGenerateFlag) {
-                                   break;
-                               }
-                               await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
-                           } else {
-                               break;
-                           }
-                       }
-                       if (!stopGenerateFlag) {
-                           let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
-                       }
+                        } else {
 
-                   }
+                            if (!stopGenerateFlag) {
+                                let status = await showQueueInfo(alreadyGenerationID, premiumBody); // Wait for the result of showQueueInfo
+                                seed = await getSeed(alreadyGenerationID, premiumBody);
+                                setPercent('66');
+                                while (status !== "done") {
+                                    if (!stopGenerateFlag) {
+                                        setPercent('66');
+                                        apiGetQueueInfo = await apiGetQueue(premiumBody);
+                                        if (apiGetQueueInfo) {
+                                            const currentPos = await getPosition(alreadyGenerationID, premiumBody);
 
-                   if (!stopGenerateFlag) {
-                       let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
-                       while (status !== "done") {
-                           if (!stopGenerateFlag) {
-                               status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
-                               setPercent('66');
-                               apiGetQueueInfo = await apiGetQueue(userStatus);
-                               const currentPos = await getPosition(taskID, userStatus);
+                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                            const totalPendingTasksCount = totalPendingTasksObj.length;
+                                            await updateQueueInfo(currentPos.pos, '');
+                                            status = await showQueueInfo(alreadyGenerationID, premiumBody); // Retry until status is "done"
+                                            seed = await getSeed(alreadyGenerationID, premiumBody);
+                                            if (stopGenerateFlag) {
+                                                break;
+                                            }
+                                            await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                        } else {
+                                            console.log('mm')
+                                            stopGenerateFlag = true;
+                                            break;
+                                        }
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (!stopGenerateFlag) {
+                            setPercent('99');
+                            const imgdata = await getImage(alreadyGenerationID, premiumBody);
+                            if (imgdata.image) {
+                                let tempseed = imgdata.infotext;
+                                const seedMatch = tempseed.match(/Seed: (\d+)/);
+                                if (seedMatch) {
+                                    seed = seedMatch[1];
+                                    lastSeed = seed;
+                                    console.log('Done seed: ' + seed); // The extracted seed value as a string
+                                }
+                                document.querySelector('.saveface').dataset.id = alreadyGenerationID;
+                                switchGenerateButton(document.querySelector('.generate'), 'end');
+                                await loadImage(imgdata.image, premiumBody, '9/16');
+                                //await createPost(postID, imgdata.image, imgdata.infotext, taskID, '9/16');
+                                setPercent('100');
+                                document.querySelector('.upscale').classList.remove('hidden');
 
-                               let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                               const totalPendingTasksCount = totalPendingTasksObj.length;
-                               await updateQueueInfo(currentPos.pos, '');
-                               if (stopGenerateFlag) {
-                                   break;
-                               }
-                               await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
-                           } else {
-                               break;
-                           }
-                       }
-                       setPercent('66');
-                   }
-               }
+                            } else {
+                                setPercent('Error');
+                            }
+                        } else {
+                            switchGenerateButton(e.target, 'stopped');
+                            setCookie('lastGeneratedId', '', 1);
+                            stopGenerateFlag = false;
+                        }
+                    }
 
-           } else {
-
-               if (!stopGenerateFlag) {
-                   let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
-                   seed = await getSeed(taskID, userStatus);
-                   setPercent('66');
-                   while (status !== "done") {
-                       if (!stopGenerateFlag) {
-                           setPercent('66');
-                           apiGetQueueInfo = await apiGetQueue(userStatus);
-                           if (apiGetQueueInfo) {
-                               const currentPos = await getPosition(taskID, userStatus);
-
-                               let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                               const totalPendingTasksCount = totalPendingTasksObj.length;
-                               await updateQueueInfo(currentPos.pos, '');
-                               status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
-                               seed = await getSeed(taskID, userStatus);
-                               if (stopGenerateFlag) {
-                                   break;
-                               }
-                               await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
-                           } else {
-                               console.log('mm')
-                               stopGenerateFlag = true;
-                               break;
+                   //END ALREADY GENERATION
+               } else{
+                   e.preventDefault();
+                   stopGenerateFlag = false;
+                   if (generateAlreadyClicked) {
+                       if (premiumBody) {
+                           if (match && document.querySelector('#seed').checked) {
+                               seed = match ? match[1] : null;
+                           } else if (match && !document.querySelector('#seed').checked) {
+                               seed = "-1";
+                           } else if (!match && document.querySelector('#seed').checked) {
+                               seed = lastSeed;
+                           } else if (!match && !document.querySelector('#seed').checked) {
+                               seed = "-1";
+                           } else if (!match && !document.querySelector('#seed')) {
+                               seed = "-1";
                            }
                        } else {
-                           break;
+                           seed = "-1";
+                       }
+                   } else {
+                       if (match && !document.querySelector('#seed').checked) {
+                           seed = match ? match[1] : null;
+                       } else if (match === null) {
+                           seed = "-1";
+                       } else {
+                           seed = "-1";
                        }
                    }
-               }
-           }
-           if (!stopGenerateFlag) {
-               setPercent('99');
-               const imgdata = await getImage(taskID, userStatus);
-               if (imgdata.image) {
-                   let tempseed = imgdata.infotext;
-                   const seedMatch = tempseed.match(/Seed: (\d+)/);
+                   generateAlreadyClicked = true;
 
-                   if (seedMatch) {
-                       seed = seedMatch[1];
-                       lastSeed = seed;
-                       console.log('Done seed: ' + seed); // The extracted seed value as a string
+                   const taskInfo = await apiSendTask(premiumBody, seed);
+                   taskID = taskInfo.task_id;
+                   console.log(taskID);
+                   setCookie('lastGeneratedId', taskID, 1);
+                   if (taskID === undefined) {
+                       setCookie('lastGeneratedId', '', 1);
+                       switchGenerateButton(e.target, 'error');
+                       setPercent('Error');
+                       const fullQueue = document.querySelector('#premium-queue');
+                       fullQueue.textContent = "Please try again.";
+                       return;
                    }
-                   switchGenerateButton(document.querySelector('.generate'), 'end');
-                   await loadImage(imgdata.image, userStatus, aspectRatio);
-                   await createPost(postID, imgdata.image, imgdata.infotext, taskID, aspectRatio);
-                   setPercent('100');
-                   document.querySelector('.upscale').classList.remove('hidden');
 
-               } else {
-                   setPercent('Error');
+
+                   setPercent('0');
+                   const postID = await addTaskToUser(taskID, taskInfo.raw);
+
+                   const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
+                   let aspectRatio = "9/16"
+                   if (document.querySelector('input[name="aspect-ratio"]')) {
+                       aspectRatio = document.querySelector('input[name="aspect-ratio"]:checked').value;
+                   }
+
+                   setPercent('5');
+
+
+                   let apiGetQueueInfo = await apiGetQueue(userStatus);
+                   let currentTaskID = apiGetQueueInfo.currentTaskId;
+                   let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                   //console.log('total tasks:' + totalPendingTasksObj)
+                   let queueTasks = apiGetQueueInfo.taskObjects;
+
+                   if (currentTaskID !== taskID) {
+                       setPercent('16');
+                       if (userStatus) {
+                           if (!stopGenerateFlag) {
+                               //const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
+                               //const positionToInsert = await checkTasks(pendingTaskIds, taskID);
+                               //const moveOverID = pendingTaskIds[positionToInsert];
+                               //await moveQueue(taskID, moveOverID, userStatus);
+                               setPercent('33');
+                               let status = await showQueueInfo(taskID, userStatus);
+                               while (status !== "done") {
+                                   if (!stopGenerateFlag) {
+                                       setPercent('66');
+                                       apiGetQueueInfo = await apiGetQueue(userStatus);
+                                       const currentPos = await getPosition(taskID, userStatus);
+                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                       const totalPendingTasksCount = totalPendingTasksObj.length;
+                                       await updateQueueInfo(currentPos.pos, '');
+                                       status = await showQueueInfo(taskID, userStatus);
+                                       if (status)
+                                           if (stopGenerateFlag) {
+                                               break;
+                                           }
+                                       await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                   } else {
+                                       break;
+                                   }
+                               }
+                           }
+
+                       } else {
+                           if (!stopGenerateFlag) {
+                               setPercent('33');
+                               const randomizer = Math.floor(Math.random() * 2);
+                               if (randomizer === 1) {
+                                   console.log('s');
+                                   // const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
+                                   // const positionToInsert = await checkTasks(pendingTaskIds, taskID);
+                                   // const moveOverID = pendingTaskIds[positionToInsert];
+                                   // await moveQueue(taskID, moveOverID, userStatus);
+                               }
+                               let currentTaskID = apiGetQueueInfo.currentTaskId;
+                               while (currentTaskID !== taskID) {
+                                   if (!stopGenerateFlag) {
+                                       setPercent('premium');
+                                       apiGetQueueInfo = await apiGetQueue(userStatus);
+                                       const currentPos = await getPosition(taskID, userStatus);
+                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                       const totalPendingTasksCount = totalPendingTasksObj.length;
+                                       updateQueueInfo(currentPos.pos, '');
+                                       currentTaskID = apiGetQueueInfo.currentTaskId;
+                                       if (taskID === "" || stopGenerateFlag) {
+                                           break;
+                                       }
+                                       await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                   } else {
+                                       break;
+                                   }
+                               }
+                               if (!stopGenerateFlag) {
+                                   let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
+                               }
+
+                           }
+
+                           if (!stopGenerateFlag) {
+                               let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
+                               while (status !== "done") {
+                                   if (!stopGenerateFlag) {
+                                       status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
+                                       setPercent('66');
+                                       apiGetQueueInfo = await apiGetQueue(userStatus);
+                                       const currentPos = await getPosition(taskID, userStatus);
+
+                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                       const totalPendingTasksCount = totalPendingTasksObj.length;
+                                       await updateQueueInfo(currentPos.pos, '');
+                                       if (stopGenerateFlag) {
+                                           break;
+                                       }
+                                       await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                   } else {
+                                       break;
+                                   }
+                               }
+                               setPercent('66');
+                           }
+                       }
+
+                   } else {
+
+                       if (!stopGenerateFlag) {
+                           let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
+                           seed = await getSeed(taskID, userStatus);
+                           setPercent('66');
+                           while (status !== "done") {
+                               if (!stopGenerateFlag) {
+                                   setPercent('66');
+                                   apiGetQueueInfo = await apiGetQueue(userStatus);
+                                   if (apiGetQueueInfo) {
+                                       const currentPos = await getPosition(taskID, userStatus);
+
+                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
+                                       const totalPendingTasksCount = totalPendingTasksObj.length;
+                                       await updateQueueInfo(currentPos.pos, '');
+                                       status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
+                                       seed = await getSeed(taskID, userStatus);
+                                       if (stopGenerateFlag) {
+                                           break;
+                                       }
+                                       await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
+                                   } else {
+                                       console.log('mm')
+                                       stopGenerateFlag = true;
+                                       break;
+                                   }
+                               } else {
+                                   break;
+                               }
+                           }
+                       }
+                   }
+                   if (!stopGenerateFlag) {
+                       setPercent('99');
+                       const imgdata = await getImage(taskID, userStatus);
+                       if (imgdata.image) {
+                           let tempseed = imgdata.infotext;
+                           const seedMatch = tempseed.match(/Seed: (\d+)/);
+                           if (seedMatch) {
+                               seed = seedMatch[1];
+                               lastSeed = seed;
+                               console.log('Done seed: ' + seed); // The extracted seed value as a string
+                           }
+                           document.querySelector('.saveface').dataset.id = taskID;
+                           switchGenerateButton(document.querySelector('.generate'), 'end');
+                           await loadImage(imgdata.image, userStatus, aspectRatio);
+
+                           setPercent('100');
+                           document.querySelector('.upscale').classList.remove('hidden');
+
+                       } else {
+                           setPercent('Error');
+                       }
+                   } else {
+                       switchGenerateButton(e.target, 'stopped');
+                       setCookie('lastGeneratedId', '', 1);
+                       stopGenerateFlag = false;
+                   }
                }
-           } else {
-               switchGenerateButton(e.target, 'stopped');
-               setCookie('lastGeneratedId', '', 1);
-               stopGenerateFlag = false;
-           }
+
        }
         });
     });
@@ -382,6 +559,22 @@ const apiTasks = async () => {
                 switchGenerateButton(e1.target, 'end-upscale');
             }
             isUpscaleInProgress = false; // Reset upscale status after completion
+        } else {
+            const modal = document.querySelector('.premium-modal');
+            modal.classList.add('show');
+        }
+    });
+
+    document.querySelector('.saveface').addEventListener('click', async (e1) => {
+        e1.preventDefault();
+        if (premiumBody) { // Check if upscale is not in progress
+            const buttonElement = e1.currentTarget;
+            const faceTaskId = buttonElement.dataset.id;
+            await saveFaceToUser(faceTaskId);
+            await addNewFaceToUI(faceTaskId);
+
+            buttonElement.disabled = true;
+            buttonElement.textContent = "Saved";
         } else {
             const modal = document.querySelector('.premium-modal');
             modal.classList.add('show');

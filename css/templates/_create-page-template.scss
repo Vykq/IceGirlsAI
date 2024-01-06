@@ -75,6 +75,18 @@
             .grid{
               grid-template-columns: 1fr 1fr 1fr;
               gap:.5rem;
+              &.double{
+                grid-template-columns: 1fr 1fr;
+                .user-faces{
+                  position: relative;
+                  .icon{
+                    position: absolute;
+                    top: 50%;
+                    left: 1rem;
+                    transform: translateY(-50%);
+                  }
+                }
+              }
             }
             .top{
               display: flex;
@@ -578,6 +590,16 @@
             align-items: center;
           }
         }
+        .buttons-wrapper-single{
+          display: grid;
+          grid-template-columns: 1fr;
+          gap:1rem;
+          .button-area{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        }
         .upscale-text{
           color:#dedede;
           font-size: .8rem;
@@ -592,9 +614,13 @@
           align-items: center;
           justify-content: center;
           margin:1.5rem 0;
+          gap:1rem;
           a{
             display: inline-block;
             width: max-content;
+            &.hidden{
+              display: none;
+            }
           }
         }
 
@@ -855,6 +881,39 @@
                   img{
                     @include imageCover(50%, 0);
                     transition: .2s all ease-in-out;
+                  }
+                }
+                .delete-face{
+                  position: absolute;
+                  z-index: 999999;
+                  display: flex;
+                  width: 1.5rem;
+                  height: 1.5rem;
+                  top: 0.5rem;
+                  left: 0.5rem;
+                  background: #181818;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 0.25rem;
+                  svg{
+                    width: 1rem;
+                    height: 1rem;
+                    path{
+                      transition: .2s all ease-in-out;
+                    }
+                  }
+                  &:hover{
+                    svg{
+                      .handle, .cover{
+                        transform: rotate(8deg) translateX(5px) translateY(-3px);
+                      }
+                    }
+                  }
+                }
+                .face-image-wrap{
+                  .loader{
+                    position: absolute;
+                    left:50%;
                   }
                 }
                 .premium-notify{

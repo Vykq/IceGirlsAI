@@ -3,7 +3,7 @@ const checkIfPremium = () => {
     const generateBtn = document.querySelector('button.generate');
     const stopBtn = document.querySelector('button.stop-generate');
 
-    if(body.classList.contains('logged-in')){
+    if(body.classList.contains('premium')){
         return true;
     } else {
         return false;

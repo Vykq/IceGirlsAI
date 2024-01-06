@@ -55,6 +55,7 @@ const singleImageTwo = async () => {
         return fetch(apiUrl + "agent-scheduler/v1/task/" + taskID + "/results?zip=false")
             .then(response => response.json())
             .then(async data => {
+                console.log('cia', data);
                 if (data.success !== false) {
                     let APIimage = data.data[0].image;
                     let infoText = data.data[0].infotext;
@@ -63,8 +64,8 @@ const singleImageTwo = async () => {
                     const seed = getSeed(infoText);
                     const spinner = singleImage.querySelector('.spinner');
                     spinner.classList.remove('show');
-                    imageElement.classList.add('hub-single-image');
-                    imageElement.classList.add('show');
+                    //imageElement.classList.add('hub-single-image');
+                    // imageElement.classList.add('show');
                     if (document.querySelector('.reuse-settings')) {
                         document.querySelector('.reuse-settings').disabled = false;
                     }
@@ -74,6 +75,7 @@ const singleImageTwo = async () => {
                     return fetch(apiUrl + "agent-scheduler/v1/task/" + taskID + "/results?zip=false")
                         .then(response => response.json())
                         .then(async data => {
+                            console.log(data);
                             if (data.success !== false) {
                                 let APIimage = data.data[0].image;
                                 let infoText = data.data[0].infotext;

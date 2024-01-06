@@ -43,10 +43,14 @@ get_header();
                 </div>
             </div>
             <div class="button-area-premium">
+                <div class="buttons-wrapper-si">
+                    <button class="saveface main-button hidden">Save Face</button>
+                </div>
                 <?php
                 $user = wp_get_current_user();
                 if ( !in_array( 'premium', (array) $user->roles ) ) { ?>
                     <a href="/premium/" target="_blank" class="main-button">Get premium</a>
+
                 <?php } ?>
             </div>
             <div class="buttons-wrapper">

@@ -1,4 +1,4 @@
-const checkTaskStatus = (Id, isPremium) => {
+const checkTaskStatus = async (Id, isPremium) => {
     const myHeaders = new Headers();
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -19,9 +19,11 @@ const checkTaskStatus = (Id, isPremium) => {
         .then(data => {
             console.log(data);
             if(data.success){
-                return true; //Done
+                console.log('Image created');
+                return data.data.status;
             } else {
-                return false;
+                console.log('Image is:', data.message);
+                return data.message;
             }
 
         })

@@ -4,14 +4,17 @@ const switchGenerateButton = (button, status) =>{
     const stopBtn = document.querySelector('.stop-generate');
     const generateBtn = document.querySelector('.generate');
     const generateBtn2 = document.querySelector('.gen-bottom');
-    const spinner = document.querySelector('.spinner');
-    const loader = spinner.querySelector('.loader');
+    const colWrapper = document.querySelector('.col-wrapper');
+    const spinner = colWrapper.querySelector('.spinner');
+    const loader = colWrapper.querySelector('.loader');
     const notifier = document.querySelector('.notifier');
     const percents = document.querySelector('#steps-all');
     const queue = document.querySelector('#premium-queue');
     const currentStep = document.querySelector('#current-step');
     const sameSeedBtn = document.querySelector('.seed-button');
+    const saveFaceBtn = document.querySelector('.saveface');
     if(status === "start"){
+        stopBtn.disabled = false;
         generateBtn.classList.add('hidden');
         generateBtn2.classList.add('hidden');
         stopBtn.classList.remove('hidden');
@@ -31,7 +34,11 @@ const switchGenerateButton = (button, status) =>{
             upscaleButton.classList.add('hidden');
             document.querySelector('.upscale-text').classList.add('hidden');
         }
+        if(saveFaceBtn){
+            saveFaceBtn.classList.add('hidden');
+        }
     } else if(status === "stopped") {
+        stopBtn.disabled = false;
         generateBtn.classList.remove('hidden');
         generateBtn2.classList.remove('hidden');
         stopBtn.classList.add('hidden');
@@ -41,6 +48,7 @@ const switchGenerateButton = (button, status) =>{
         queue.textContent = "";
         //setCookie('lastGeneratedId', '',1);
     } else if (status === "end") {
+        stopBtn.disabled = false;
         spinner.classList.remove('show');
         notifier.classList.add('hide');
         button.classList.remove('hidden');
@@ -53,6 +61,9 @@ const switchGenerateButton = (button, status) =>{
             upscaleButton.disabled = false;
             upscaleButton.textContent = "Upscale & download!";
             document.querySelector('.upscale-text').classList.remove('hidden');
+        }
+        if(saveFaceBtn){
+            saveFaceBtn.classList.remove('hidden');
         }
 
     } else if (status === "upscale") {
@@ -84,8 +95,32 @@ const switchGenerateButton = (button, status) =>{
         button.classList.remove('hidden');
         stopBtn.classList.add('hidden');
         percents.classList.remove('hide');
+        stopBtn.disabled = false;
+    } else if (status === "already-generating"){
+        generateBtn.classList.add('hidden');
+        generateBtn2.classList.add('hidden');
+        stopBtn.classList.remove('hidden');
+        stopBtn.disabled = true;
+        spinner.classList.add('show');
+        notifier.classList.add('hide');
+        percents.classList.remove('hide');
+        queue.classList.remove('hide');
+        queue.textContent = "Your previous task is not done yet.";
+        currentStep.textContent = "Your previous task is not done yet.";
+        sameSeedBtn.classList.add('hidden');
+        if(document.querySelector('.generated-image')){
+            const img = document.querySelector('.generated-image');
+            img.classList.remove('show');
+        }
+        if(document.querySelector('.upscale')){
+            const upscaleButton = document.querySelector('.upscale');
+            upscaleButton.classList.add('hidden');
+            document.querySelector('.upscale-text').classList.add('hidden');
+        }
+        if(saveFaceBtn){
+            saveFaceBtn.classList.add('hidden');
+        }
     }
-
 }
 
 export default switchGenerateButton;

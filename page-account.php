@@ -194,27 +194,27 @@ if(!is_user_logged_in()){ ?>
 
                                 <div class="radio-buttons">
                                     <div class="single-radio">
-                                        <label for="slow"><input type="checkbox" id="slow" value="Too slow generation" name="reasonInput">Too slow generation
+                                        <label for="slow"><input type="checkbox" id="slow" value="Too slow generation" name="reasonInput[]">Too slow generation
                                         </label>
                                     </div>
                                     <div class="single-radio">
                                         <label for="expensive">
-                                            <input type="checkbox" id="expensive" name="reasonInput" value="Too expensive" >Too expensive
+                                            <input type="checkbox" id="expensive" name="reasonInput[]" value="Too expensive" >Too expensive
                                         </label>
                                     </div>
                                     <div class="single-radio">
                                         <label for="interface">
-                                            <input type="checkbox" id="interface" name="reasonInput" value="I don't like website's interface" >I don't like website's interface
+                                            <input type="checkbox" id="interface" name="reasonInput[]" value="I don't like website's interface" >I don't like website's interface
                                         </label>
                                     </div>
                                     <div class="single-radio">
                                         <label for="low-quality">
-                                            <input type="checkbox" id="low-quality" name="reasonInput" value="Generations are low quality">Generations are low quality
+                                            <input type="checkbox" id="low-quality" name="reasonInput[]" value="Generations are low quality">Generations are low quality
                                         </label>
                                     </div>
                                     <div class="single-radio">
                                         <label for="try">
-                                            <input type="checkbox" id="try" name="reasonInput" value="I just wanted to try this website">I just wanted to try this website
+                                            <input type="checkbox" id="try" name="reasonInput[]" value="I just wanted to try this website">I just wanted to try this website
                                         </label>
                                     </div>
                                 </div>

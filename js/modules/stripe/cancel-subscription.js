@@ -11,7 +11,7 @@ const cancelSubscription = () => {
 
     const textArea = step1.querySelector('textarea');
     const statusInfoBlock = document.querySelector('.error-msg');
-    const reasonInput = document.querySelectorAll('input[name="reasonInput"]');
+    const reasonInput = document.querySelectorAll('input[name="reasonInput[]"]');
     let IsReasonSelected = false;
 
     const updateSubBtn = document.querySelector('.update-sub');

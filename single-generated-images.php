@@ -10,7 +10,7 @@ get_header(); ?>
                     </svg> Go Back
                 </a>
 
-                <div class="image-info-block" id="taskid" data-id="<?php echo get_field('task_id'); ?>">
+                <div class="image-info-block" id="taskid" data-id="<?php echo get_the_title(); ?>">
                     <p class="top">
                         Image Details
                     </p>

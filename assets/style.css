@@ -2626,6 +2626,18 @@ textarea {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 0.5rem;
 }
+.creation .container .grid .left form .form-area .grid.double {
+  grid-template-columns: 1fr 1fr;
+}
+.creation .container .grid .left form .form-area .grid.double .user-faces {
+  position: relative;
+}
+.creation .container .grid .left form .form-area .grid.double .user-faces .icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+}
 .creation .container .grid .left form .form-area .top {
   display: flex;
   flex-direction: column;
@@ -3104,6 +3116,16 @@ textarea {
   flex-direction: column;
   align-items: center;
 }
+.creation .container .grid .right .buttons-wrapper-single {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.creation .container .grid .right .buttons-wrapper-single .button-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .creation .container .grid .right .upscale-text {
   color: #dedede;
   font-size: 0.8rem;
@@ -3118,10 +3140,14 @@ textarea {
   align-items: center;
   justify-content: center;
   margin: 1.5rem 0;
+  gap: 1rem;
 }
 .creation .container .grid .right .button-area-premium a {
   display: inline-block;
   width: max-content;
+}
+.creation .container .grid .right .button-area-premium a.hidden {
+  display: none;
 }
 .creation .container .grid .right .seed-button.hidden {
   display: none;
@@ -3389,6 +3415,33 @@ textarea {
   object-position: 50% 0;
   transform: none;
   transition: 0.2s all ease-in-out;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .delete-face, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .delete-face, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .delete-face, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .delete-face, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .delete-face, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .delete-face, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .delete-face, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .delete-face {
+  position: absolute;
+  z-index: 999999;
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: #181818;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .delete-face svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .delete-face svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .delete-face svg, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .delete-face svg, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .delete-face svg, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .delete-face svg, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .delete-face svg, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .delete-face svg {
+  width: 1rem;
+  height: 1rem;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .delete-face svg path, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .delete-face svg path, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .delete-face svg path, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .delete-face svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .delete-face svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .delete-face svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .delete-face svg path, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .delete-face svg path {
+  transition: 0.2s all ease-in-out;
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .delete-face:hover svg .cover, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .delete-face:hover svg .cover, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .delete-face:hover svg .cover, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .delete-face:hover svg .cover, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .delete-face:hover svg .cover, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .delete-face:hover svg .cover, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .delete-face:hover svg .cover, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .delete-face:hover svg .handle, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .delete-face:hover svg .cover {
+  transform: rotate(8deg) translateX(5px) translateY(-3px);
+}
+.backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .face-image-wrap .loader, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .face-image-wrap .loader, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .face-image-wrap .loader, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .face-image-wrap .loader, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .face-image-wrap .loader, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .face-image-wrap .loader, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .face-image-wrap .loader, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .face-image-wrap .loader {
+  position: absolute;
+  left: 50%;
 }
 .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-checkpoint .wrapper .action-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .checkpoints .single-action .wrapper .action-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-checkpoint .wrapper .action-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .model-input .premium-notify, .backdrop .main-modal .modal-wrapper .content .actions .single-action .wrapper .action-input .premium-notify {
   position: absolute;

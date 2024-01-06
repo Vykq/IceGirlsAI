@@ -1,17 +1,20 @@
 import watermark from "watermarkjs/lib";
 
 const loadImage = async (image, isPremium, aspectRatio) => {
-    const notify = document.querySelector('.notifier');
-    const loader = document.querySelector('.spinner');
-    const imageElement = document.querySelector('.generated-image');
-    const generateButton = document.querySelector('.generate');
-    const imageDiv = document.querySelector('.col-wrapper .image');
+    const colWrapper = document.querySelector('.col-wrapper');
+    const notify = colWrapper.querySelector('.notifier');
+    const loader = colWrapper.querySelector('.spinner');
+    const imageElement = colWrapper.querySelector('.generated-image');
+    const generateButtons = colWrapper.querySelectorAll('.generate');
+    const imageDiv = colWrapper.querySelector('.col-wrapper .image');
     let size;
     let imageToShow;
     if(isPremium){
         imageElement.src = image;
         imageElement.classList.add('show');
-        generateButton.disabled = false;
+        generateButtons.forEach(btn => {
+            btn.disabled = false;
+        })
         loader.classList.remove('show');
     } else {
         const watermarkedImage = await watermark([image, themeUrl.themeUrl + '/assets/images/watermark.jpg'])

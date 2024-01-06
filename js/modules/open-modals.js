@@ -1,3 +1,6 @@
+import loadFaceImages from "./load-face-images";
+import deleteFace from "./delete-face";
+
 const openModals = () => {
 
     const modals = document.querySelectorAll('.modals');
@@ -14,14 +17,20 @@ const openModals = () => {
     const actionTitle = document.querySelector('#current-scene');
     const charsInput = document.querySelectorAll('input[name="char"]');
     const charTitle = document.querySelector('#current-char');
+    const facesInput = document.querySelectorAll('input[name="face"]');
+    const faceTitle = document.querySelector('#current-face');
     let openedModalClass = "";
 
 
     openBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
             e.preventDefault();
             mobileMenu.classList.remove('show');
             openedModalClass = btn.dataset.id;
+            if(openedModalClass === "user-faces"){
+                await loadFaceImages()
+                await deleteFace();
+            }
             modals.forEach(modal => {
                 if(modal.classList.contains(btn.dataset.id)){
                     modal.classList.add('show');
@@ -112,6 +121,30 @@ const openModals = () => {
                     if (modalText.length <= 26) {
                         if(input.nextElementSibling.textContent === "None"){
                             btn.textContent = 'Characters';
+                        } else {
+                            btn.textContent = modalText;
+                        }
+                    } else {
+                        // If the text exceeds 26 characters, truncate it and add "..."
+                        btn.textContent = modalText.substring(0, 11) + '...';
+                    }
+                }
+            })
+            closeModal();
+        })
+    })
+
+
+    facesInput.forEach(input =>{
+        input.addEventListener('change', (e) => {
+            faceTitle.textContent = input.nextElementSibling.textContent;
+            saveNotify.classList.add('show');
+            openBtns.forEach(btn => {
+                if (btn.dataset.id === openedModalClass) {
+                    const modalText = 'Face: ' + input.nextElementSibling.textContent;
+                    if (modalText.length <= 26) {
+                        if(input.nextElementSibling.textContent === "None"){
+                            btn.textContent = 'Saved faces';
                         } else {
                             btn.textContent = modalText;
                         }

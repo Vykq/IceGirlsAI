@@ -25,6 +25,7 @@ import showTooltip from "./modules/show-tooltip";
 import charsFilter from "./modules/chars-filter";
 import setVideoObserver from "./modules/video-observer";
 import cancelSubscription from "./modules/stripe/cancel-subscription";
+import deleteFace from "./modules/delete-face";
 
 window.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('.site-loader').classList.add('hide');
@@ -48,7 +49,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     apiTasks();
     showTabs();
     updateRangeValue();
-    charsFilter('.single-filter', '.single-char')
+    charsFilter('.single-filter', '.single-char');
+
   }
 
   if (document.querySelector('.main-modal-blur')) {

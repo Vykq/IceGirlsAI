@@ -45,33 +45,8 @@ if(document.querySelector('body').classList.contains('premium')){
 
 
 const apiTasks = async () => {
-    // let openedPageCookie = getCookieValue('lastGeneratedId');
-    //     cookieChange(openedPageCookie, premiumBody);
-    //     let isset = false;
-    //     let tempIdas = '';
-    //     if(!isset){
-    //         tempIdas = openedPageCookie;
-    //         isset = true;
-    //     }
-    //
-    //         const intervalId = window.setInterval(() => {
-    //             openedPageCookie = getCookieValue('lastGeneratedId');
-    //             cookieChange(tempIdas, premiumBody, intervalId);
-    //             console.log('ne');
-    //         }, 100);
-    //
-    //
-    //
-    //     console.log(intervalId);
-
-
-
-
-
-
 
     let stopGenerateFlag = false;
-
     const form = document.querySelector('.creation-form');
     let isUpscaleInProgress = false;
     let taskID = "";
@@ -90,6 +65,7 @@ const apiTasks = async () => {
         document.querySelector('.choose-model').textContent = "Style";
         document.querySelector('.choose-scene').textContent = "Action";
         document.querySelector('.choose-char').textContent = "Characters";
+        document.querySelector('.user-faces').textContent = "Saved faces";
         form.reset();
     });
 
@@ -99,7 +75,6 @@ const apiTasks = async () => {
     if (checkIfPremium()) {
         const promptInput = document.querySelector('textarea[name="prompt"]');
         promptInput.addEventListener('blur', async (e) => {
-            console.log('test');
             const wordArray = []; // Create an empty array to store the words
             const promptValue = promptInput.value;
             const words = promptValue.split(/[,\s]+/);
@@ -164,10 +139,6 @@ const apiTasks = async () => {
 
                         let apiGetQueueInfo = await apiGetQueue(premiumBody);
                         let currentTaskID = apiGetQueueInfo.currentTaskId;
-                        let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                        //console.log('total tasks:' + totalPendingTasksObj)
-                        let queueTasks = apiGetQueueInfo.taskObjects;
-
                         if (currentTaskID !== alreadyGenerationID) {
                             setPercent('16');
                             if (premiumBody) {
@@ -179,8 +150,6 @@ const apiTasks = async () => {
                                             setPercent('66');
                                             apiGetQueueInfo = await apiGetQueue(premiumBody);
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
-                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                            const totalPendingTasksCount = totalPendingTasksObj.length;
                                             await updateQueueInfo(currentPos.pos, '');
                                             status = await showQueueInfo(alreadyGenerationID, premiumBody);
                                             if (status)
@@ -203,8 +172,6 @@ const apiTasks = async () => {
                                             setPercent('premium');
                                             apiGetQueueInfo = await apiGetQueue(premiumBody);
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
-                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                            const totalPendingTasksCount = totalPendingTasksObj.length;
                                             updateQueueInfo(currentPos.pos, '');
                                             currentTaskID = apiGetQueueInfo.currentTaskId;
                                             if (taskID === "" || stopGenerateFlag) {
@@ -229,9 +196,6 @@ const apiTasks = async () => {
                                             setPercent('66');
                                             apiGetQueueInfo = await apiGetQueue(premiumBody);
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
-
-                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                            const totalPendingTasksCount = totalPendingTasksObj.length;
                                             await updateQueueInfo(currentPos.pos, '');
                                             if (stopGenerateFlag) {
                                                 break;
@@ -249,7 +213,6 @@ const apiTasks = async () => {
 
                             if (!stopGenerateFlag) {
                                 let status = await showQueueInfo(alreadyGenerationID, premiumBody); // Wait for the result of showQueueInfo
-                                seed = await getSeed(alreadyGenerationID, premiumBody);
                                 setPercent('66');
                                 while (status !== "done") {
                                     if (!stopGenerateFlag) {
@@ -257,18 +220,13 @@ const apiTasks = async () => {
                                         apiGetQueueInfo = await apiGetQueue(premiumBody);
                                         if (apiGetQueueInfo) {
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
-
-                                            let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                            const totalPendingTasksCount = totalPendingTasksObj.length;
                                             await updateQueueInfo(currentPos.pos, '');
                                             status = await showQueueInfo(alreadyGenerationID, premiumBody); // Retry until status is "done"
-                                            seed = await getSeed(alreadyGenerationID, premiumBody);
                                             if (stopGenerateFlag) {
                                                 break;
                                             }
                                             await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                                         } else {
-                                            console.log('mm')
                                             stopGenerateFlag = true;
                                             break;
                                         }
@@ -280,6 +238,7 @@ const apiTasks = async () => {
                         }
                         if (!stopGenerateFlag) {
                             setPercent('99');
+                            seed = await getSeed(alreadyGenerationID, premiumBody);
                             const imgdata = await getImage(alreadyGenerationID, premiumBody);
                             if (imgdata.image) {
                                 let tempseed = imgdata.infotext;
@@ -352,31 +311,20 @@ const apiTasks = async () => {
 
 
                    setPercent('0');
-                   const postID = await addTaskToUser(taskID, taskInfo.raw);
-
-                   const userStatus = await isPremium(taskID);        //userStatus = true -- Premium user Premium taskID pridedam i duombaze
+                   const postID = await addTaskToUser(taskID);
+                   const userStatus = checkIfPremium();
                    let aspectRatio = "9/16"
                    if (document.querySelector('input[name="aspect-ratio"]')) {
                        aspectRatio = document.querySelector('input[name="aspect-ratio"]:checked').value;
                    }
-
                    setPercent('5');
-
-
                    let apiGetQueueInfo = await apiGetQueue(userStatus);
                    let currentTaskID = apiGetQueueInfo.currentTaskId;
-                   let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                   //console.log('total tasks:' + totalPendingTasksObj)
-                   let queueTasks = apiGetQueueInfo.taskObjects;
 
                    if (currentTaskID !== taskID) {
                        setPercent('16');
                        if (userStatus) {
                            if (!stopGenerateFlag) {
-                               //const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
-                               //const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                               //const moveOverID = pendingTaskIds[positionToInsert];
-                               //await moveQueue(taskID, moveOverID, userStatus);
                                setPercent('33');
                                let status = await showQueueInfo(taskID, userStatus);
                                while (status !== "done") {
@@ -384,8 +332,6 @@ const apiTasks = async () => {
                                        setPercent('66');
                                        apiGetQueueInfo = await apiGetQueue(userStatus);
                                        const currentPos = await getPosition(taskID, userStatus);
-                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                       const totalPendingTasksCount = totalPendingTasksObj.length;
                                        await updateQueueInfo(currentPos.pos, '');
                                        status = await showQueueInfo(taskID, userStatus);
                                        if (status)
@@ -402,22 +348,12 @@ const apiTasks = async () => {
                        } else {
                            if (!stopGenerateFlag) {
                                setPercent('33');
-                               const randomizer = Math.floor(Math.random() * 2);
-                               if (randomizer === 1) {
-                                   console.log('s');
-                                   // const pendingTaskIds = totalPendingTasksObj.map(task => task.id);
-                                   // const positionToInsert = await checkTasks(pendingTaskIds, taskID);
-                                   // const moveOverID = pendingTaskIds[positionToInsert];
-                                   // await moveQueue(taskID, moveOverID, userStatus);
-                               }
                                let currentTaskID = apiGetQueueInfo.currentTaskId;
                                while (currentTaskID !== taskID) {
                                    if (!stopGenerateFlag) {
                                        setPercent('premium');
                                        apiGetQueueInfo = await apiGetQueue(userStatus);
                                        const currentPos = await getPosition(taskID, userStatus);
-                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                       const totalPendingTasksCount = totalPendingTasksObj.length;
                                        updateQueueInfo(currentPos.pos, '');
                                        currentTaskID = apiGetQueueInfo.currentTaskId;
                                        if (taskID === "" || stopGenerateFlag) {
@@ -442,9 +378,6 @@ const apiTasks = async () => {
                                        setPercent('66');
                                        apiGetQueueInfo = await apiGetQueue(userStatus);
                                        const currentPos = await getPosition(taskID, userStatus);
-
-                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                       const totalPendingTasksCount = totalPendingTasksObj.length;
                                        await updateQueueInfo(currentPos.pos, '');
                                        if (stopGenerateFlag) {
                                            break;
@@ -462,7 +395,6 @@ const apiTasks = async () => {
 
                        if (!stopGenerateFlag) {
                            let status = await showQueueInfo(taskID, userStatus); // Wait for the result of showQueueInfo
-                           seed = await getSeed(taskID, userStatus);
                            setPercent('66');
                            while (status !== "done") {
                                if (!stopGenerateFlag) {
@@ -470,18 +402,13 @@ const apiTasks = async () => {
                                    apiGetQueueInfo = await apiGetQueue(userStatus);
                                    if (apiGetQueueInfo) {
                                        const currentPos = await getPosition(taskID, userStatus);
-
-                                       let totalPendingTasksObj = apiGetQueueInfo.pendingTasks;
-                                       const totalPendingTasksCount = totalPendingTasksObj.length;
                                        await updateQueueInfo(currentPos.pos, '');
                                        status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
-                                       seed = await getSeed(taskID, userStatus);
                                        if (stopGenerateFlag) {
                                            break;
                                        }
                                        await new Promise(resolve => setTimeout(resolve, 1000)); // Timeout
                                    } else {
-                                       console.log('mm')
                                        stopGenerateFlag = true;
                                        break;
                                    }
@@ -493,6 +420,7 @@ const apiTasks = async () => {
                    }
                    if (!stopGenerateFlag) {
                        setPercent('99');
+                       seed = await getSeed(taskID, userStatus);
                        const imgdata = await getImage(taskID, userStatus);
                        if (imgdata.image) {
                            let tempseed = imgdata.infotext;
@@ -505,7 +433,6 @@ const apiTasks = async () => {
                            document.querySelector('.saveface').dataset.id = taskID;
                            switchGenerateButton(document.querySelector('.generate'), 'end');
                            await loadImage(imgdata.image, userStatus, aspectRatio);
-
                            setPercent('100');
                            document.querySelector('.upscale').classList.remove('hidden');
 

@@ -117,45 +117,6 @@ function addTaskToUser() {
             'post_author' => $user_id
         ));
 
-        if($post_id){
-            $infoText = $_POST['infoText'];
-            $infoText = json_decode($infoText, true);
-            print_r($infoText);
-            $pattern = '/(.+?)\s*<lora:/';
-            preg_match($pattern, $infoText, $matches);
-            $prompt = trim($matches[1]);
-            // Step 2: Extract loras
-            $loras = array();
-            $pattern = '/<lora:(\w+):([^>]+)>/';
-            preg_match_all($pattern, $infoText, $matches, PREG_SET_ORDER);
-            foreach ($matches as $match) {
-                $loras[$match[1]] = $match[2];
-            }
-            // Step 3: Extract info
-            $pattern = '/<lora:.*?<\/lora>/';
-            $infoText = preg_replace($pattern, '', $infoText);
-            $infoText = str_replace("\n", '', $infoText);
-            $pattern = '/(\w+):\s*([^,]+)/';
-            preg_match_all($pattern, $infoText, $matches, PREG_SET_ORDER);
-            $info = array();
-            foreach ($matches as $match) {
-                $info[$match[1]] = trim($match[2]);
-            }
-
-
-            if(in_array( 'premium', (array) $user->roles)){
-                update_field('premium', 1, $post_id);
-            }
-
-            update_field('prompt', $prompt, $post_id);
-            update_field('size', $info['Size'], $post_id);
-            update_field('model', $info['Model'], $post_id);
-            update_field('sampler', $info['Sampler'], $post_id);
-            update_field('details', $loras['more_details'], $post_id);
-            update_field('task_id', $_POST['task-id'], $post_id);
-            update_field('like_count', '0', $post_id);
-        }
-
         $return['postid'] = $post_id;
 
     } else {

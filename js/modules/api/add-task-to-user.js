@@ -1,4 +1,4 @@
-const addTaskToUser = async (taskID, raw) => {
+const addTaskToUser = async (taskID) => {
     const postData = async (url, data) => {
         let res = await fetch(url, {
             method: 'POST',
@@ -12,7 +12,6 @@ const addTaskToUser = async (taskID, raw) => {
     const data = new FormData();
     data.append('action', 'addTaskToUser');
     data.append('taskID', taskID);
-    data.append('infoText', JSON.stringify(raw));
     return postData(themeUrl.ajax_url, data)
         .then((res) => {
             console.log(res.postid)

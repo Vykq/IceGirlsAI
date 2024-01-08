@@ -30,7 +30,7 @@ if($success) {
 
             </div>
         </div>
-
+        <img src='https://ck.juicyads.com/ilikeitjuicy_px.php?c=s4332434v234u444&z=0' border='0'>
         <?php
         get_footer();
 } else {

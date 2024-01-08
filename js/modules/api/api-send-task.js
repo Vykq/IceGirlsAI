@@ -88,7 +88,7 @@ const apiSendTask = async (isPremium, oldSeed) => {
         midPrompt = promptInput.value;
         stepSlider = stepInputElement.value;
     }else {
-        if(document.querySelector('body').classList.contains('logged-in')){
+        if(document.querySelector('body').classList.contains('premium')){
             const promptInput = document.querySelector('textarea[name="prompt"]');
             midPrompt = promptInput.value;
         }

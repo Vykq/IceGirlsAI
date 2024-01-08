@@ -287,6 +287,28 @@ function theme_post_types()
     ));
 
 
+    register_post_type('test', array(
+        'rewrite' => array('test' => __('test', 'slug', 'vyk')),
+        'has_archive' => false,
+        'public' => true,
+        'show_in_rest' => true,
+        'menu_position' => 0,
+        'labels' => array(
+            'name' => 'Tests',
+            'add_new_item' => 'Add test',
+            'edit_item' => 'Edit test',
+            'all_items' => 'All test',
+            'singular_name' => 'Test'
+        ),
+        'supports' => array(
+            'title',
+            'page-attributes',
+            'thumbnail',
+        ),
+        'menu_icon' => 'dashicons-games'
+    ));
+
+
 }
 add_action('init', 'theme_post_types');
 

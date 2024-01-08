@@ -68,7 +68,9 @@ const loadImage = async (image, isPremium, aspectRatio) => {
                 imageDiv.append(watermarkedImg);
                 watermarkedImg.classList.add('show');
                 watermarkedImg.classList.add('generated-image');
-                generateButton.disabled = false;
+                generateButtons.forEach(btn => {
+                    btn.disabled = false;
+                })
                 loader.classList.remove('show');
             });
 

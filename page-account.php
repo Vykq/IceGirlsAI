@@ -69,19 +69,22 @@ if(!is_user_logged_in()){ ?>
                                 if ( in_array( 'premium', (array) $user->roles ) && !$subscriptionID ) {
                                     //Upgrade free trial ?>
                                     <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                                    <stripe-buy-button buy-button-id="buy_btn_1OOOi2I7TOk6FZaw3ZxCaaUp" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
+                                        <stripe-buy-button
+                                        buy-button-id="buy_btn_1OWcw7I7TOk6FZawPoViWsvs" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
                                     </stripe-buy-button>
                                     <?php
                                 } else if (in_array( 'premium', (array) $user->roles ) && $subscriptionID !== "") { ?>
                                             <span class="secondary-button cancel-sub open-modal" data-id="cancel-sub">Cancel Subscription</span>
                                 <?php } else if (in_array( 'expremium', (array) $user->roles )) { ?>
                                     <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                                <stripe-buy-button buy-button-id="buy_btn_1ONJ8NImYhxsDvR3MqLOxhmo" publishable-key="pk_live_51NnN2gImYhxsDvR3wFI2xlea6ucXKoccpD5PDtuTJJ3RrXwFXkpOKecdiGPJiP4hmAtgoM80bIAssQv0qNKq3C3t00kkIWWGz2"
-                                    </stripe-buy-button>
+                                        <stripe-buy-button
+                                            buy-button-id="buy_btn_1OWcw7I7TOk6FZawPoViWsvs" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
+                                        </stripe-buy-button>
                                 <?php } else { ?>
                                     <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                                    <stripe-buy-button buy-button-id="buy_btn_1OOOjPI7TOk6FZawKUjXkuXn" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
-                                    </stripe-buy-button>
+                                        <stripe-buy-button
+                                            buy-button-id="buy_btn_1OWcw7I7TOk6FZawPoViWsvs" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
+                                        </stripe-buy-button>
                                 <?php } ?>
 
                     </div>
@@ -259,8 +262,18 @@ if(!is_user_logged_in()){ ?>
                     <p class="sub">Sorry, please try again later or contact support.</p>
                 </div>
             </div>
-
-
+            <div id="cancel-step4" class="step hidden">
+                <div class="cancel-info-area">
+                    <p class="title">Success</p>
+                    <p class="sub">You successfully changed your plan to $10 per month.</p>
+                </div>
+            </div>
+            <div id="cancel-step5" class="step hidden">
+                <div class="cancel-info-area">
+                    <p class="title">Success</p>
+                    <p class="sub">You successfully canceled your subscription.</p>
+                </div>
+            </div>
         </div>
         </div>
         </div>

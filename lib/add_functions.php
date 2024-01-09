@@ -442,7 +442,7 @@ function updateSubscription(){
     $new_price_id = 'price_1OO6H7I7TOk6FZawbshkObay'; //Zymn
 //    $new_price_id = 'price_1ONElTBLwWwcKcmiIWlpCmZB'; //my
 
-    $url = "https://api.stripe.com/v1/subscription_items/" . $subscriptionItemID . "?price=" . $new_price_id;
+    $url = "https://api.stripe.com/v1/subscription_items/" . $subscriptionItemID . "?price=" . $new_price_id . "&proration_behavior=none";
 
     $headers = array(
         'Authorization: Basic ' . base64_encode($sk_live . ":"),

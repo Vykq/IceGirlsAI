@@ -8,6 +8,8 @@ const cancelSubscription = () => {
     const step1 = document.querySelector('#cancel-step1');
     const step2 = document.querySelector('#cancel-step2');
     const step3 = document.querySelector('#cancel-step3');
+    const successPage = document.querySelector('#cancel-step4');
+    const cancelSuccessPage = document.querySelector('#cancel-step5');
 
     const textArea = step1.querySelector('textarea');
     const statusInfoBlock = document.querySelector('.error-msg');
@@ -151,7 +153,8 @@ const cancelSubscription = () => {
                                 console.log(res);
                                 spinner.classList.add('hidden');
                                 if(res.success) {
-                                    location.reload();
+                                    step2.classList.add('hidden');
+                                    cancelSuccessPage.classList.remove('hidden');
                                 } else {
                                     showError();
                                 }
@@ -207,7 +210,8 @@ const cancelSubscription = () => {
                     console.log(res);
                     spinner.classList.add('hidden');
                     if(res.success) {
-                        location.reload();
+                        step2.classList.add('hidden');
+                        successPage.classList.remove('hidden');
                     } else {
                         showError();
                     }

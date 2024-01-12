@@ -5,6 +5,7 @@
 
 get_header();
 $user = wp_get_current_user();
+viewItemEvent();
 ?>
 
 <div class="premium-page-template">

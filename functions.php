@@ -4,6 +4,7 @@ require_once('lib/web-sockets.php');
 require_once('lib/stable-diffusion-api.php');
 require_once('lib/free-premium.php');
 require_once('lib/blocks.php');
+require_once('lib/ga-events.php');
 function webpack_files() {
     wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), time(), true);
     wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), time());

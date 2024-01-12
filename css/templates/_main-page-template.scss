@@ -152,6 +152,89 @@
   }
 }
 
+.homepage2-hero{
+  height: 88vh;
+  @media (max-width: 800px){
+    height: 75vh;
+  }
+
+  .hero-wrapper{
+    position: relative;
+    height: 100%;
+    .image{
+      width: 100%;
+      height: 100%;
+      img{
+        @include imageCover(50%, 50%);
+        &.mobile{
+          display: none;
+          @media (max-width: 900px){
+            display: block;
+          }
+        }
+        &.desktop{
+          @media (max-width: 900px){
+            display: none;
+          }
+        }
+      }
+    }
+    .content-area{
+      position: absolute;
+      top:50%;
+      left: 50%;
+      transform:translate(-50%, -50%);
+      @media (max-width: 900px){
+        width: 80%;
+      }
+      .content-wrapper{
+        background-color: $black;
+        border-radius: 0.5rem;
+        border:3px solid $go;
+        padding:2rem;
+        .title{
+          font-size: 3rem;
+          line-height: 3.5rem;
+          color:#dedede;
+          text-align: center;
+          @media (max-width: 900px){
+            text-align: center;
+          }
+        }
+        .subtitle{
+          font-size: 1rem;
+          line-height: 1.5rem;
+          color:#dedede;
+          text-align: center;
+        }
+        .button-wrapper{
+          margin:1rem 0 0;
+          display: flex;
+          gap:.5rem;
+          @media (max-width: 880px){
+            flex-direction: column;
+          }
+          a{
+            width: 50%;
+            border-radius: 0.5rem;
+            color:$black;
+            background-color: $go;
+            font-size: 1rem;
+            line-height: 1rem;
+            font-weight: 700;
+            text-align: center;
+            padding:1rem 2rem;
+            display: block;
+            @media (max-width: 880px){
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 
 .featured-block{
   background-color: #1f1f1f;
@@ -268,6 +351,14 @@
         &:last-of-type{
           transform: scale(0.8);
           @media (max-width: 900px){
+            transform: scale(1);
+          }
+        }
+        &.equal-height{
+          &:first-of-type{
+            transform: scale(1);
+          }
+          &:last-of-type{
             transform: scale(1);
           }
         }

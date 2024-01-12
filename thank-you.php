@@ -3,7 +3,10 @@
  * Template name: Thank you Page
  */
 
-$success = setPremiumForStripePurchase($_GET['id']);
+
+if($_GET){
+    $success = setPremiumForStripePurchase($_GET['id']);
+    $success = true;
 if($success) {
 
     $user = wp_get_current_user();
@@ -31,8 +34,13 @@ if($success) {
             </div>
         </div>
         <img src='https://ck.juicyads.com/ilikeitjuicy_px.php?c=s4332434v234u444&z=0' border='0'>
+        <img src="//tsyndicate.com/api/v2/cpa/114375/pixel.gif" />
         <?php
+        thankYouEvent($user_id);
         get_footer();
 } else {
-    wp_die('Error');
+    wp_die('Error with the ID');
+}
+} else {
+    wp_die('Did you came from STRIPE?');
 }

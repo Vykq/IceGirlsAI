@@ -18,7 +18,7 @@ $user_info = get_user_meta($user_id);
             <div class="inside-wrapper">
                 <div class="content-area">
                     <div class="content-wrapper">
-                        <h1 class="title"><?php echo get_field('title'); ?></h1>
+                        <h2 class="title"><?php echo get_field('title'); ?></h2>
                         <p class="subtitle"><?php echo get_field('subtitle'); ?></p>
                         <div class="button-wrapper">
                             <a class="yellow-black" href="<?php echo get_field('button_url'); ?>"><?php echo get_field('button_text'); ?></a>
@@ -42,11 +42,18 @@ $user_info = get_user_meta($user_id);
         <div class="grid-info-block">
             <div class="container">
                 <div class="grid-area">
-                <?php while(have_rows('column')) : the_row(); ?>
-                    <div class="single-column">
+                <?php
+                $rowCount = count(get_field('column'));
+                if($rowCount > 3){
+                    $class = "equal-height";
+                } else {
+                    $class = '';
+                }
+                while(have_rows('column')) : the_row(); ?>
+                    <div class="single-column <?php echo $class; ?>">
                         <div class="column-wrapper">
                             <div class="image-area">
-                                <img src="<?php the_sub_field('image'); ?>" alt="<?php the_sub_field('title'); ?>">
+                                <img loading="lazy" src="<?php the_sub_field('image'); ?>" alt="<?php the_sub_field('title'); ?>">
                             </div>
                             <h2 class="title"><?php the_sub_field('title'); ?></h2>
                             <div class="content">
@@ -117,7 +124,7 @@ $user_info = get_user_meta($user_id);
                 </div>
                 <div class="right <?php echo (get_field('image_on_right')) ? 'first' : ''; ?>">
                     <div class="image-area">
-                        <img src="<?php echo get_field('text_image'); ?>" alt="<?php echo get_field('text_title'); ?>">
+                        <img loading="lazy" src="<?php echo get_field('text_image'); ?>" alt="<?php echo get_field('text_title'); ?>">
                     </div>
                 </div>
             </div>

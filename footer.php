@@ -83,6 +83,22 @@ $user = wp_get_current_user();
                         </ul>
                     </nav>
                 </div>
+                <div class="col">
+                    <p class="col-title">Explore</p>
+                    <nav>
+                        <ul class="footer-menu">
+                            <li>
+                                <a href="/ai-celebrity-nudes/">AI Celebrity nudes</a>
+                            </li>
+                            <li>
+                                <a href="/anime-porn">Anime porn</a>
+                            </li>
+                            <li>
+                                <a href="/ai-nudes/">AI nudes</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>

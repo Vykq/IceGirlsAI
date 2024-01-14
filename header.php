@@ -10,23 +10,22 @@
 
         gtag('config', 'G-DR6P4VB37J');
     </script>
-    <script type="text/javascript" src="https://api.goaffpro.com/loader.js?shop=vu7ivg8d7m"></script>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <?php wp_head(); ?>
+    <script type="text/javascript" src="https://api.goaffpro.com/loader.js?shop=vu7ivg8d7m"></script>
 </head>
 <body <?php body_class(); ?>>
 <div class="site-loader">
     <div class="logo-image">
-        <img src="<?php echo get_template_directory_uri() . '/assets/images/icegirls.png'; ?>" alt="IceGirls.Ai">
+        <img width="140px" height="27px" src="<?php echo get_template_directory_uri() . '/assets/images/icegirls.png'; ?>" alt="IceGirls.Ai">
     </div>
 </div>
 <header>
-    <?php if(!is_front_page()){ ?>
         <h1 style="opacity: 0; visibility: hidden; font-size: 1px;"><?php echo get_the_title(); ?></h1>
-    <?php }
+    <?php
     $user = wp_get_current_user();
     $current_url = site_url();
     ?>

@@ -5,6 +5,12 @@
     color:#dedede;
     border-left-color: $go;
   }
+  .tml-alerts{
+    margin-bottom: 3rem;
+    ul{
+      list-style-type: none;
+    }
+  }
   .tml-indicator-wrap, .tml-indicator_hint-wrap, .acf-user-register-fields, h2{
     display: none;
   }
@@ -25,7 +31,7 @@
       order:4;
       margin-bottom: 1rem;
     }
-    div:nth-child(10){
+    div:nth-child(7){
       order: 5;
       grid-column-end: 1;
       grid-column-start: 1;
@@ -94,6 +100,7 @@
   form{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     .tml-log-wrap{
       order:1;
     }
@@ -172,7 +179,7 @@
   .tml-field-wrap{
     position: relative;
     width: 100%;
-
+    margin-bottom: 1rem;
     label{
       position: absolute;
       top:0;
@@ -184,6 +191,7 @@
       padding:3px 6px;
     }
     input{
+      width: 100%;
       padding:1rem 1rem 1rem;
       background-color: $black;
       color:#dedede;
@@ -216,6 +224,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-top: 3rem;
     li{
       list-style-type: none;
       &.tml-register-link{

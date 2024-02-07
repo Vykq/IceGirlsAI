@@ -5,9 +5,10 @@ require_once('lib/stable-diffusion-api.php');
 require_once('lib/free-premium.php');
 require_once('lib/blocks.php');
 require_once('lib/ga-events.php');
+require_once('lib/tokkens.php');
 function webpack_files() {
-    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '3', true);
-    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '3');
+    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '3.4', true);
+    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '3.4');
     wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), '1', true);
 //    wp_enqueue_script('splide-js', get_theme_file_uri('assets/splide.min.js'), array(), '4.1.3', true);
 //    wp_enqueue_style('splide-styles', get_theme_file_uri('assets/splide.min.css'), array(), '4.1.3');
@@ -21,7 +22,9 @@ function webpack_files() {
             'stripe_key' => get_field('stripe_live_key','api'),
             'url_empty' => "Your URL field is empty, enter an URL.",
             'loading' => "Loading...",
+            'loading_face' => "Uploading your face",
             'success' => "Thank you! We got your submition.",
+            'success_face' => "Your face successfully uploaded",
             'failure' => "Something went wrong... Try again.",
             'info_empty' => "Explain your removal reasons.",
             'msg_empty' => "Enter your message.",
@@ -30,6 +33,10 @@ function webpack_files() {
             'type_value' => 'Select Support type',
             'empty_reason' => 'Select support type',
             'cancel_reason' => 'Select canceling reason',
+            'file_empty' => 'Select your uploading image',
+            'name_empty' => "Enter your title",
+            'invalid_file_format' => 'Image should be .jpg or .jpeg format',
+            'file_too_large' => 'Image is too big (Maximum file size 1 MB)',
         )
     );
 
@@ -290,27 +297,48 @@ function theme_post_types()
         ),
     ));
 
-
-    register_post_type('test', array(
-        'rewrite' => array('test' => __('test', 'slug', 'vyk')),
+    register_post_type('faces', array(
+        'rewrite' => array('faces' => __('Faces', 'slug', 'vyk')),
         'has_archive' => false,
         'public' => true,
         'show_in_rest' => true,
-        'menu_position' => 0,
+        'menu_position' => -3,
         'labels' => array(
-            'name' => 'Tests',
-            'add_new_item' => 'Add test',
-            'edit_item' => 'Edit test',
-            'all_items' => 'All test',
-            'singular_name' => 'Test'
+            'name' => 'Users Faces',
+            'add_new_item' => 'Add Face',
+            'edit_item' => 'Edit Face',
+            'all_items' => 'All Faces',
+            'singular_name' => 'Face'
         ),
         'supports' => array(
             'title',
-            'page-attributes',
             'thumbnail',
+            'author'
         ),
-        'menu_icon' => 'dashicons-games'
+        'menu_icon' => 'dashicons-smiley'
     ));
+
+//
+//    register_post_type('test', array(
+//        'rewrite' => array('test' => __('test', 'slug', 'vyk')),
+//        'has_archive' => false,
+//        'public' => true,
+//        'show_in_rest' => true,
+//        'menu_position' => 0,
+//        'labels' => array(
+//            'name' => 'Tests',
+//            'add_new_item' => 'Add test',
+//            'edit_item' => 'Edit test',
+//            'all_items' => 'All test',
+//            'singular_name' => 'Test'
+//        ),
+//        'supports' => array(
+//            'title',
+//            'page-attributes',
+//            'thumbnail',
+//        ),
+//        'menu_icon' => 'dashicons-games'
+//    ));
 
 
 }
@@ -456,7 +484,13 @@ function setAffiliate(){
 }
 
 function custom_login_redirect() {
-    return home_url('/account');
+    return home_url('/create');
 }
 
 add_filter('rtcamp.google_default_redirect', 'custom_login_redirect');
+
+function my_custom_redirect() {
+    return home_url('/create');
+}
+add_filter( 'tml_redirect_url', 'my_custom_redirect' );
+?>

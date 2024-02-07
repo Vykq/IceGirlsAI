@@ -70,7 +70,10 @@ const apiSendTask = async (isPremium, oldSeed) => {
 
     const faces = document.querySelectorAll('input[name="face"]');
     let face = {
+        set: false,
+        uploaded: false,
         taskid: '',
+        image: '',
     }
 
     let stepSlider = '';
@@ -130,7 +133,22 @@ const apiSendTask = async (isPremium, oldSeed) => {
 
     faces.forEach(input =>{
         if(input.checked){
-            face.taskid = input.id;
+            if(input.id !== "none"){
+                if(!input.dataset.uploaded) {
+                    face.set = true;
+                    face.taskid = input.id;
+                    face.uploaded = false;
+                } else {
+                    face.set = true;
+                    face.image = input.parentElement.querySelector('img').src;
+                    face.uploaded = true;
+                }
+            } else {
+                face.set = false;
+                face.taskid = '';
+                face.uploaded = false;
+            }
+
         }
     });
 
@@ -188,13 +206,21 @@ const apiSendTask = async (isPremium, oldSeed) => {
             "string"
         ],
         "steps": +stepSlider,
-        // "steps": 20,
+        // "steps": 5,
         "seed": oldSeed,
     };
 
-    if (face.taskid !== "" && face.taskid !== "none") {
+    console.log(face);
+
+    if (face.set === true && face.taskid !== "none" || face.image !== "") {
         try {
-            const faceImage = await getOnlyImage(face.taskid);
+            let faceImage = '';
+            if(face.uploaded === false){
+                faceImage = await getOnlyImage(face.taskid);
+            } else {
+                faceImage = face.image;
+            }
+
             let reactorArgs = [
                 faceImage, //Image source
                 true, //enable reactor?

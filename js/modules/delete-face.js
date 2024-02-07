@@ -17,23 +17,22 @@ const deleteFace = async () => {
     if(deleteFaces) {
         deleteFaces.forEach(btn => {
             btn.addEventListener('click', async () => {
-                const data = new FormData();
-                data.append('action', 'deleteFaceFromUser');
-                data.append('faceID', btn.dataset.id);
-                return postData(themeUrl.ajax_url, data)
-                    .then((res) => {
-                        const blocks = document.querySelectorAll('.single-face')
-                        blocks.forEach(block =>{
-                            if(block.dataset.id === btn.dataset.id){
-                                block.remove();
-                            }
+                    const data = new FormData();
+                    data.append('action', 'deleteFaceFromUser');
+                    data.append('faceID', btn.dataset.id);
+                    return postData(themeUrl.ajax_url, data)
+                        .then((res) => {
+                            const blocks = document.querySelectorAll('.single-face')
+                            blocks.forEach(block => {
+                                if (block.dataset.id === btn.dataset.id) {
+                                    block.remove();
+                                }
+                            })
+                            console.log(res);
                         })
-                        console.log(res);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-
+                        .catch((error) => {
+                            console.log(error);
+                        });
             })
         })
     }

@@ -26,6 +26,7 @@ import charsFilter from "./modules/chars-filter";
 import setVideoObserver from "./modules/video-observer";
 import cancelSubscription from "./modules/stripe/cancel-subscription";
 import deleteFace from "./modules/delete-face";
+import faceUploadForm from "./modules/face-upload-form";
 
 window.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('.site-loader').classList.add('hide');
@@ -44,6 +45,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     setVideoObserver();
   }
 
+  if(document.querySelector('.upload-face')){
+    await faceUploadForm();
+  }
 
   if(document.querySelector('.create-page-template')){
     apiTasks();

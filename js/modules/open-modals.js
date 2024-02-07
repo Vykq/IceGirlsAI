@@ -1,6 +1,6 @@
-import loadFaceImages from "./load-face-images";
+// import loadFaceImages from "./load-face-images";
 import deleteFace from "./delete-face";
-
+import setActionsAndCharsByCheckpoint from "./set-actions-and-chars-by-checkpoint";
 const openModals = () => {
 
     const modals = document.querySelectorAll('.modals');
@@ -28,7 +28,7 @@ const openModals = () => {
             mobileMenu.classList.remove('show');
             openedModalClass = btn.dataset.id;
             if(openedModalClass === "user-faces"){
-                await loadFaceImages()
+                // await loadFaceImages()
                 await deleteFace();
             }
             modals.forEach(modal => {
@@ -74,6 +74,7 @@ const openModals = () => {
         input.addEventListener('change', (e) => {
             modelTitle.textContent = input.nextElementSibling.textContent;
             saveNotify.classList.add('show');
+            setActionsAndCharsByCheckpoint(e.target);
             openBtns.forEach(btn => {
                 if (btn.dataset.id === openedModalClass) {
                     const modalText = 'Style: ' + input.nextElementSibling.textContent;

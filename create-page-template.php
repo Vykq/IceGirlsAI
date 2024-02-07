@@ -10,7 +10,6 @@ get_header();
     <div class="container">
     <div class="grid">
         <div class="left">
-            <?php // FORM, to edit form template-parts/create-form.php ?>
             <?php echo get_template_part('template-parts/create-form'); ?>
         </div>
         <div class="right">

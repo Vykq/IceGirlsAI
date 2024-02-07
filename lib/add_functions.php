@@ -612,34 +612,217 @@ function checkLastTask(){
 
 
 
+//Not using anymore
+//add_action('wp_ajax_nopriv_saveFaceToUserTask', 'saveFaceToUserTask');
+//add_action('wp_ajax_saveFaceToUserTask', 'saveFaceToUserTask');
+//
+//function saveFaceToUserTask(){
+//    $response = array();
+//    if($_POST['taskID']){
+//        $user = wp_get_current_user();
+//        $user_id = $user->ID;
+//        $facesArray = get_field('faces', 'user_' . $user_id);
+//        $newRowData = array(
+//            'face' => $_POST['taskID']
+//        );
+//        add_row('faces', $newRowData, 'user_' . $user_id);
+//        $response['status'] = true;
+//        $numRows = count($facesArray);
+//
+//        // If there are more than 10 rows, delete the first row
+//        if ($numRows > 10) {
+//            delete_row('faces', 1, 'user_' . $user_id);
+//        }
+//    } else {
+//        $response['status'] = false;
+//    }
+//    wp_send_json($response);
+//    wp_die();
+//}
 
-add_action('wp_ajax_nopriv_saveFaceToUserTask', 'saveFaceToUserTask');
-add_action('wp_ajax_saveFaceToUserTask', 'saveFaceToUserTask');
 
-function saveFaceToUserTask(){
+add_action('wp_ajax_nopriv_getImageBase64ByPostID', 'getImageBase64ByPostID');
+add_action('wp_ajax_getImageBase64ByPostID', 'getImageBase64ByPostID');
+
+function getImageBase64ByPostID() {
     $response = array();
-    if($_POST['taskID']){
-        $user = wp_get_current_user();
-        $user_id = $user->ID;
-        $facesArray = get_field('faces', 'user_' . $user_id);
-        $newRowData = array(
-            'face' => $_POST['taskID']
-        );
-        add_row('faces', $newRowData, 'user_' . $user_id);
-        $response['status'] = true;
-        $numRows = count($facesArray);
 
-        // If there are more than 10 rows, delete the first row
-        if ($numRows > 10) {
-            delete_row('faces', 1, 'user_' . $user_id);
-        }
-    } else {
-        $response['status'] = false;
+    if($_POST['id']){
+        $response['image'] = get_the_post_thumbnail_url($_POST['id']);
     }
+
     wp_send_json($response);
     wp_die();
 }
 
+
+
+add_action('wp_ajax_nopriv_uploadFaceImageToUser', 'uploadFaceImageToUser');
+add_action('wp_ajax_uploadFaceImageToUser', 'uploadFaceImageToUser');
+
+function uploadFaceImageToUser() {
+    $response = array();
+    $title = $_POST['face-title'];
+    $image = $_FILES['uploading-face'];
+
+
+    $userID = get_current_user_id();
+    $userPostsCount = count_user_posts($userID, 'faces');
+
+    if ($userPostsCount >= 10) {
+        // If user has more than 10 posts, delete the oldest post
+        $args = array(
+            'author'         => $userID,
+            'post_type'      => 'faces', // Change this to your custom post type if needed
+            'posts_per_page' => 1,
+            'orderby'        => 'date',
+            'order'          => 'ASC',
+        );
+
+        $user_posts = get_posts($args);
+
+        if ($user_posts) {
+            foreach ($user_posts as $post) {
+                wp_delete_post($post->ID, true);
+            }
+        }
+    }
+
+    $post_data = array(
+        'post_title'   => $title,
+        'post_status'  => 'publish',
+        'post_type'    => 'faces', // Change this to your custom post type if needed
+        'post_author'  => $userID,
+    );
+
+
+    $post_id = wp_insert_post($post_data);
+
+    $upload = wp_upload_bits($image['name'], null, file_get_contents($image['tmp_name']));
+
+    if (!$upload['error']) {
+        $file_path = $upload['file'];
+
+        // Set the post thumbnail
+        $attachment_id = wp_insert_attachment(array(
+            'post_mime_type' => $upload['type'],
+            'post_title'     => $title,
+            'post_content'   => '',
+            'post_status'    => 'inherit',
+        ), $file_path, $post_id);
+
+        if (!is_wp_error($attachment_id)) {
+            require_once(ABSPATH . 'wp-admin/includes/image.php');
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+            // Set the post thumbnail
+            set_post_thumbnail($post_id, $attachment_id);
+
+            $base64_image = base64_encode(file_get_contents($image['tmp_name']));
+
+            // Update the ACF field with the base64 data
+            update_field('base64_image', $base64_image, $post_id);
+        }
+    }
+    $response['postid'] = $post_id;
+    wp_send_json($response);
+    wp_die();
+}
+
+
+
+add_action('wp_ajax_nopriv_saveFaceImageToUser', 'saveFaceImageToUser');
+add_action('wp_ajax_saveFaceImageToUser', 'saveFaceImageToUser');
+
+function saveFaceImageToUser(){
+    $response = array();
+    $userID = get_current_user_id();
+    $userPostsCount = count_user_posts($userID, 'faces');
+    $response['userPosts'] = $userPostsCount;
+
+    if(isset($_POST['image']) && !empty($_POST['image'])) {
+        $image_data = $_POST['image'];
+
+        if ($userPostsCount >= 10) {
+            // If user has more than 10 posts, delete the oldest post
+            $args = array(
+                'author'         => $userID,
+                'post_type'      => 'faces', // Change this to your custom post type if needed
+                'posts_per_page' => 1,
+                'orderby'        => 'date',
+                'order'          => 'ASC',
+            );
+
+            $user_posts = get_posts($args);
+
+            if ($user_posts) {
+                foreach ($user_posts as $post) {
+                    wp_delete_post($post->ID, true);
+                }
+            }
+        }
+
+        // Insert new post
+        $post_data = array(
+            'post_title'   => 'Generated face',
+            'post_status'  => 'publish',
+            'post_type'    => 'faces', // Change this to your custom post type if needed
+            'post_author'  => $userID,
+        );
+
+        $post_id = wp_insert_post($post_data);
+
+        if ($post_id) {
+            // Decode base64 image data
+            $image_data = str_replace('data:image/png;base64,', '', $image_data);
+            $image_data = str_replace(' ', '+', $image_data);
+            $decoded_image = base64_decode($image_data);
+
+            // Generate a unique filename
+            $upload_dir = wp_upload_dir();
+            $upload_path = $upload_dir['path'];
+            $upload_file = trailingslashit($upload_path) . md5(uniqid()) . '.png';
+
+            // Save the image to the uploads directory
+            $file_saved = file_put_contents($upload_file, $decoded_image);
+
+            if ($file_saved !== false) {
+                // Attach the image to the post
+                $attachment_id = wp_insert_attachment(array(
+                    'guid'           => $upload_file,
+                    'post_mime_type' => 'image/png',
+                    'post_title'     => 'Generated face image',
+                    'post_content'   => '',
+                    'post_status'    => 'inherit'
+                ), $upload_file);
+
+                if (!is_wp_error($attachment_id)) {
+                    set_post_thumbnail($post_id, $attachment_id);
+                    update_field('base64_image', $image_data, $post_id);
+                    $response['status'] = true;
+                    $response['message'] = 'Face saved successfully.';
+                    $response['postid'] = $post_id;
+                } else {
+                    $response['status'] = false;
+                    $response['message'] = 'Error attaching image to post.';
+                }
+            } else {
+                $response['status'] = false;
+                $response['message'] = 'Error saving image to server.';
+            }
+        } else {
+            $response['status'] = false;
+            $response['message'] = 'Error creating post.';
+        }
+    } else {
+        $response['status'] = false;
+        $response['message'] = 'Image not provided.';
+    }
+
+    wp_send_json($response);
+    wp_die();
+}
 
 
 add_action('wp_ajax_nopriv_loadNewFaces', 'loadNewFaces');
@@ -680,20 +863,11 @@ add_action('wp_ajax_deleteFaceFromUser', 'deleteFaceFromUser');
 
 function deleteFaceFromUser(){
     $response = array();
-    $user = wp_get_current_user();
-    $user_id = $user->ID;
-    $deleteID = $_POST['faceID'];
-    if(have_rows('faces','user_' . $user_id)):
-        while(have_rows('faces', 'user_' . $user_id)) : the_row();
-            if(get_sub_field('face') == $deleteID){
-                $row_key = get_row_index(); // Get the row index/key
-                delete_row('faces', $row_key, 'user_' . $user_id);
-                $response['success'] = true;
-            } else {
-                $response['success'] = false;
-            }
-        endwhile;
-    endif;
+    if($_POST['faceID']){
+        $id = $_POST['faceID'];
+        wp_delete_post($id, true);
+        $response['message'] = 'Face deleted';
+    }
     wp_send_json($response);
     wp_die();
 }

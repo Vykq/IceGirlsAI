@@ -17,7 +17,7 @@ $user_info = get_user_meta($user_id);
                 </div>
                 <div class="content-area">
                     <div class="content-wrapper">
-                        <h2 class="title"><?php echo get_field('title'); ?></h2>
+                        <h1 class="title"><?php echo get_field('title'); ?></h1>
                         <p class="subtitle"><?php echo get_field('subtitle'); ?></p>
                         <div class="button-wrapper">
                             <a href="<?php echo get_field('button_url'); ?>"><?php echo get_field('button_text'); ?></a>

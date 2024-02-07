@@ -204,7 +204,49 @@ $user = wp_get_current_user();
         </div>
     </div>
 </div>
+
+
+         <div class="backdrop models-modal-wrapper modals premium-modal credits-modal">
+             <div class="main-modal">
+                 <div class="modal-wrapper">
+                     <div class="top">
+                         <p class="title" id="current-scene">Information</p>
+                         <div class="close-modal">
+                             <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffa702"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                         </div>
+                     </div>
+                     <div class="content">
+                         <div class="wrapper">
+                             <div class="premium-status">
+                                 <p class="offer">You are out of <span>credits</span>.</p>
+                                 <p class="offer">Subscribe to <a href="/premium/"><span>Premium</span></a> to get infinity credits.</p>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
 <?php endif; ?>
+<!-- Server Down Modal -->
+<div class="backdrop models-modal-wrapper modals premium-modal server-status">
+    <div class="main-modal">
+        <div class="modal-wrapper">
+            <div class="top">
+                <p class="title" id="current-scene">Information</p>
+                <div class="close-modal">
+                    <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffa702"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                </div>
+            </div>
+            <div class="content">
+                <div class="wrapper">
+                    <div class="premium-upscale">
+                        <p class="offer">Sorry, the server now is <span>offline</span>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- AGE POPUP -->
 <div class="backdrop age-verification">

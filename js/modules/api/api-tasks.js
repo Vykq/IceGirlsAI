@@ -113,21 +113,21 @@ const apiTasks = async () => {
 
     document.querySelectorAll('.generate').forEach(btn =>{
        btn.addEventListener('click', async (e) => {
+           e.preventDefault();
            document.querySelector('.saveface').disabled = false;
            document.querySelector('.saveface').textContent = "Save face";
-
-
-
+           switchGenerateButton(e.target, 'start');
+           setPercent('0');
            if(!userLoggedIn) {
+               switchGenerateButton(e.target, 'stopped');
                document.querySelector('.login-modal').classList.add('show');
                document.querySelector('html').classList.add('modal-is-open');
            } else {
                const userCredits = await creditsLeft();
-
                const lastUserTaskStatus = await lastUserTask(premiumBody);
                console.log(lastUserTaskStatus);
                if(lastUserTaskStatus.status === "Task is pending"){
-                   switchGenerateButton(e.target, 'start');
+                   //switchGenerateButton(e.target, 'start');
                     const alreadyGenerationID = lastUserTaskStatus.taskID;
                     if(lastUserTaskStatus.taskID !== "") {
                         console.log(alreadyGenerationID);
@@ -275,12 +275,12 @@ const apiTasks = async () => {
 
                    //END ALREADY GENERATION
                } else {
-                   e.preventDefault();
-                   switchGenerateButton(e.target, 'start');
+
+
                    if(serverStatus) {
                    console.log(userCredits);
                    if (userCredits >= 1) {
-
+                       setPercent('1');
                        await useCredits();
                        stopGenerateFlag = false;
                        if (generateAlreadyClicked) {
@@ -324,7 +324,7 @@ const apiTasks = async () => {
                        }
 
 
-                       setPercent('0');
+
                        const postID = await addTaskToUser(taskID);
                        const userStatus = checkIfPremium();
                        let aspectRatio = "9/16"

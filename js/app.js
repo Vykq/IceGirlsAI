@@ -27,6 +27,7 @@ import setVideoObserver from "./modules/video-observer";
 import cancelSubscription from "./modules/stripe/cancel-subscription";
 import deleteFace from "./modules/delete-face";
 import faceUploadForm from "./modules/face-upload-form";
+import creditsTimer from "./modules/credits-timer";
 
 window.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('.site-loader').classList.add('hide');
@@ -72,6 +73,10 @@ window.addEventListener('DOMContentLoaded', async () => {
       }, parseFloat(modal_timer*1000));
     }
       //timer('.timer', deadline);
+  }
+
+  if(document.querySelector('.credits-modal')){
+    creditsTimer('.credit-timer', creditsFulfillTime);
   }
 
 

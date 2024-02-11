@@ -351,6 +351,8 @@ function cancelSubscription(){
             $response['success'] = true;
             $response['message'] = 'Subscription canceled successfully';
             update_field('subscription_id', '', 'user_' . $user_id);
+            update_field('tokkens_set', 1, 'user_' . $user_id);
+            update_field('tokens', 10, 'user_' . $user_id);
             $user->set_role('subscriber');
         } else {
             $response['success'] = false;
@@ -402,6 +404,8 @@ function cancelSubscription2(){
             $response['success'] = true;
             $response['message'] = 'Subscription canceled successfully';
             update_field('subscription_id', '', 'user_' . $user_id);
+            update_field('tokkens_set', 1, 'user_' . $user_id);
+            update_field('tokens', 10, 'user_' . $user_id);
             $user->set_role('subscriber');
         } else {
             $response['success'] = false;

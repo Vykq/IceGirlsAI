@@ -30,6 +30,7 @@
     <?php
     $user = wp_get_current_user();
     $current_url = site_url();
+
     ?>
     <?php
     if (in_array( 'expremium', (array) $user->roles ) && !get_field('subscription_id', 'user_' . $user->ID)) { ?>
@@ -89,7 +90,7 @@
                     </div>
                 </div>
                 <?php if(is_user_logged_in()) { ?>
-                    <div class="tokens" title="Your tokens will be recharged every week">
+                    <div class="tokens" title="Your tokens will be recharged every day">
                         <div class="image-area">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff950d"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.15" d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="#ff950d"></path> <path d="M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#ff950d" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                         </div>

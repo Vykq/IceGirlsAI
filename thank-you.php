@@ -11,6 +11,8 @@ if($success) {
 
     $user = wp_get_current_user();
     $user_id = $user->id;
+    update_field('tokkens_set', 1, 'user_' . $user_id);
+    update_field('tokens', 9999, 'user_' . $user_id);
     ?>
     <script type="text/javascript">
         var goaffproOrder = {

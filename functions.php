@@ -7,8 +7,8 @@ require_once('lib/blocks.php');
 require_once('lib/ga-events.php');
 require_once('lib/tokkens.php');
 function webpack_files() {
-    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '3.4', true);
-    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '3.4');
+    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '3.43', true);
+    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '3.43');
     wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), '1', true);
 //    wp_enqueue_script('splide-js', get_theme_file_uri('assets/splide.min.js'), array(), '4.1.3', true);
 //    wp_enqueue_style('splide-styles', get_theme_file_uri('assets/splide.min.css'), array(), '4.1.3');
@@ -493,4 +493,22 @@ function my_custom_redirect() {
     return home_url('/create');
 }
 add_filter( 'tml_redirect_url', 'my_custom_redirect' );
+
+
+
+//function premiumTokens(){
+//    $premium_users = get_users( array(
+//        'role'    => 'premium',
+//        'fields'  => 'ID',
+//    ) );
+//    foreach ( $premium_users as $user_id ) {
+//
+//        update_field('tokkens_set', 1, 'user_' . $user_id);
+//        update_field('tokens', 9999, 'user_' . $user_id);
+//    }
+//
+//}
+
+
+
 ?>

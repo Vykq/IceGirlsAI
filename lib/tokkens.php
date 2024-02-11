@@ -92,16 +92,16 @@ function tokkens_back(){
 //
 //
 //
-//update tokens every week
-if (!wp_next_scheduled('weekly_tokens_update')) {
-    wp_schedule_event(time(), 'weekly', 'weekly_tokens_update');
+//update tokens every day
+if (!wp_next_scheduled('daily_tokens_update')) {
+    wp_schedule_event(time(), 'daily', 'daily_tokens_update');
 }
 
 // Hook the function to the scheduled event
-add_action('weekly_tokens_update', 'update_tokens_weekly');
+add_action('daily_tokens_update', 'update_tokens_daily');
 
 // Define the function to update tokens
-function update_tokens_weekly() {
+function update_tokens_daily() {
     // Get all user IDs excluding users with the 'premium' role
     $user_ids = get_users(array(
         'fields' => 'ID',

@@ -210,16 +210,63 @@ $user = wp_get_current_user();
              <div class="main-modal">
                  <div class="modal-wrapper">
                      <div class="top">
-                         <p class="title" id="current-scene">Information</p>
-                         <div class="close-modal">
+                         <p class="title">Out of credits</p>
+                         <div class="close-modal close-modal-button">
                              <svg viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffa702"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 21.32L21 3.32001" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M3 3.32001L21 21.32" stroke="#ffa702" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                          </div>
                      </div>
                      <div class="content">
-                         <div class="wrapper">
-                             <div class="premium-status">
-                                 <p class="offer">You are out of <span>credits</span>.</p>
-                                 <p class="offer">Subscribe to <a href="/premium/"><span>Premium</span></a> to get infinity credits.</p>
+                         <div class="modal-grid wrapper two-col">
+                             <div class="left">
+                                 <div class="img-area">
+                                     <img src="https://icegirls.ai/wp-content/uploads/2024/02/out-of-credits-min.webp" alt="icegirls.ai">
+                                 </div>
+                             </div>
+                             <div class="right">
+                                 <div class="inner-col-wrapper modal-right">
+                                     <p class="credits-title">You are ouf of <span>credits</span></p>
+                                     <?php
+                                     $next_run_timestamp = wp_next_scheduled('daily_tokens_update');
+                                     $next_run_date_time = date('Y-m-d H:i:s', $next_run_timestamp);
+                                     ?>
+                                     <script type="text/javascript">
+                                         const creditsFulfillTime = "<?php echo $next_run_date_time; ?>"
+                                     </script>
+                                     <div class="timer-area">
+                                         <p class="timer-title">Your credits will be restored in</p>
+                                         <p class="credit-timer">
+                                             <span id="hour">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+                                         </p>
+                                     </div>
+
+                                     <div class="premium-features">
+                                         <p class="title">Become a <span>premium</span> and get:</p>
+                                         <div class="grid">
+                                             <div class="left-list">
+                                                 <ul class="list">
+                                                     <li><p><b>Infinite <span>credits</span></b></p></li>
+                                                     <li><p>Custom prompt</p></li>
+                                                     <li><p>All actions</p></li>
+                                                     <li><p>All styles</p></li>
+                                                     <li><p>All characters</p></li>
+                                                 </ul>
+                                             </div>
+                                             <div class="right-list">
+                                                 <ul class="list">
+                                                     <li><p>Fast generation</p></li>
+                                                     <li><p>Face Swap</p></li>
+                                                     <li><p>Aspect ratio</p></li>
+                                                     <li><p>4k Upscaling</p></li>
+                                                 </ul>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="button-area">
+                                         <a href="https://buy.stripe.com/9AQ3ghgZA2AF036bIL" class="main-button">Upgrade only $15/month</a>
+                                     </div>
+
+                                 </div>
                              </div>
                          </div>
                      </div>
@@ -229,7 +276,7 @@ $user = wp_get_current_user();
 <?php endif; ?>
 <!-- Server Down Modal -->
 <div class="backdrop models-modal-wrapper modals premium-modal server-status">
-    <div class="main-modal">
+    <div class="main-modal server-status">
         <div class="modal-wrapper">
             <div class="top">
                 <p class="title" id="current-scene">Information</p>

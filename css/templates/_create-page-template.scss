@@ -1360,21 +1360,20 @@
   &.credits-modal{
     .main-modal{
       width: unset;
-      height:95%;
       @media (max-width: 800px){
         aspect-ratio: unset!important;
-        height:unset;
       }
     }
     .two-col{
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: max-content 1fr;
       height: 100%;
       gap:0.5rem;
       @media (max-width: 800px){
         grid-template-columns: 1fr;
       }
       .left{
+        max-width: 15rem;
         overflow: hidden!important;
         @media (max-width: 800px){
           display: none;

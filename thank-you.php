@@ -13,6 +13,7 @@ if($success) {
     $user_id = $user->id;
     update_field('tokkens_set', 1, 'user_' . $user_id);
     update_field('tokens', 9999, 'user_' . $user_id);
+    add_premium_to_klaviyo_list($user_id);
     ?>
     <script type="text/javascript">
         var goaffproOrder = {

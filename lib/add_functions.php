@@ -354,6 +354,7 @@ function cancelSubscription(){
             update_field('tokkens_set', 1, 'user_' . $user_id);
             update_field('tokens', 10, 'user_' . $user_id);
             $user->set_role('subscriber');
+            add_expremium_to_klaviyo_list($user_id);
         } else {
             $response['success'] = false;
             $response['message'] = 'Error canceling subscription. HTTP Code: ' . $httpCode;
@@ -590,6 +591,78 @@ function update_klaviyo_list($user_id) {
     }
 }
 
+
+
+function add_premium_to_klaviyo_list($user_id) {
+    $user_info = get_userdata($user_id);
+    $user_role = $user_info->roles;
+
+    if (in_array('premium', $user_role)) {
+        $email = $user_info->user_email;
+        $first_name = $user_info->first_name;
+        $last_name = $user_info->last_name;
+
+        // Replace with your Klaviyo Private API Key
+        $klaviyo_api_key = 'pk_c0fdc261faf90a5ca3f8c9885727df5711';
+
+        $data = array(
+            'api_key' => $klaviyo_api_key,
+            'profiles' => array(
+                array(
+                    'email' => $email,
+                    '$first_name' => $first_name,
+                    '$last_name' => $last_name
+                )
+            )
+        );
+
+        $response = wp_remote_post('https://a.klaviyo.com/api/v2/list/UNKSPf/members', array(
+            'body' => json_encode($data),
+            'headers' => array('Content-Type' => 'application/json')
+        ));
+
+        // Handle response or error
+        if (is_wp_error($response)) {
+            // Error handling
+        } else {
+            // Success handling
+        }
+    }
+}
+
+function add_expremium_to_klaviyo_list($user_id) {
+    $user_info = get_userdata($user_id);
+        $email = $user_info->user_email;
+        $first_name = $user_info->first_name;
+        $last_name = $user_info->last_name;
+
+        // Replace with your Klaviyo Private API Key
+        $klaviyo_api_key = 'pk_c0fdc261faf90a5ca3f8c9885727df5711';
+
+        $data = array(
+            'api_key' => $klaviyo_api_key,
+            'profiles' => array(
+                array(
+                    'email' => $email,
+                    '$first_name' => $first_name,
+                    '$last_name' => $last_name
+                )
+            )
+        );
+
+        $response = wp_remote_post('https://a.klaviyo.com/api/v2/list/TFVw2Z/members', array(
+            'body' => json_encode($data),
+            'headers' => array('Content-Type' => 'application/json')
+        ));
+
+        // Handle response or error
+        if (is_wp_error($response)) {
+            // Error handling
+        } else {
+            // Success handling
+        }
+
+}
 
 
 add_action('wp_ajax_nopriv_checkLastTask', 'checkLastTask');

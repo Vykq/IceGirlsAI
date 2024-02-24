@@ -24,13 +24,15 @@
     </div>
 </div>
 <header>
-        <?php if(!is_front_page() && !is_page('ai-celebrity-nudes') && !is_page('anime-porn') && !is_page('ai-nudes')) { ?>
-            <h1 style="opacity: 0; visibility: hidden; font-size: 1px;"><?php echo get_the_title(); ?></h1>
-        <?php } ?>
+<!--        --><?php //if(!is_front_page() && !is_page('ai-celebrity-nudes') && !is_page('anime-porn') && !is_page('ai-nudes')) { ?>
+<!--            <h1 style="opacity: 0; visibility: hidden; font-size: 1px;">--><?php //echo get_the_title(); ?><!--</h1>-->
+<!--        --><?php //} ?>
     <?php
+    if(is_page('create') || is_page('hub') || is_page('blog') || is_page('premium')){ ?>
+        <h1 style="opacity: 0; visibility: hidden; font-size: 1px;"><?php echo get_the_title(); ?></h1>
+    <?php }
     $user = wp_get_current_user();
     $current_url = site_url();
-
     ?>
     <?php
     if (in_array( 'expremium', (array) $user->roles ) && !get_field('subscription_id', 'user_' . $user->ID)) { ?>

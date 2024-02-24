@@ -131,6 +131,35 @@ $user_info = get_user_meta($user_id);
         </div>
     </div>
 
+    <div class="premium-text-image">
+        <div class="container">
+            <div class="wrapper">
+                <div class="left">
+                    <?php if (get_field('text_title2')) : ?>
+                        <h2 class="title"><?php echo get_field('text_title2'); ?></h2>
+                    <?php endif; ?>
+                    <?php if (get_field('text_content2')) : ?>
+                        <div class="content">
+                            <?php echo get_field('text_content2'); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(get_field('text_button_text2') && get_field('text_button_url2')): ?>
+                        <div class="button-area">
+                            <a class="main-button" href="<?php the_field('text_button_url2'); ?>"><?php the_field('text_button_text2'); ?></a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="right <?php echo (get_field('image_on_right2')) ? 'first' : ''; ?>">
+                    <?php if(get_field('text_image2')) : ?>
+                    <div class="image-area">
+                        <img loading="lazy" src="<?php echo get_field('text_image2'); ?>" alt="<?php echo get_field('text_title2'); ?>">
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="premium-page-template">
         <div class="container">
             <div class="grid">

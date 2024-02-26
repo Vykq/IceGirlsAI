@@ -38,7 +38,7 @@ get_header();
                             </div>
                         </div>
                         <div class="text">
-                            <p>Watch AI porn on Patreon.</p>
+                            <p>Watch AI Porn Videos.</p>
                         </div>
                     </a>
                 </div>

@@ -97,7 +97,7 @@ if (isset($_GET['prompt'])) {
 
 
 
-        <?php if ( in_array( 'premium', (array) $user->roles ) ) { ?>
+        <?php if(is_user_logged_in()) { ?>
             <div class="main-prompt prompt-preview-area show">
                 <div class="whole-input">
                     <textarea name="prompt" id="positive-prompt-2" placeholder="Enter Your prompt"><?php echo (fixPrompt()) ? fixPrompt() : "" ;?></textarea>
@@ -108,17 +108,12 @@ if (isset($_GET['prompt'])) {
                 </div>
             </div>
         <?php } else { ?>
-            <div class="single-input positive-prompt">
-                <div class="whole-input single-input premium prompt">
+            <div class="main-prompt prompt-preview-area show">
+                <div class="whole-input">
+                    <textarea name="prompt" id="positive-prompt-2" placeholder="Enter Your prompt"><?php echo (fixPrompt()) ? fixPrompt() : "" ;?></textarea>
+                    <label for="positive-prompt">Prompt</label>
                     <div class="tooltip-icon">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="12" cy="12" r="10" stroke="#ff950d" stroke-width="1.5"></circle> <path d="M12 17V11" stroke="#ff950d" stroke-width="1.5" stroke-linecap="round"></path> <circle cx="1" cy="1" r="1" transform="matrix(1 0 0 -1 11 9)" fill="#ff950d"></circle> </g></svg>
-                    </div>
-                    <div class="input-wrapper premium">
-                        <textarea name="get-premium-prompt" id="positive-prompt" placeholder="Enter Your prompt"></textarea>
-                        <label for="positive-prompt">Prompt</label>
-                    </div>
-                    <div class="premium-area">
-                        <a href="/premium/" class="offer">To use this option you need <span>Premium</span></a>
                     </div>
                 </div>
             </div>

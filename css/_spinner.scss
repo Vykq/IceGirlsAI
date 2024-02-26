@@ -12,6 +12,11 @@
   &.show{
     display:flex;
   }
+  .text {
+    p {
+      text-decoration: underline;
+    }
+  }
   p{
     color:#FFF;
     font-size: 0.9rem;

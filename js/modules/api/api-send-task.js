@@ -86,19 +86,20 @@ const apiSendTask = async (isPremium, oldSeed) => {
     if(isPremium){
         //IF USER IS PREMIUM
         const stepInputElement = document.querySelector('input[name="steps"]');
-        const promptInput = document.querySelector('textarea[name="prompt"]');
+        //const promptInput = document.querySelector('textarea[name="prompt"]');
         details = document.querySelector('input[name="details"]').value;
-        midPrompt = promptInput.value;
+        //midPrompt = promptInput.value;
         stepSlider = stepInputElement.value;
     }else {
-        if(document.querySelector('body').classList.contains('premium')){
-            const promptInput = document.querySelector('textarea[name="prompt"]');
-            midPrompt = promptInput.value;
-        }
+
 
         stepSlider = 20;
         details = 0;
     }
+
+        const promptInput = document.querySelector('textarea[name="prompt"]');
+        midPrompt = promptInput.value;
+
 
     checkpoints.forEach(input =>{
         if(input.checked){

@@ -47,6 +47,7 @@ $models = new WP_Query($args); ?>
                                 $posts = $models->posts;
                                 array_unshift($posts, $hentai_post_obj);
                                 $models->posts = $posts;
+                                $models->post_count++;
                             }
                         }
                     $firstLoop = true;

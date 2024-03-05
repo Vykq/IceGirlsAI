@@ -47,7 +47,7 @@ if(document.querySelector('body').classList.contains('premium')){
 } else {
     premiumBody = false;
 }
-
+console.log('t');
 
 
 const apiTasks = async () => {
@@ -342,6 +342,7 @@ const apiTasks = async () => {
                                     while (status !== "done") {
                                         if (!stopGenerateFlag) {
                                             setPercent('66');
+                                            console.log('66');
                                             apiGetQueueInfo = await apiGetQueue(premiumBody);
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
                                             await updateQueueInfo(currentPos.pos, '');
@@ -364,6 +365,7 @@ const apiTasks = async () => {
                                     while (currentTaskID !== alreadyGenerationID) {
                                         if (!stopGenerateFlag) {
                                             setPercent('premium');
+                                            console.log('88');
                                             apiGetQueueInfo = await apiGetQueue(premiumBody);
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
                                             updateQueueInfo(currentPos.pos, '');
@@ -388,6 +390,7 @@ const apiTasks = async () => {
                                         if (!stopGenerateFlag) {
                                             status = await showQueueInfo(alreadyGenerationID, premiumBody); // Retry until status is "done"
                                             setPercent('66');
+                                            console.log('99');
                                             apiGetQueueInfo = await apiGetQueue(premiumBody);
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
                                             await updateQueueInfo(currentPos.pos, '');
@@ -411,6 +414,7 @@ const apiTasks = async () => {
                                 while (status !== "done") {
                                     if (!stopGenerateFlag) {
                                         setPercent('66');
+                                        console.log('987');
                                         apiGetQueueInfo = await apiGetQueue(premiumBody);
                                         if (apiGetQueueInfo) {
                                             const currentPos = await getPosition(alreadyGenerationID, premiumBody);
@@ -530,6 +534,7 @@ const apiTasks = async () => {
                                    while (status !== "done") {
                                        if (!stopGenerateFlag) {
                                            setPercent('66');
+                                           console.log('33a');
                                            apiGetQueueInfo = await apiGetQueue(userStatus);
                                            const currentPos = await getPosition(taskID, userStatus);
                                            await updateQueueInfo(currentPos.pos, '');
@@ -549,8 +554,11 @@ const apiTasks = async () => {
                                if (!stopGenerateFlag) {
                                    setPercent('33');
                                    let currentTaskID = apiGetQueueInfo.currentTaskId;
+                                   console.log('currentTaskId',currentTaskID);
+                                   console.log('tavo task id', taskID);
                                    while (currentTaskID !== taskID) {
                                        if (!stopGenerateFlag) {
+                                           console.log('33b');
                                            setPercent('premium');
                                            apiGetQueueInfo = await apiGetQueue(userStatus);
                                            const currentPos = await getPosition(taskID, userStatus);
@@ -576,6 +584,7 @@ const apiTasks = async () => {
                                        if (!stopGenerateFlag) {
                                            status = await showQueueInfo(taskID, userStatus); // Retry until status is "done"
                                            setPercent('66');
+                                           console.log('33c');
                                            apiGetQueueInfo = await apiGetQueue(userStatus);
                                            const currentPos = await getPosition(taskID, userStatus);
                                            await updateQueueInfo(currentPos.pos, '');
@@ -599,6 +608,7 @@ const apiTasks = async () => {
                                while (status !== "done") {
                                    if (!stopGenerateFlag) {
                                        setPercent('66');
+                                       console.log('33d');
                                        apiGetQueueInfo = await apiGetQueue(userStatus);
                                        if (apiGetQueueInfo) {
                                            const currentPos = await getPosition(taskID, userStatus);

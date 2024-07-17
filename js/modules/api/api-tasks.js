@@ -47,7 +47,6 @@ if(document.querySelector('body').classList.contains('premium')){
 } else {
     premiumBody = false;
 }
-console.log('t');
 
 
 const apiTasks = async () => {

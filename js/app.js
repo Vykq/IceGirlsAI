@@ -28,6 +28,9 @@ import cancelSubscription from "./modules/stripe/cancel-subscription";
 import deleteFace from "./modules/delete-face";
 import faceUploadForm from "./modules/face-upload-form";
 import creditsTimer from "./modules/credits-timer";
+import undress from "./modules/undresser/undress";
+import getEstimatedPrice from "./modules/crypto/getEstimatedPrice";
+import createInvoice from "./modules/crypto/create-invoice";
 
 window.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('.site-loader').classList.add('hide');
@@ -36,6 +39,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   if(!document.querySelector('body').classList.contains('logged-in')){
     switchLoginRegister();
+  }
+
+  if(document.querySelector('.undresser-form')){
+    undress();
   }
 
   if(document.querySelector('.tooltip-icon')){
@@ -50,12 +57,15 @@ window.addEventListener('DOMContentLoaded', async () => {
     await faceUploadForm();
   }
 
-  if(document.querySelector('.create-page-template')){
-    apiTasks();
+  if(document.querySelector('.create-invoice')){
+    createInvoice();
+  }
+
+  if(document.querySelector('.creation-form')){
     showTabs();
+    apiTasks();
     updateRangeValue();
     charsFilter('.single-filter', '.single-char');
-
   }
 
   if (document.querySelector('.main-modal-blur')) {

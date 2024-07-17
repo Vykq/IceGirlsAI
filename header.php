@@ -18,7 +18,7 @@
     <script type="text/javascript" src="https://api.goaffpro.com/loader.js?shop=vu7ivg8d7m"></script>
 </head>
 <body <?php body_class(); ?>>
-<div class="site-loader">
+<div class="site-loader hide">
     <div class="logo-image">
         <img width="140px" height="27px" src="<?php echo get_template_directory_uri() . '/assets/images/icegirls.png'; ?>" alt="IceGirls.Ai">
     </div>
@@ -34,15 +34,12 @@
     $user = wp_get_current_user();
     $current_url = site_url();
     ?>
-    <?php
-    if (in_array( 'expremium', (array) $user->roles ) && !get_field('subscription_id', 'user_' . $user->ID)) { ?>
         <div class="topbar">
             <div class="container">
-                <p class="info">Please resubscribe to our premium plan to regain your premium role, you won't be charged for the next 30d</p>
+                <p class="info">🚀 Exciting News! We Now Accept Crypto Payments! 💸</p>
             </div>
         </div>
 
-    <?php } ?>
     <div class="main-header">
         <div class="container">
             <div class="wrapper">

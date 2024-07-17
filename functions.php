@@ -1,4 +1,5 @@
 <?php
+
 require_once('lib/add_functions.php');
 require_once('lib/web-sockets.php');
 require_once('lib/stable-diffusion-api.php');
@@ -6,9 +7,11 @@ require_once('lib/free-premium.php');
 require_once('lib/blocks.php');
 require_once('lib/ga-events.php');
 require_once('lib/tokkens.php');
+require_once('lib/nowPayment.php');
+
 function webpack_files() {
-    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '3.46', true);
-    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '3.46');
+    wp_enqueue_script('webpack-js', get_theme_file_uri('assets/app.js'), array(), '4', true);
+    wp_enqueue_style('webpack-styles', get_theme_file_uri('assets/style.css'), array(), '4');
     wp_enqueue_script('masonry-js', get_theme_file_uri('assets/minimasonry.min.js'), array(), '1', true);
 //    wp_enqueue_script('splide-js', get_theme_file_uri('assets/splide.min.js'), array(), '4.1.3', true);
 //    wp_enqueue_style('splide-styles', get_theme_file_uri('assets/splide.min.css'), array(), '4.1.3');
@@ -147,6 +150,27 @@ function theme_post_types()
     add_role('expremium', 'ExPremium', $expremium_role->capabilities);
     // Remove the capability to view the admin bar
     $expremium_role->remove_cap('show_admin_bar');
+
+    register_post_type('orders', array(
+        'rewrite' => array('orders' => __('orders', 'slug', 'vyk')),
+        'has_archive' => false,
+        'public' => true,
+        'show_in_rest' => true,
+        'menu_position' => -1,
+        'labels' => array(
+            'name' => 'Orders',
+            'add_new_item' => 'Add Order',
+            'edit_item' => 'Edit Order',
+            'all_items' => 'All Orders',
+            'singular_name' => 'Order'
+        ),
+        'supports' => array(
+            'title',
+            'page-attributes',
+            'thumbnail',
+        ),
+        'menu_icon' => 'dashicons-money-alt'
+    ));
 
     register_post_type('checkpoints', array(
         'rewrite' => array('checkpoints' => __('checkpoints', 'slug', 'vyk')),

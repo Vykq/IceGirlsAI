@@ -67,11 +67,7 @@ viewItemEvent();
                             <p class="note">Debit or Credit card & Paypal</p>
                         </div>
                      <?php if(is_user_logged_in()){ ?>
-                             <?php if (in_array( 'expremium', (array) $user->roles )) { ?>
-                             <a class="main-button" target="_blank" href="https://buy.stripe.com/14k04538Kfnr3ficMN">Purchase with 30d free</a>
-                            <?php } else { ?>
-                             <a class="main-button" target="_blank" href="<?php the_field('premium_button_url'); ?>"><?php the_field('premium_button_text'); ?></a>
-                            <?php } ?>
+                         <span class="main-button create-invoice">Buy premium (crypto)</span>
                       <?php } else { ?>
                         <span class="main-button open-login-modal open-modal " data-id="login-modal">Log in and purchase</span>
                     <?php } ?>

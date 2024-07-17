@@ -5,7 +5,8 @@
 
 
 if($_GET){
-    $success = setPremiumForStripePurchase($_GET['id']);
+//    $success = setPremiumForStripePurchase($_GET['id']);
+    $success = setPremiumForCryptoPurchase($_GET['NP_id'], $_GET['order_id']);
     $success = true;
 if($success) {
 

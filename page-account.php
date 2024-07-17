@@ -71,28 +71,16 @@ if(!is_user_logged_in()){ ?>
                         $next_run_date_time = date('Y-m-d H:i', $next_run_timestamp);
                         if(!in_array( 'premium', (array) $user->roles )) {?>
                             <p class="log-out">Credits will be recharged in </br><?php echo $next_run_date_time; ?></p>
-                        <?php } ?>
+                        <?php } else {
+                            $premiumUntil = get_field('date_until_premium', 'user_' . $user_id);
+                            ?>
+                            <p class="log-out">Your premium membership ends: <?php echo $premiumUntil; ?></p>
+                        <?php }?>
                         <a href="<?php echo wp_logout_url( home_url()); ?>" class="log-out"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path class="door" d="M8.51465 20H4.51465C3.41008 20 2.51465 19.1046 2.51465 18V6C2.51465 4.89543 3.41008 4 4.51465 4H8.51465V6H4.51465V18H8.51465V20Z" fill="#FFA702FF"></path> <path class="arrow" d="M13.8422 17.385L15.2624 15.9768L11.3432 12.0242L20.4861 12.0242C21.0384 12.0242 21.4861 11.5765 21.4861 11.0242C21.4861 10.4719 21.0384 10.0242 20.4861 10.0242L11.3239 10.0242L15.3044 6.0774L13.8962 4.6572L7.50527 10.9941L13.8422 17.385Z" fill="#FFA702FF"></path> </g></svg> Log out</a>
                             <?php
-                                if ( in_array( 'premium', (array) $user->roles ) && !$subscriptionID ) {
-                                    //Upgrade free trial ?>
-                                    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                                        <stripe-buy-button
-                                        buy-button-id="buy_btn_1OWcw7I7TOk6FZawPoViWsvs" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
-                                    </stripe-buy-button>
-                                    <?php
-                                } else if (in_array( 'premium', (array) $user->roles ) && $subscriptionID !== "") { ?>
-                                            <span class="secondary-button cancel-sub open-modal" data-id="cancel-sub">Cancel Subscription</span>
-                                <?php } else if (in_array( 'expremium', (array) $user->roles )) { ?>
-                                    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                                        <stripe-buy-button
-                                            buy-button-id="buy_btn_1OWcw7I7TOk6FZawPoViWsvs" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
-                                        </stripe-buy-button>
-                                <?php } else { ?>
-                                    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                                        <stripe-buy-button
-                                            buy-button-id="buy_btn_1OWcw7I7TOk6FZawPoViWsvs" publishable-key="pk_live_51OO51uI7TOk6FZawV8EApzoidjKzSrv63ZMEJfF3peyJevlocmlPADspJBIDE5qeCXqpGUxREQie48E2QKNRzulx0054RfhQWv"
-                                        </stripe-buy-button>
+                            //user is not premium
+                                if ( !in_array( 'premium', (array) $user->roles )) { ?>
+                                    <span class="main-button small create-invoice">Buy premium </br>(crypto)</span>
                                 <?php } ?>
                     </div>
                 </div>
